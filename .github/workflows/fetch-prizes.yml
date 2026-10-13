@@ -1,0 +1,32 @@
+# 노벨상 공식 API에서 수상자·수상 사유 원문을 받아 prizes.json을 갱신하고 커밋한다.
+# Actions 탭 → "Fetch prize data" → Run workflow (갱신할 브랜치 선택)
+name: Fetch prize data
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run fetch-prizes
+      - name: Commit changes
+        run: |
+          if git diff --quiet src/data/prizes.json; then
+            echo "변경 없음"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/prizes.json
+          git commit -m "data: 노벨상 API에서 수상자·수상 사유 갱신"
+          git push
