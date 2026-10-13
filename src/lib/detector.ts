@@ -1,5 +1,5 @@
 import type { ObjectDetector } from "@mediapipe/tasks-vision";
-import { DETECTOR } from "../config";
+import { DEBUG, DEBUG_MIN_SCORE, DETECTOR, SCORE_THRESHOLD } from "../config";
 import { COCO_ALLOWLIST } from "../data";
 import type { Detection } from "../types";
 
@@ -22,9 +22,10 @@ export function loadDetector(): Promise<ObjectDetector> {
       const detector = await ObjectDetector.createFromOptions(vision, {
         baseOptions: { modelAssetPath: DETECTOR.modelPath, delegate: "CPU" },
         runningMode: "IMAGE",
-        scoreThreshold: DETECTOR.scoreThreshold,
-        maxResults: DETECTOR.maxResults,
-        categoryAllowlist: COCO_ALLOWLIST,
+        // 디버그 모드에서는 낮은 점수·허용 목록 밖 클래스까지 받아 점수표로 보여준다
+        scoreThreshold: DEBUG ? Math.min(DEBUG_MIN_SCORE, SCORE_THRESHOLD) : SCORE_THRESHOLD,
+        maxResults: DEBUG ? 25 : DETECTOR.maxResults,
+        ...(DEBUG ? {} : { categoryAllowlist: COCO_ALLOWLIST }),
       });
       ready = true;
       return detector;

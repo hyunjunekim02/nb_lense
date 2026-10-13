@@ -36,3 +36,17 @@ export const ENABLE_AI_FALLBACK = import.meta.env.VITE_ENABLE_AI_FALLBACK === "t
 
 /** 결과 하단에서 "이 렌즈의 인식 모델도 인공신경망" 문구가 가리키는 카드 */
 export const NEURAL_NET_PRIZE_ID = "2024-physics";
+
+/**
+ * 검수·임계값 조정용 디버그 모드. 주소 뒤에 ?debug 를 붙이면 켜진다 (로컬·Pages 모두).
+ * 켜지면 80개 COCO 클래스를 낮은 점수까지 모두 받아 결과 화면에 점수표로 보여준다.
+ * ?debug&threshold=0.25 처럼 임계값을 바꿔 실험할 수 있다.
+ */
+const params = typeof location !== "undefined" ? new URLSearchParams(location.search) : new URLSearchParams();
+export const DEBUG = params.has("debug");
+const thresholdParam = Number(params.get("threshold"));
+/** 실제로 결과에 쓰는 임계값 */
+export const SCORE_THRESHOLD =
+  DEBUG && thresholdParam > 0 && thresholdParam < 1 ? thresholdParam : DETECTOR.scoreThreshold;
+/** 디버그 모드에서 모델이 돌려주는 최저 점수 */
+export const DEBUG_MIN_SCORE = 0.1;

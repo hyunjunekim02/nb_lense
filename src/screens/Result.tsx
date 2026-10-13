@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { NEURAL_NET_PRIZE_ID } from "../config";
+import { DEBUG, NEURAL_NET_PRIZE_ID } from "../config";
 import { filterByObject } from "../lib/mapping";
 import type { ScanResult } from "../types";
 import { ObjectChip } from "../components/ObjectChip";
 import { PrizeCard } from "../components/PrizeCard";
 import { Disclaimer } from "../components/Disclaimer";
 import { Icon } from "../components/Icon";
+import { DebugPanel } from "../components/DebugPanel";
 
 function formatSeconds(ms: number) {
   const s = ms / 1000;
@@ -85,6 +86,9 @@ export function Result({
               직접 고르기
             </button>
           </div>
+          {DEBUG && result.rawDetections && (
+          <DebugPanel detections={result.rawDetections} inferenceMs={result.inferenceMs} />
+        )}
         </div>
       </main>
     );
@@ -135,6 +139,9 @@ export function Result({
           <span className="badge">
             기기 안에서 처리됨 · 서버 비용 0원 · {formatSeconds(result.inferenceMs)}
           </span>
+        )}
+        {DEBUG && result.rawDetections && (
+          <DebugPanel detections={result.rawDetections} inferenceMs={result.inferenceMs} />
         )}
         <div style={{ marginTop: 20 }}>
           <Disclaimer />

@@ -583,3 +583,84 @@ a {
   margin: 0 0 8px;
   word-break: keep-all;
 }
+
+/* ---------- 디버그 (?debug) ---------- */
+.debug {
+  margin: 16px 0;
+  padding: 12px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  font-size: var(--fs-sub);
+}
+
+.debug h2 {
+  font-size: var(--fs-sub);
+  margin: 0 0 4px;
+}
+
+.debug table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.debug th,
+.debug td {
+  text-align: left;
+  padding: 4px 6px 4px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.debug__off {
+  color: var(--text-sub);
+}
+
+/* ---------- 검수 (#review) ---------- */
+.review h2 {
+  font-size: var(--fs-title);
+  margin: 28px 0 8px;
+}
+
+.review-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.review-item h3 {
+  font-size: var(--fs-title);
+  margin: 2px 0 6px;
+  word-break: keep-all;
+}
+
+.review-item p,
+.review-item ul {
+  margin: 0 0 6px;
+  word-break: keep-all;
+}
+
+.review-item ul {
+  padding-left: 18px;
+}
+
+.review-label {
+  display: block;
+  color: var(--text-sub);
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--surface);
+  color: var(--text-sub);
+}
+
+.tag--todo {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
