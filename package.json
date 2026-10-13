@@ -3,12 +3,17 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
   "scripts": {
     "dev": "vite",
     "build": "node scripts/check-data.mjs && tsc -b && vite build",
     "preview": "vite preview",
+    "pages": "npm run build && vite preview --open",
     "test": "vitest run",
     "typecheck": "tsc -b",
+    "check": "node scripts/check-data.mjs && tsc -b && vitest run",
     "fetch-prizes": "tsx scripts/fetch-prizes.ts",
     "postinstall": "node scripts/copy-wasm.mjs"
   },

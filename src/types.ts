@@ -42,7 +42,10 @@ export type ScanResult = {
   source: ScanSource;
   objects: ObjectEntry[];
   prizes: PrizeHit[];
+  /** 결과에 쓴 인식 (임계값·허용 목록 통과) */
   detections: Detection[];
+  /** 디버그 모드 점수표용 원본 인식 */
+  rawDetections?: Detection[];
   /** 업로드·예시일 때 화면에 보여줄 사진 (object URL) */
   imageUrl?: string;
   /** 추론 시간 (ms) */

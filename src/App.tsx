@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { OBJECTS, PRIZE_BY_ID } from "./data";
+import { COCO_ALLOWLIST, OBJECTS, PRIZE_BY_ID } from "./data";
+import { SCORE_THRESHOLD } from "./config";
 import { objectsFromDetections, objectsFromIds, prizesForObjects } from "./lib/mapping";
 import { ImageDecodeError, nextPaint, prepareImage } from "./lib/image";
 import { detect, isDetectorReady, loadDetector } from "./lib/detector";
@@ -11,6 +12,7 @@ import { Analyzing } from "./screens/Analyzing";
 import { Result } from "./screens/Result";
 import { Picker } from "./screens/Picker";
 import { About } from "./screens/About";
+import { Review } from "./screens/Review";
 import { Message } from "./screens/Message";
 import { PrizeSheet } from "./components/PrizeSheet";
 
@@ -20,6 +22,7 @@ type Screen =
   | { name: "result" }
   | { name: "picker" }
   | { name: "about" }
+  | { name: "review" }
   | { name: "error"; kind: "model" | "decode" };
 
 const catalog = { objects: OBJECTS, prizeById: PRIZE_BY_ID };
@@ -47,6 +50,8 @@ export function App() {
   }, []);
 
   useEffect(() => {
+    // #review: 팀 검수용 전체 문구 보기 (메뉴에는 노출하지 않음)
+    if (location.hash === "#review") setScreen({ name: "review" });
     history.replaceState({ screen: "home" }, "");
     const onPop = (e: PopStateEvent) => {
       const name = (e.state?.screen as Screen["name"] | undefined) ?? "home";
@@ -99,13 +104,15 @@ export function App() {
       const { detections, ms } = await detect(prepared.canvas);
       if (id !== scanId.current) return;
 
-      const objects = objectsFromDetections(detections, catalog);
+      // 디버그 모드에서는 모델이 임계값 아래·허용 목록 밖 결과까지 주므로 여기서 거른다
+      const used = detections.filter((d) => d.score >= SCORE_THRESHOLD && COCO_ALLOWLIST.includes(d.cocoClass));
+      const objects = objectsFromDetections(used, catalog);
       const prizes = prizesForObjects(objects, catalog);
       if (prizes.length > 0) track({ name: "scan_success", objects: objects.length, prizes: prizes.length, ms });
       else track({ name: "scan_empty" });
 
       pending.current = null;
-      setResult({ source, objects, prizes, detections, imageUrl: prepared.url, inferenceMs: ms });
+      setResult({ source, objects, prizes, detections: used, rawDetections: detections, imageUrl: prepared.url, inferenceMs: ms });
       go({ name: "result" }, true);
     },
     [go],
@@ -188,6 +195,9 @@ export function App() {
       break;
     case "about":
       view = <About onBack={() => history.back()} />;
+      break;
+    case "review":
+      view = <Review />;
       break;
     case "error":
       view =
