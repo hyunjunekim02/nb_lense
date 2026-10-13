@@ -4,7 +4,9 @@
     "year": 1921,
     "category": "physics",
     "categoryKo": "물리학상",
-    "laureates": ["Albert Einstein"],
+    "laureates": [
+      "Albert Einstein"
+    ],
     "motivationEn": "for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect",
     "titleKo": "빛이 전기를 만드는 광전효과",
     "descKo": "빛을 금속에 비추면 전자가 튀어나오는 광전효과를, 아인슈타인은 빛이 알갱이(광자) 단위로 에너지를 전달한다는 생각으로 설명했습니다. 그의 노벨상 수상 사유는 상대성이론이 아니라 바로 이 광전효과 법칙의 발견입니다. 빛을 전기 신호로 바꾸는 이미지 센서와 태양전지가 이 원리 위에 서 있습니다.",
@@ -16,7 +18,11 @@
     "year": 1945,
     "category": "medicine",
     "categoryKo": "생리의학상",
-    "laureates": ["Sir Alexander Fleming", "Ernst Boris Chain", "Sir Howard Walter Florey"],
+    "laureates": [
+      "Sir Alexander Fleming",
+      "Ernst B. Chain",
+      "Sir Howard Florey"
+    ],
     "motivationEn": "for the discovery of penicillin and its curative effect in various infectious diseases",
     "titleKo": "페니실린의 발견",
     "descKo": "플레밍은 푸른곰팡이가 만든 물질이 세균의 성장을 막는다는 것을 발견했고, 체인과 플로리는 이 물질을 정제해 실제 감염병 치료에 쓸 수 있음을 보였습니다. 페니실린은 대량 생산되어 수많은 생명을 구했고 항생제 시대를 열었습니다.",
@@ -28,7 +34,11 @@
     "year": 1956,
     "category": "physics",
     "categoryKo": "물리학상",
-    "laureates": ["William Bradford Shockley", "John Bardeen", "Walter Houser Brattain"],
+    "laureates": [
+      "William B. Shockley",
+      "John Bardeen",
+      "Walter H. Brattain"
+    ],
     "motivationEn": "for their researches on semiconductors and their discovery of the transistor effect",
     "titleKo": "트랜지스터",
     "descKo": "쇼클리, 바딘, 브래튼은 반도체 연구를 통해 전류를 증폭하고 켜고 끌 수 있는 트랜지스터 효과를 발견했습니다. 진공관을 대신한 이 작은 소자는 오늘날 칩 하나에 수십억 개씩 들어가 디지털 기기의 계산을 맡고 있습니다.",
@@ -40,7 +50,11 @@
     "year": 1962,
     "category": "medicine",
     "categoryKo": "생리의학상",
-    "laureates": ["Francis Harry Compton Crick", "James Dewey Watson", "Maurice Hugh Frederick Wilkins"],
+    "laureates": [
+      "Francis Crick",
+      "James Watson",
+      "Maurice Wilkins"
+    ],
     "motivationEn": "for their discoveries concerning the molecular structure of nucleic acids and its significance for information transfer in living material",
     "titleKo": "DNA 이중나선 구조",
     "descKo": "크릭, 왓슨, 윌킨스는 핵산(DNA)의 분자 구조를 밝히고, 그 구조가 생물의 유전 정보 전달에 어떤 의미가 있는지 보였습니다. 두 가닥이 짝을 이루는 이중나선 구조는 유전 정보가 어떻게 복제되는지를 설명해 주었습니다.",
@@ -52,7 +66,11 @@
     "year": 1964,
     "category": "physics",
     "categoryKo": "물리학상",
-    "laureates": ["Charles Hard Townes", "Nicolay Gennadiyevich Basov", "Aleksandr Mikhailovich Prokhorov"],
+    "laureates": [
+      "Charles H. Townes",
+      "Nicolay G. Basov",
+      "Aleksandr M. Prokhorov"
+    ],
     "motivationEn": "for fundamental work in the field of quantum electronics, which has led to the construction of oscillators and amplifiers based on the maser-laser principle",
     "titleKo": "레이저의 원리",
     "descKo": "타운스, 바소프, 프로호로프는 양자전자공학의 기초를 닦아, 메이저·레이저 원리로 빛과 마이크로파를 만들고 증폭하는 장치를 가능하게 했습니다. 바코드 스캐너, 광통신, 레이저 프린터가 모두 이 원리를 씁니다.",
@@ -64,7 +82,9 @@
     "year": 1989,
     "category": "physics",
     "categoryKo": "물리학상",
-    "laureates": ["Norman F. Ramsey"],
+    "laureates": [
+      "Norman F. Ramsey"
+    ],
     "motivationEn": "for the invention of the separated oscillatory fields method and its use in the hydrogen maser and other atomic clocks",
     "titleKo": "원자시계의 바탕이 된 측정법",
     "descKo": "램지는 원자가 흡수하는 전파의 진동수를 매우 정밀하게 재는 '분리 진동장 방법'을 고안했고, 이 방법은 수소 메이저와 원자시계에 쓰였습니다. 오늘날 세계 표준시와 GPS 위성의 시각은 원자시계로 맞춥니다. 같은 해 물리학상의 나머지 절반은 이온 덫 기술을 개발한 데멜트와 파울에게 돌아갔습니다.",
@@ -76,7 +96,9 @@
     "year": 2000,
     "category": "physics",
     "categoryKo": "물리학상",
-    "laureates": ["Jack S. Kilby"],
+    "laureates": [
+      "Jack Kilby"
+    ],
     "motivationEn": "for his part in the invention of the integrated circuit",
     "titleKo": "집적회로",
     "descKo": "킬비는 트랜지스터와 저항 같은 여러 소자를 하나의 반도체 조각 위에 만드는 집적회로(IC)의 발명에 기여했습니다. 수많은 부품을 작은 칩 하나에 담는 이 방식 덕분에 컴퓨터와 스마트폰이 손바닥 크기가 되었습니다.",
@@ -88,7 +110,10 @@
     "year": 2000,
     "category": "physics",
     "categoryKo": "물리학상",
-    "laureates": ["Zhores I. Alferov", "Herbert Kroemer"],
+    "laureates": [
+      "Zhores Alferov",
+      "Herbert Kroemer"
+    ],
     "motivationEn": "for developing semiconductor heterostructures used in high-speed- and opto-electronics",
     "titleKo": "반도체 이종구조",
     "descKo": "알표로프와 크뢰머는 성질이 다른 반도체 층을 겹겹이 쌓은 이종구조를 개발했습니다. 이 구조는 고속 통신용 트랜지스터와 반도체 레이저, LED 같은 광전자 소자의 핵심이 되었습니다.",
@@ -100,7 +125,10 @@
     "year": 2003,
     "category": "medicine",
     "categoryKo": "생리의학상",
-    "laureates": ["Paul C. Lauterbur", "Sir Peter Mansfield"],
+    "laureates": [
+      "Paul C. Lauterbur",
+      "Sir Peter Mansfield"
+    ],
     "motivationEn": "for their discoveries concerning magnetic resonance imaging",
     "titleKo": "MRI(자기공명영상)",
     "descKo": "라우터버와 맨스필드는 위치마다 세기가 다른 자기장을 걸어 몸속 영상을 만드는 방법과, 그 신호를 빠르게 영상으로 바꾸는 방법을 개발했습니다. 덕분에 방사선 없이 뇌와 장기를 선명하게 보는 MRI가 병원의 표준 검사가 되었습니다.",
@@ -112,7 +140,10 @@
     "year": 2007,
     "category": "physics",
     "categoryKo": "물리학상",
-    "laureates": ["Albert Fert", "Peter Grünberg"],
+    "laureates": [
+      "Albert Fert",
+      "Peter Grünberg"
+    ],
     "motivationEn": "for the discovery of Giant Magnetoresistance",
     "titleKo": "거대자기저항",
     "descKo": "페르와 그륀베르크는 아주 얇은 자성층과 비자성층을 번갈아 쌓으면 작은 자기장 변화에도 전기 저항이 크게 바뀌는 거대자기저항(GMR)을 각각 발견했습니다. 이 효과로 하드디스크 읽기 헤드가 훨씬 작은 자기 신호를 읽게 되어 저장 용량이 크게 늘었습니다.",
@@ -124,7 +155,9 @@
     "year": 2009,
     "category": "physics",
     "categoryKo": "물리학상",
-    "laureates": ["Charles Kuen Kao"],
+    "laureates": [
+      "Charles K. Kao"
+    ],
     "motivationEn": "for groundbreaking achievements concerning the transmission of light in fibers for optical communication",
     "titleKo": "광섬유 통신",
     "descKo": "카오는 유리 섬유 속에서 빛이 잃는 손실을 줄이면 먼 거리까지 빛으로 정보를 보낼 수 있음을 밝히고, 이를 위한 조건을 제시했습니다. 오늘날 인터넷 데이터의 대부분은 바다 밑과 땅속의 광섬유를 타고 이동합니다.",
@@ -136,8 +169,11 @@
     "year": 2009,
     "category": "physics",
     "categoryKo": "물리학상",
-    "laureates": ["Willard S. Boyle", "George E. Smith"],
-    "motivationEn": "for the invention of an imaging semiconductor circuit – the CCD sensor",
+    "laureates": [
+      "Willard S. Boyle",
+      "George E. Smith"
+    ],
+    "motivationEn": "for the invention of an imaging semiconductor circuit - the CCD sensor",
     "titleKo": "CCD 이미지 센서",
     "descKo": "보일과 스미스는 빛을 전기 신호로 바꿔 영상으로 기록하는 반도체 회로, CCD 센서를 발명했습니다. 디지털카메라 시대를 연 이 발명은 오늘날 스마트폰에 주로 쓰이는 CMOS 이미지 센서로 이어졌습니다.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2009/summary/",
@@ -148,7 +184,11 @@
     "year": 2014,
     "category": "physics",
     "categoryKo": "물리학상",
-    "laureates": ["Isamu Akasaki", "Hiroshi Amano", "Shuji Nakamura"],
+    "laureates": [
+      "Isamu Akasaki",
+      "Hiroshi Amano",
+      "Shuji Nakamura"
+    ],
     "motivationEn": "for the invention of efficient blue light-emitting diodes which has enabled bright and energy-saving white light sources",
     "titleKo": "밝고 효율적인 청색 LED",
     "descKo": "아카사키, 아마노, 나카무라는 오랫동안 만들기 어려웠던 효율적인 청색 LED를 개발했습니다. 청색 LED에 형광체를 더하면 흰빛을 낼 수 있어, 밝으면서 전기를 적게 쓰는 LED 조명과 화면 백라이트가 가능해졌습니다.",
@@ -160,7 +200,11 @@
     "year": 2019,
     "category": "chemistry",
     "categoryKo": "화학상",
-    "laureates": ["John B. Goodenough", "M. Stanley Whittingham", "Akira Yoshino"],
+    "laureates": [
+      "John B. Goodenough",
+      "M. Stanley Whittingham",
+      "Akira Yoshino"
+    ],
     "motivationEn": "for the development of lithium-ion batteries",
     "titleKo": "리튬이온 배터리",
     "descKo": "구디너프, 휘팅엄, 요시노는 리튬이온 배터리를 개발했습니다. 가볍고 여러 번 충전할 수 있는 이 배터리는 스마트폰과 노트북, 전기차를 움직이고 태양광·풍력 에너지를 저장하는 데도 쓰입니다.",
@@ -172,7 +216,10 @@
     "year": 2023,
     "category": "medicine",
     "categoryKo": "생리의학상",
-    "laureates": ["Katalin Karikó", "Drew Weissman"],
+    "laureates": [
+      "Katalin Karikó",
+      "Drew Weissman"
+    ],
     "motivationEn": "for their discoveries concerning nucleoside base modifications that enabled the development of effective mRNA vaccines against COVID-19",
     "titleKo": "mRNA 백신",
     "descKo": "커리코와 와이스먼은 mRNA의 염기를 변형하면 몸의 면역계가 이를 공격하지 않고 단백질도 더 많이 만들어진다는 것을 발견했습니다. 이 발견 덕분에 코로나19 팬데믹 때 효과적인 mRNA 백신을 빠르게 개발할 수 있었습니다.",
@@ -184,7 +231,10 @@
     "year": 2024,
     "category": "physics",
     "categoryKo": "물리학상",
-    "laureates": ["John J. Hopfield", "Geoffrey Hinton"],
+    "laureates": [
+      "John J. Hopfield",
+      "Geoffrey Hinton"
+    ],
     "motivationEn": "for foundational discoveries and inventions that enable machine learning with artificial neural networks",
     "titleKo": "인공신경망 기계학습의 기초",
     "descKo": "홉필드와 힌턴은 물리학의 도구를 사용해, 오늘날 강력한 기계학습의 바탕이 된 인공신경망 방법을 개발했습니다. 홉필드는 패턴을 저장하고 되살리는 연결망을, 힌턴은 데이터 속 특징을 스스로 찾아내는 방법을 제시했습니다.",
