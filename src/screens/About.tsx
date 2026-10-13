@@ -20,6 +20,12 @@ export function About({ onBack }: { onBack: () => void }) {
 
       <h2>만든 사람</h2>
       <p>POSTECH 학생 4인이 Nobel Week 2026 파견단 활동의 하나로 만들었습니다.</p>
+      <ul>
+        <li>김현준 (개발 담당)</li>
+        <li>문준혁</li>
+        <li>조인재</li>
+        <li>오은호</li>
+      </ul>
 
       <h2>사진과 개인정보</h2>
       <p>
