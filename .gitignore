@@ -1,0 +1,7 @@
+node_modules
+dist
+*.local
+.DS_Store
+# MediaPipe wasm is copied from the pinned npm package on install (scripts/copy-wasm.mjs)
+public/wasm
+*.tsbuildinfo

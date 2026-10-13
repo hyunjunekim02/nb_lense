@@ -1,0 +1,147 @@
+[
+  {
+    "id": "phone",
+    "nameKo": "스마트폰",
+    "cocoClass": "cell phone",
+    "icon": "phone.svg",
+    "prizes": [
+      { "prizeId": "1956-physics", "whereKo": "칩 속 수십억 개의 트랜지스터" },
+      { "prizeId": "2000-physics-ic", "whereKo": "프로세서와 메모리 같은 집적회로 칩" },
+      { "prizeId": "2000-physics-hetero", "whereKo": "통신 칩과 광소자 속 반도체 이종구조" },
+      { "prizeId": "2009-physics-ccd", "whereKo": "카메라 이미지 센서의 출발점이 된 CCD" },
+      { "prizeId": "2009-physics-fiber", "whereKo": "스마트폰을 인터넷에 잇는 광섬유 통신망" },
+      { "prizeId": "2014-physics", "whereKo": "카메라 플래시와 LCD 화면 백라이트의 흰빛 LED" },
+      { "prizeId": "2019-chemistry", "whereKo": "매일 충전하는 리튬이온 배터리" },
+      { "prizeId": "1921-physics", "whereKo": "빛을 전기 신호로 바꾸는 카메라 센서의 원리(광전효과)" },
+      { "prizeId": "2024-physics", "whereKo": "사진 보정과 음성 인식 같은 AI 기능의 기초(인공신경망)" }
+    ]
+  },
+  {
+    "id": "laptop",
+    "nameKo": "노트북",
+    "cocoClass": "laptop",
+    "icon": "laptop.svg",
+    "prizes": [
+      { "prizeId": "1956-physics", "whereKo": "CPU 속 수십억 개의 트랜지스터" },
+      { "prizeId": "2000-physics-ic", "whereKo": "프로세서와 메모리 같은 집적회로 칩" },
+      { "prizeId": "2014-physics", "whereKo": "화면을 밝히는 LED 백라이트" },
+      { "prizeId": "2019-chemistry", "whereKo": "충전해서 쓰는 리튬이온 배터리" },
+      { "prizeId": "2024-physics", "whereKo": "음성 인식과 번역 같은 AI 기능의 기초(인공신경망)" },
+      { "prizeId": "2007-physics", "whereKo": "하드디스크(HDD) 읽기 헤드. SSD만 쓰는 기종에는 해당하지 않아요" }
+    ]
+  },
+  {
+    "id": "tv",
+    "nameKo": "TV·모니터",
+    "cocoClass": "tv",
+    "icon": "tv.svg",
+    "prizes": [
+      { "prizeId": "2014-physics", "whereKo": "화면 뒤에서 빛을 내는 LED 백라이트" },
+      { "prizeId": "2000-physics-ic", "whereKo": "화면을 구동하는 집적회로 칩" }
+    ]
+  },
+  {
+    "id": "car",
+    "nameKo": "자동차",
+    "cocoClass": "car",
+    "icon": "car.svg",
+    "prizes": [
+      { "prizeId": "2019-chemistry", "whereKo": "전기차를 움직이는 리튬이온 배터리" },
+      { "prizeId": "1989-physics-clock", "whereKo": "내비게이션이 쓰는 GPS 위성 속 원자시계의 원리" },
+      { "prizeId": "2014-physics", "whereKo": "밝고 전기를 적게 쓰는 LED 전조등" }
+    ]
+  },
+  {
+    "id": "traffic_light",
+    "nameKo": "신호등",
+    "cocoClass": "traffic light",
+    "icon": "traffic_light.svg",
+    "prizes": [
+      { "prizeId": "2014-physics", "whereKo": "LED 신호등. 밝은 초록불은 청색 LED와 같은 질화갈륨 계열 반도체로 만들어요" }
+    ]
+  },
+  {
+    "id": "clock",
+    "nameKo": "시계",
+    "cocoClass": "clock",
+    "icon": "clock.svg",
+    "prizes": [
+      { "prizeId": "1989-physics-clock", "whereKo": "세계 표준시를 정하는 원자시계의 원리" }
+    ]
+  },
+  {
+    "id": "person",
+    "nameKo": "사람",
+    "cocoClass": "person",
+    "icon": "person.svg",
+    "prizes": [
+      { "prizeId": "1962-medicine", "whereKo": "우리 몸의 설계도, DNA 이중나선 구조" },
+      { "prizeId": "2003-medicine", "whereKo": "몸속을 들여다보는 MRI" }
+    ]
+  },
+  {
+    "id": "led_bulb",
+    "nameKo": "LED 전구",
+    "icon": "led_bulb.svg",
+    "prizes": [
+      { "prizeId": "2014-physics", "whereKo": "청색 LED에 형광체를 더해 만든 흰빛 LED 조명" }
+    ]
+  },
+  {
+    "id": "battery",
+    "nameKo": "보조배터리",
+    "icon": "battery.svg",
+    "prizes": [
+      { "prizeId": "2019-chemistry", "whereKo": "안에 든 리튬이온 배터리" }
+    ]
+  },
+  {
+    "id": "router",
+    "nameKo": "공유기·인터넷",
+    "icon": "router.svg",
+    "prizes": [
+      { "prizeId": "2009-physics-fiber", "whereKo": "집까지 인터넷을 실어 오는 광섬유 통신" }
+    ]
+  },
+  {
+    "id": "solar_panel",
+    "nameKo": "태양광 패널",
+    "icon": "solar_panel.svg",
+    "prizes": [
+      { "prizeId": "1921-physics", "whereKo": "빛을 전기로 바꾸는 광전효과" }
+    ]
+  },
+  {
+    "id": "barcode",
+    "nameKo": "바코드 스캐너",
+    "icon": "barcode.svg",
+    "prizes": [
+      { "prizeId": "1964-physics", "whereKo": "바코드를 읽는 레이저" },
+      { "prizeId": "2000-physics-hetero", "whereKo": "작고 효율적인 반도체 레이저" }
+    ]
+  },
+  {
+    "id": "vaccine",
+    "nameKo": "백신",
+    "icon": "vaccine.svg",
+    "prizes": [
+      { "prizeId": "2023-medicine", "whereKo": "코로나19 mRNA 백신 기술" }
+    ]
+  },
+  {
+    "id": "antibiotic",
+    "nameKo": "항생제",
+    "icon": "antibiotic.svg",
+    "prizes": [
+      { "prizeId": "1945-medicine", "whereKo": "최초의 항생제, 페니실린" }
+    ]
+  },
+  {
+    "id": "mri",
+    "nameKo": "MRI",
+    "icon": "mri.svg",
+    "prizes": [
+      { "prizeId": "2003-medicine", "whereKo": "자기장으로 몸속을 찍는 자기공명영상" }
+    ]
+  }
+]
