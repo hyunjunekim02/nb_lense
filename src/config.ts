@@ -74,8 +74,14 @@ export const ZEROSHOT = {
   threshold: 0.5,
 } as const;
 
+/**
+ * 테스트용 도감. 주소에 ?unlock 을 붙이면 1차 도감이 다 채워진(2차가 열린) 별도 도감으로 연다.
+ * 실제 기록과 다른 키에 저장하므로 원래 도감은 그대로 남는다. 예: ?unlock&zeroshot&debug
+ */
+export const TEST_UNLOCK = params.has("unlock");
+
 /** 도감 기록 localStorage 키. 형식을 바꾸면 버전을 올린다 */
-export const COLLECTION_STORAGE_KEY = "nb_lense.collection.v1";
+export const COLLECTION_STORAGE_KEY = TEST_UNLOCK ? "nb_lense.collection.test.v1" : "nb_lense.collection.v1";
 
 /** 결과 하단에서 "이 렌즈의 인식 모델도 인공신경망" 문구가 가리키는 카드 */
 export const NEURAL_NET_PRIZE_ID = "2024-physics";

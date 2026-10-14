@@ -9,7 +9,7 @@ import { renderCollectionCard, renderShareCard, shareOrDownload } from "./lib/sh
 import * as collection from "./lib/collection";
 import type { Detection, ScanResult, ScanSource } from "./types";
 import type { ZeroshotRaw } from "./lib/recognizers/zeroshot";
-import { RECOGNIZERS } from "./config";
+import { RECOGNIZERS, TEST_UNLOCK } from "./config";
 import { Home } from "./screens/Home";
 import { Analyzing, type AnalyzingPhase } from "./screens/Analyzing";
 import { Result } from "./screens/Result";
@@ -29,7 +29,10 @@ type Screen =
   | { name: "error"; kind: "model" | "decode" };
 
 const catalog = { objects: OBJECTS, prizeById: PRIZE_BY_ID };
-const initialCollection = collection.load();
+const initialCollection = (() => {
+  const loaded = collection.load();
+  return TEST_UNLOCK ? { ...loaded, state: collection.unlockStage1(loaded.state) } : loaded;
+})();
 
 export function App() {
   const [screen, setScreen] = useState<Screen>({ name: "home" });

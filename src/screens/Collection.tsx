@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
-import { RECOGNIZERS } from "../config";
+import { RECOGNIZERS, TEST_UNLOCK } from "../config";
 import { PRIZE_BY_ID } from "../data";
 import { hintFor, iconFor, progress, TIERS, type CollectionState } from "../lib/collection";
 import { Icon } from "../components/Icon";
@@ -100,6 +100,9 @@ export function Collection({
         <h1>내 노벨상 도감</h1>
       </header>
 
+      {TEST_UNLOCK && (
+        <p className="callout">테스트용 도감이에요(?unlock). 1차가 모두 채워져 있고, 실제 기록과 따로 저장돼요.</p>
+      )}
       {!persistent && <p className="callout">기록을 저장할 수 없는 브라우저예요. 앱을 닫으면 기록이 사라져요.</p>}
       {showInstallHint && (
         <div className="callout callout--row">

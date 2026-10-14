@@ -258,6 +258,19 @@ export function save(state: CollectionState, storage: StorageLike | null = defau
   }
 }
 
+/** 테스트용(?unlock): 1차 도감에서 빠진 칸을 모두 채워 2차 도감을 연다. 이미 찾은 기록은 그대로 둔다 */
+export function unlockStage1(state: CollectionState, now: Date = new Date(), tiers: Tiers = TIERS): CollectionState {
+  const date = today(now);
+  const next: CollectionState = { ...state, prizes: { ...state.prizes }, objects: { ...state.objects } };
+  for (const objectId of tiers.stage1Objects) next.objects[objectId] ??= { firstAt: date, count: 1 };
+  for (const id of tiers.stage1) {
+    const objectId = OBJECTS.find((o) => tiers.stage1Objects.includes(o.id) && o.prizes.some((l) => l.prizeId === id))!.id;
+    next.prizes[id] ??= { firstAt: date, objectId, count: 1 };
+  }
+  next.milestones = { first: date, half: date, complete: date, ...state.milestones };
+  return next;
+}
+
 /** 기록 지우기. 홈 화면 추가 안내를 닫은 기록 같은 화면 설정은 남긴다 */
 export function reset(state: CollectionState): CollectionState {
   return { ...emptyState(), ui: state.ui };

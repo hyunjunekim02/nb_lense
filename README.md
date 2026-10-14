@@ -66,6 +66,7 @@ COCO에 없는 물건(모기, 현미경, 알약 등)은 2단계 제로샷 분류
 - 처음 한 번은 Hugging Face에서 모델(수십 MB)을 받느라 오래 걸리고, 이후에는 브라우저 캐시를 씁니다.
 - 라벨은 `src/data/objects.json`의 `zeroshotLabelsEn`, 어느 사물에도 해당하지 않는 사진을 거르는 라벨은 `ZEROSHOT.negativeLabelsEn`에서 고칩니다.
 - 2차 노벨상은 1차 도감을 완성한 뒤에 찍은 사진만 도감에 담깁니다.
+- `?unlock`을 붙이면 1차가 모두 채워진 테스트용 도감으로 열립니다. 실제 기록과 다른 키에 저장되므로 원래 도감은 그대로입니다. 2차 수집까지 실험하려면 `/nb_lense/?unlock&zeroshot&debug`를 쓰세요.
 
 ## 프로젝트 구조
 

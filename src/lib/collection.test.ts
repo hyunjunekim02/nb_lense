@@ -1,7 +1,20 @@
 import { describe, expect, it } from "vitest";
 import { COLLECTION_STORAGE_KEY } from "../config";
 import { OBJECT_BY_ID, OBJECTS, PRIZE_BY_ID } from "../data";
-import { applyScan, emptyState, hintFor, iconFor, load, progress, reset, save, TIERS, tierOf, whereFor } from "./collection";
+import {
+  applyScan,
+  emptyState,
+  hintFor,
+  iconFor,
+  load,
+  progress,
+  reset,
+  save,
+  TIERS,
+  tierOf,
+  unlockStage1,
+  whereFor,
+} from "./collection";
 import { prizesForObjects } from "./mapping";
 import type { ScanSource } from "../types";
 
@@ -181,6 +194,16 @@ describe("applyScan", () => {
     const after = applyScan(all1, scan("upload", "mosquito"));
     expect(after.newPrizeIds).toEqual(["1902-medicine"]);
     expect(progress(after.state)).toMatchObject({ stage2Prizes: 1, stage2PrizeTotal: 25 });
+  });
+
+  it("테스트용 unlockStage1은 1차를 모두 채우고 기존 기록은 유지한다", () => {
+    const s = applyScan(emptyState(), scan("upload", "phone"), day("2026-10-01")).state;
+    const u = unlockStage1(s, day("2026-10-14"));
+    expect(progress(u)).toMatchObject({ prizes: 26, stage2Unlocked: true });
+    expect(u.prizes["2014-physics"].firstAt).toBe("2026-10-01");
+    expect(u.prizes["1913-physics"]).toEqual({ firstAt: "2026-10-14", objectId: "refrigerator", count: 1 });
+    // 열린 뒤에는 2차를 바로 담을 수 있다
+    expect(applyScan(u, scan("upload", "pencil")).newPrizeIds).toEqual(["2010-physics"]);
   });
 
   it("데이터에서 사라진 ID는 진행률에서 빠진다", () => {
