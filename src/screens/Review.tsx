@@ -53,7 +53,7 @@ export function Review() {
       {OBJECTS.map((o) => (
         <article key={o.id} className="review-item">
           <div className="sub">
-            <code>{o.id}</code> · {o.cocoClass ? `자동 인식 (COCO: ${o.cocoClass})` : "직접 고르기 전용"}
+            <code>{o.id}</code> · {o.cocoClass ? `자동 인식 (COCO: ${o.cocoClass})` : "인식 안 됨 (앱에 나오지 않음)"}
           </div>
           <h3 style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <Icon name={o.icon} />

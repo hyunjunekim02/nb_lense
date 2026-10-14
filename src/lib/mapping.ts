@@ -21,20 +21,6 @@ export function objectsFromDetections(detections: Detection[], catalog: Catalog)
     .map(([id]) => catalog.objects.find((o) => o.id === id)!);
 }
 
-/** 사물 ID 목록 → 사물 (중복·알 수 없는 ID 제거, 입력 순서 유지) */
-export function objectsFromIds(ids: string[], catalog: Catalog): ObjectEntry[] {
-  const seen = new Set<string>();
-  const out: ObjectEntry[] = [];
-  for (const id of ids) {
-    if (seen.has(id)) continue;
-    const obj = catalog.objects.find((o) => o.id === id);
-    if (!obj) continue;
-    seen.add(id);
-    out.push(obj);
-  }
-  return out;
-}
-
 /**
  * 사물 → 노벨상 카드. 같은 노벨상은 한 장으로 합치고(어디에 들어 있는지는 사물별로 모음),
  * 연도 오름차순(같은 해는 ID 순)으로 정렬한다.

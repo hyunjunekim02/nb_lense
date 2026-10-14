@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { DEBUG, NEURAL_NET_PRIZE_ID } from "../config";
+import { OBJECTS } from "../data";
 import { filterByObject } from "../lib/mapping";
 import type { ScanResult } from "../types";
 import { ObjectChip } from "../components/ObjectChip";
@@ -7,6 +8,9 @@ import { PrizeCard } from "../components/PrizeCard";
 import { Disclaimer } from "../components/Disclaimer";
 import { Icon } from "../components/Icon";
 import { DebugPanel } from "../components/DebugPanel";
+
+/** 빈 결과 안내에 쓰는 인식 가능한 사물 이름 */
+const AUTO_NAMES = OBJECTS.filter((o) => o.cocoClass).map((o) => o.nameKo).join(", ");
 
 function formatSeconds(ms: number) {
   const s = ms / 1000;
@@ -17,14 +21,12 @@ export function Result({
   result,
   onOpenPrize,
   onAgain,
-  onPick,
   onShare,
   sharing,
 }: {
   result: ScanResult;
   onOpenPrize: (prizeId: string) => void;
   onAgain: () => void;
-  onPick: () => void;
   onShare: () => void;
   sharing: boolean;
 }) {
@@ -33,7 +35,6 @@ export function Result({
 
   const empty = result.prizes.length === 0;
   const hits = filterByObject(result.prizes, focus);
-  const isManual = result.source === "manual";
   const objectIds = new Set(result.objects.map((o) => o.id));
   // 사물별로 가장 점수가 높은 박스 하나만 표시한다
   const boxes = result.detections
@@ -77,13 +78,10 @@ export function Result({
           <h1 className="headline" aria-live="polite">
             이 사진에서는 찾지 못했어요
           </h1>
-          <p className="lead">사진 속 물건을 직접 골라 보거나 다른 사진으로 다시 해 보세요.</p>
+          <p className="lead">찾을 수 있는 것: {AUTO_NAMES}. 이 중 하나가 잘 보이게 다시 찍어 보세요.</p>
           <div className="empty__actions">
-            <button type="button" className="btn btn--secondary" onClick={onAgain}>
-              다른 사진
-            </button>
-            <button type="button" className="btn btn--primary" style={{ flex: 1 }} onClick={onPick}>
-              직접 고르기
+            <button type="button" className="btn btn--primary" onClick={onAgain}>
+              다른 사진으로 해보기
             </button>
           </div>
           {DEBUG && result.rawDetections && (
@@ -98,7 +96,7 @@ export function Result({
     <main className="page page--with-bar">
       <div className="result-head">
         <h1 className="headline" aria-live="polite">
-          {isManual ? "고른 물건에서" : "이 사진에서"} 노벨상 <span className="num">{result.prizes.length}</span>개를
+          이 사진에서 노벨상 <span className="num">{result.prizes.length}</span>개를
           찾았어요
         </h1>
       </div>
@@ -137,7 +135,7 @@ export function Result({
         </p>
         {result.inferenceMs != null && (
           <span className="badge">
-            기기 안에서 처리됨 · 서버 비용 0원 · {formatSeconds(result.inferenceMs)}
+            기기 안에서 처리됨 · {formatSeconds(result.inferenceMs)}
           </span>
         )}
         {DEBUG && result.rawDetections && (

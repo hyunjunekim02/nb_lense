@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { COCO_ALLOWLIST, OBJECTS, PRIZE_BY_ID } from "./data";
 import { SCORE_THRESHOLD } from "./config";
-import { objectsFromDetections, objectsFromIds, prizesForObjects } from "./lib/mapping";
+import { objectsFromDetections, prizesForObjects } from "./lib/mapping";
 import { ImageDecodeError, nextPaint, prepareImage } from "./lib/image";
 import { detect, isDetectorReady, loadDetector } from "./lib/detector";
 import { track } from "./lib/analytics";
@@ -10,7 +10,6 @@ import type { ScanResult, ScanSource } from "./types";
 import { Home } from "./screens/Home";
 import { Analyzing } from "./screens/Analyzing";
 import { Result } from "./screens/Result";
-import { Picker } from "./screens/Picker";
 import { About } from "./screens/About";
 import { Review } from "./screens/Review";
 import { Message } from "./screens/Message";
@@ -20,7 +19,6 @@ type Screen =
   | { name: "home" }
   | { name: "analyzing"; imageUrl: string; phase: "model" | "detect" }
   | { name: "result" }
-  | { name: "picker" }
   | { name: "about" }
   | { name: "review" }
   | { name: "error"; kind: "model" | "decode" };
@@ -57,7 +55,7 @@ export function App() {
       const name = (e.state?.screen as Screen["name"] | undefined) ?? "home";
       const sheetId = (e.state?.sheet as string | undefined) ?? null;
       setSheet(sheetId);
-      if (name === "picker" || name === "about" || (name === "result" && resultRef.current)) setScreen({ name } as Screen);
+      if (name === "about" || (name === "result" && resultRef.current)) setScreen({ name } as Screen);
       else {
         scanId.current++;
         setScreen({ name: "home" });
@@ -132,18 +130,6 @@ export function App() {
     [go, runScan],
   );
 
-  const onPicked = useCallback(
-    (ids: string[]) => {
-      track({ name: "scan_start", source: "manual" });
-      const objects = objectsFromIds(ids, catalog);
-      const prizes = prizesForObjects(objects, catalog);
-      track({ name: "scan_success", objects: objects.length, prizes: prizes.length });
-      setResult({ source: "manual", objects, prizes, detections: [] });
-      go({ name: "result" });
-    },
-    [go],
-  );
-
   const openPrize = useCallback((prizeId: string) => {
     track({ name: "prize_open", prizeId });
     setSheet(prizeId);
@@ -168,7 +154,6 @@ export function App() {
   }, [result]);
 
   const home = () => go({ name: "home" });
-  const picker = () => go({ name: "picker" });
 
   let view;
   switch (screen.name) {
@@ -177,7 +162,6 @@ export function App() {
         <Home
           onFile={(f) => runScan(f, "upload")}
           onSample={onSample}
-          onPick={picker}
           onAbout={() => go({ name: "about" })}
         />
       );
@@ -187,11 +171,8 @@ export function App() {
       break;
     case "result":
       view = result ? (
-        <Result result={result} onOpenPrize={openPrize} onAgain={home} onPick={picker} onShare={onShare} sharing={sharing} />
+        <Result result={result} onOpenPrize={openPrize} onAgain={home} onShare={onShare} sharing={sharing} />
       ) : null;
-      break;
-    case "picker":
-      view = <Picker onBack={() => history.back()} onDone={onPicked} />;
       break;
     case "about":
       view = <About onBack={() => history.back()} />;
@@ -217,8 +198,8 @@ export function App() {
             >
               다시 시도
             </button>
-            <button type="button" className="btn btn--secondary" onClick={picker}>
-              직접 고르기
+            <button type="button" className="btn btn--secondary" onClick={home}>
+              홈으로
             </button>
           </Message>
         );

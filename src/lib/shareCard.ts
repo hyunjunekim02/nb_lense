@@ -80,8 +80,7 @@ export async function renderShareCard(result: ScanResult, url: string): Promise<
   ctx.fillStyle = text;
   ctx.font = `700 64px ${font}`;
   const n = result.prizes.length;
-  const lead = result.source === "manual" ? "고른 물건에서" : "이 사진에서";
-  ctx.fillText(lead, PAD, y);
+  ctx.fillText("이 사진에서", PAD, y);
   y += 84;
   ctx.fillText(`노벨상 ${n}개를 찾았어요`, PAD, y);
   y += 110;

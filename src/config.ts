@@ -1,6 +1,6 @@
-// 서비스 전역 설정. 공개 서비스명은 미정이라(명세 11장) 여기 한 곳에서만 관리한다.
+// 서비스 전역 설정.
 
-/** 서비스 표시 이름. "노벨 렌즈"는 작업명이며, 공개명이 정해지면 이 값만 바꾼다. */
+/** 서비스 표시 이름 (공개명 확정). 화면·공유 카드·탭 제목에 쓰고, index.html의 메타 태그도 함께 맞춘다. */
 export const SERVICE_NAME = "노벨 렌즈";
 
 export const GITHUB_URL = "https://github.com/hyunjunekim02/nb_lense";
