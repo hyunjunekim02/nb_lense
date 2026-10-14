@@ -19,17 +19,17 @@ function fake(id: RecognizerId, stage: 1 | 2 | 3, enabled: boolean, found: Recog
 }
 
 describe("pipeline", () => {
-  it("2·3단계가 꺼져 있으면 1단계 결과만 돌려주고 스텁은 부르지 않는다", async () => {
-    const zs = vi.spyOn(zeroshotRecognizer, "recognize");
+  it("꺼진 단계는 요청해도 돌리지 않는다 (3단계 스텁 포함)", async () => {
     const llm = vi.spyOn(llmRecognizer, "recognize");
     const coco = fake("coco", 1, true, []);
-    const out = await createPipeline([llmRecognizer, coco, zeroshotRecognizer]).run(image, ["zeroshot", "llm"]);
+    const zs = fake("zeroshot", 2, false, [hit("led_bulb", "zeroshot")]);
+    const out = await createPipeline([llmRecognizer, coco, zs]).run(image, ["zeroshot", "llm"]);
     expect(out.ran).toEqual(["coco"]);
     expect(out.recognitions).toEqual([]);
-    expect(zs).not.toHaveBeenCalled();
+    expect(zs.recognize).not.toHaveBeenCalled();
     expect(llm).not.toHaveBeenCalled();
-    expect(zeroshotRecognizer.enabled).toBe(false);
     expect(llmRecognizer.enabled).toBe(false);
+    expect(zeroshotRecognizer.enabled).toBe(true);
   });
 
   it("1단계가 찾았으면 켜진 상위 단계도 돌리지 않는다", async () => {

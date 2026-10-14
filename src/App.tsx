@@ -9,7 +9,7 @@ import { renderCollectionCard, renderShareCard, shareOrDownload } from "./lib/sh
 import * as collection from "./lib/collection";
 import type { Detection, ScanResult, ScanSource } from "./types";
 import type { ZeroshotRaw } from "./lib/recognizers/zeroshot";
-import { RECOGNIZERS, TEST_UNLOCK } from "./config";
+import { RECOGNIZERS, TEST_UNLOCK, ZEROSHOT_FORCE } from "./config";
 import { Home } from "./screens/Home";
 import { Analyzing, type AnalyzingPhase } from "./screens/Analyzing";
 import { Result } from "./screens/Result";
@@ -29,6 +29,10 @@ type Screen =
   | { name: "error"; kind: "model" | "decode" };
 
 const catalog = { objects: OBJECTS, prizeById: PRIZE_BY_ID };
+
+/** 2단계(제로샷)를 돌릴 차례인가: 2차 도감이 열렸거나 ?zeroshot 실험 중 */
+const zeroshotActive = (state: collection.CollectionState) =>
+  RECOGNIZERS.zeroshot && (ZEROSHOT_FORCE || collection.progress(state).stage2Unlocked);
 const initialCollection = (() => {
   const loaded = collection.load();
   return TEST_UNLOCK ? { ...loaded, state: collection.unlockStage1(loaded.state) } : loaded;
@@ -119,10 +123,10 @@ export function App() {
 
       // detect()는 동기라 UI를 막는다. 분석 중 화면이 그려진 뒤 호출한다 (명세 5.1)
       await nextPaint(2);
-      // 2단계(제로샷)는 켜져 있으면 1단계가 아무것도 못 찾았을 때 이어서 돌린다
+      // 2단계(제로샷)는 2차 도감이 열렸으면(또는 ?zeroshot) 1단계가 아무것도 못 찾았을 때 이어서 돌린다
       const { recognitions, ms, raw, ran, failed } = await pipeline.run(
         prepared.canvas,
-        RECOGNIZERS.zeroshot ? ["zeroshot"] : [],
+        zeroshotActive(recordRef.current) ? ["zeroshot"] : [],
         {
           onLoad: (stage) => {
             if (stage === "zeroshot" && id === scanId.current) {
@@ -269,6 +273,7 @@ export function App() {
           onOpenCollection={openCollection}
           onShareCollection={onShareCollection}
           onPlaceholderTap={() => track({ name: "stage_placeholder_tap", stage: "llm" })}
+          zeroshotActive={zeroshotActive(record)}
         />
       ) : null;
       break;
