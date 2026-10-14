@@ -21,6 +21,20 @@ for (const p of prizes) {
   }
 }
 
+// 1차 = 1단계(COCO)로 인식되는 사물에 연결된 노벨상, 2차 = 그 밖 (src/lib/collection.ts의 computeTiers와 같은 규칙)
+const stage1Objects = objects.filter((o) => o.cocoClass && o.prizes.length > 0);
+for (const o of stage1Objects) {
+  if (!o.hintKo) {
+    console.error(`[check-data] ${o.id}: 1차 사물은 도감 잠긴 칸 힌트(hintKo)가 필요합니다`);
+    errors++;
+  }
+}
+const stage1Ids = new Set(stage1Objects.flatMap((o) => o.prizes.map((l) => l.prizeId)));
+const stage2 = prizes.filter((p) => !stage1Ids.has(p.id)).map((p) => p.id);
+console.log(
+  `[check-data] 도감: 1차 노벨상 ${prizes.length - stage2.length}개 · 2차 ${stage2.length}개 (${stage2.join(", ")}) · 1차 사물 ${stage1Objects.length}종`,
+);
+
 const unverified = prizes.filter((p) => !p.verified).map((p) => p.id);
 if (unverified.length) {
   console.warn(

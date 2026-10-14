@@ -120,6 +120,17 @@ a {
   font-weight: 600;
 }
 
+.btn--quiet {
+  color: var(--text-sub);
+  font-weight: 500;
+}
+
+/* 준비 중 자리: 눌림은 기록하지만 비활성으로 보인다 */
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+}
+
 .btn--icon {
   width: var(--tap);
   padding: 0;
@@ -211,7 +222,13 @@ a {
 .home__links {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 2px;
+}
+
+.home__sep {
+  color: var(--text-sub);
 }
 
 .samples {
@@ -432,6 +449,53 @@ a {
   color: var(--text-sub);
 }
 
+.tag-new {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 6px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+  vertical-align: 2px;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px 8px 12px 14px;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+}
+
+.banner__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  word-break: keep-all;
+}
+
+.banner__text span {
+  color: var(--text-sub);
+  font-size: var(--fs-sub);
+}
+
+.banner__action.btn--primary {
+  width: auto;
+  height: var(--tap);
+  font-size: 15px;
+}
+
+.sample-note {
+  margin: 8px 0 0;
+  word-break: keep-all;
+}
+
 .result-foot {
   padding: 20px 0 8px;
 }
@@ -457,6 +521,7 @@ a {
 
 .empty__actions {
   display: flex;
+  flex-direction: column;
   gap: 8px;
   margin-top: 20px;
 }
@@ -532,6 +597,173 @@ a {
 .sheet ul {
   margin: 0;
   padding-left: 18px;
+}
+
+.sheet__notice {
+  margin-top: 12px !important;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-sub);
+  font-size: var(--fs-sub);
+}
+
+.sheet__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.sheet__actions .btn--primary {
+  flex: 1;
+  width: auto;
+}
+
+/* ---------- 도감 ---------- */
+.callout {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-sub);
+  font-size: var(--fs-sub);
+  word-break: keep-all;
+}
+
+.callout--row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 4px 4px 14px;
+}
+
+.collection__summary {
+  padding: 4px 0 8px;
+}
+
+.meter {
+  height: 8px;
+  margin: 14px 0 8px;
+  border-radius: 4px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.meter__bar {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--accent);
+  transition: width var(--dur) ease-out;
+}
+
+.collection .section-title {
+  font-size: var(--fs-title);
+  font-weight: 600;
+  margin: 24px 0 8px;
+}
+
+.section-desc {
+  margin: -4px 0 10px;
+  word-break: keep-all;
+}
+
+.tiles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  text-align: left;
+  word-break: keep-all;
+}
+
+button.tile {
+  cursor: pointer;
+}
+
+.tile .icon {
+  margin-bottom: 4px;
+  color: var(--accent);
+}
+
+.tile__meta {
+  color: var(--text-sub);
+  font-size: 12px;
+}
+
+.tile__title {
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.tile__date {
+  margin-top: auto;
+  padding-top: 4px;
+  color: var(--text-sub);
+  font-size: 12px;
+}
+
+.tile--locked {
+  border-style: dashed;
+  background: var(--surface);
+}
+
+.tile__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  background: var(--line);
+  color: var(--text-sub);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.tile__hint {
+  margin-top: auto;
+  padding-top: 4px;
+  color: var(--text-sub);
+  font-size: var(--fs-sub);
+}
+
+.tile--stage2 .icon {
+  color: var(--text-sub);
+}
+
+.tile--stage2 .tag {
+  margin-top: auto;
+}
+
+.collection__foot {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 28px 0 calc(24px + env(safe-area-inset-bottom));
+  text-align: center;
+}
+
+.collection__foot .notice {
+  margin: 4px 0 0;
 }
 
 /* ---------- 오류 ---------- */

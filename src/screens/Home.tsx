@@ -6,10 +6,17 @@ export function Home({
   onFile,
   onSample,
   onAbout,
+  onCollection,
+  collected,
+  collectionTotal,
 }: {
   onFile: (file: File) => void;
   onSample: (src: string) => void;
   onAbout: () => void;
+  onCollection: () => void;
+  /** 1차 도감에서 찾은 노벨상 수 */
+  collected: number;
+  collectionTotal: number;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showSamples, setShowSamples] = useState(false);
@@ -49,6 +56,21 @@ export function Home({
               onClick={() => setShowSamples((v) => !v)}
             >
               예시 사진으로 해보기
+            </button>
+            <span className="home__sep" aria-hidden="true">
+              ·
+            </span>
+            <button type="button" className="btn btn--text" onClick={onCollection}>
+              {collected > 0 ? (
+                <span>
+                  내 도감{" "}
+                  <span className="num">
+                    {collected}/{collectionTotal}
+                  </span>
+                </span>
+              ) : (
+                "내 도감"
+              )}
             </button>
           </div>
 

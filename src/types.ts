@@ -7,6 +7,10 @@ export type ObjectEntry = {
   cocoClass?: string;
   /** public/icons 안의 단색 SVG 파일명 */
   icon: string;
+  /** 도감 잠긴 칸 힌트. 1차 사물(cocoClass 있음)은 필수, 사물 이름을 직접 말하지 않는다 */
+  hintKo?: string;
+  /** 2단계 제로샷 인식용 영어 라벨 (준비 중, 지금은 비어 있어도 된다) */
+  zeroshotLabelsEn?: string[];
   prizes: { prizeId: string; whereKo: string }[];
 };
 
@@ -50,4 +54,14 @@ export type ScanResult = {
   imageUrl?: string;
   /** 추론 시간 (ms) */
   inferenceMs?: number;
+  /** 업로드 스캔으로 도감에 새로 담긴 것 (예시 사진은 없음) */
+  collected?: {
+    newPrizeIds: string[];
+    /** 이번 스캔에서 처음 도달한 마일스톤 중 가장 높은 것 */
+    milestone?: Milestone;
+    /** 스캔 후 1차 노벨상 수집 개수 */
+    count: number;
+  };
 };
+
+export type Milestone = "first" | "half" | "stage2" | "complete";

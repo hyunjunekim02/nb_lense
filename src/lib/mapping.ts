@@ -1,4 +1,5 @@
 import type { Detection, ObjectEntry, PrizeEntry, PrizeHit } from "../types";
+import type { Recognition } from "./recognizers/types";
 
 type Catalog = {
   objects: ObjectEntry[];
@@ -15,6 +16,22 @@ export function objectsFromDetections(detections: Detection[], catalog: Catalog)
     const obj = catalog.objects.find((o) => o.cocoClass === d.cocoClass);
     if (!obj || obj.prizes.length === 0) continue;
     best.set(obj.id, Math.max(best.get(obj.id) ?? 0, d.score));
+  }
+  return [...best.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([id]) => catalog.objects.find((o) => o.id === id)!);
+}
+
+/**
+ * 인식 엔진 결과(사물 ID) → 사물. 여러 엔진·여러 박스가 같은 사물을 찾아도 하나로 합치고,
+ * 알 수 없는 ID와 노벨상이 없는 사물은 무시한다. 순서는 가장 높은 점수 순.
+ */
+export function objectsFromRecognitions(recognitions: Recognition[], catalog: Catalog): ObjectEntry[] {
+  const best = new Map<string, number>();
+  for (const r of recognitions) {
+    const obj = catalog.objects.find((o) => o.id === r.objectId);
+    if (!obj || obj.prizes.length === 0) continue;
+    best.set(obj.id, Math.max(best.get(obj.id) ?? 0, r.score));
   }
   return [...best.entries()]
     .sort((a, b) => b[1] - a[1])

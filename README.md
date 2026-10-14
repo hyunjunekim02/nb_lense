@@ -7,6 +7,7 @@
 - 사물 인식: [MediaPipe Object Detector](https://developers.google.com/edge/mediapipe/solutions/vision/object_detector) (EfficientDet-Lite0 int8, COCO), 기기 안에서 실행
 - 설명은 모두 사람이 쓰고 검수한 정적 텍스트이며, LLM 호출은 없습니다
 - 사진은 기기 밖으로 전송되지 않습니다. 분석은 쿠키 없는 GoatCounter로 이벤트 수만 집계합니다
+- 직접 찍은 사진으로 찾은 노벨상은 **노벨상 도감**에 모입니다 (v1.1, 아래 "도감" 참고)
 
 ## 로컬 개발 환경 (macOS)
 
@@ -84,11 +85,13 @@ public/models/   인식 모델 (efficientdet_lite0_uint8.tflite, 같은 출처�
 public/wasm/     MediaPipe wasm (npm install 때 고정 버전 패키지에서 복사, git 제외)
 public/samples/  예시 사진 3장 (현재 자리표시 이미지, 팀 사진으로 교체)
 public/icons/    단색 라인 아이콘 (Lucide, ISC)
-src/config.ts    서비스명·임계값·기능 플래그 (서비스명은 여기 한 곳에서만 관리)
-src/data/        objects.json(사물 → 노벨상), prizes.json(노벨상 정보)
-src/lib/         detector(인식), image(리사이즈·EXIF), mapping(결과 계산), analytics, shareCard
-src/screens/     Home, Analyzing, Result, About, Message(오류), Review(#review 검수)
-scripts/         fetch-prizes.ts(공식 API → prizes.json), check-data.mjs(빌드 전 검사)
+public/manifest.webmanifest, app-icon-*.png   홈 화면 추가용 (아이콘은 scripts/make-icons.mjs로 생성)
+src/config.ts    서비스명·임계값·인식 단계 플래그·도감 설정
+src/data/        objects.json(사물 → 노벨상, 도감 힌트), prizes.json(노벨상 정보)
+src/lib/         recognizers/(단계별 인식 엔진), collection(도감), image(리사이즈·EXIF), mapping(결과 계산), analytics, shareCard
+src/screens/     Home, Analyzing, Result, Collection(도감), About, Message(오류), Review(#review 검수)
+src/sw.template.js  서비스 워커 템플릿 (빌드 때 vite.config.ts가 채워 dist/sw.js로 냄)
+scripts/         fetch-prizes.ts(공식 API → prizes.json), check-data.mjs(빌드 전 검사), make-icons.mjs
 ```
 
 ## 데이터 다루기
@@ -97,6 +100,27 @@ scripts/         fetch-prizes.ts(공식 API → prizes.json), check-data.mjs(빌
 - **노벨상 문구**: `src/data/prizes.json`의 `titleKo`, `descKo`와 objects의 `whereKo`는 팀이 검수합니다. 검수가 끝나면 `verified`를 `true`로 바꾸세요. `false`가 남아 있으면 빌드할 때 경고가 나옵니다.
 - **수상자·수상 사유**: `laureates`, `motivationEn`은 공식 API 값을 그대로 씁니다(약관상 수정 금지). 갱신은 `npm run fetch-prizes` 또는 GitHub Actions의 **Fetch prize data** 워크플로를 실행하면 결과가 커밋됩니다.
 - 한 해에 주제가 둘인 상은 ID를 나눕니다(`2009-physics-fiber`, `2009-physics-ccd`). 결과 화면의 "노벨상 N개"는 이렇게 나눈 카드 수입니다.
+
+## 도감 (v1.1)
+
+- **무엇이 담기나**: 사진 올리기로 찾은 노벨상만 담깁니다. 예시 사진 결과는 보여주기만 하고 담지 않습니다.
+- **1차·2차**: `cocoClass`가 있는 사물(지금 기기 안 모델로 인식되는 것)에 연결된 노벨상이 1차, 나머지가 2차입니다. 데이터에서 자동 계산되며(`src/lib/collection.ts`), `npm run check`가 개수를 출력합니다.
+  - 1차 사물에는 잠긴 칸 힌트 `hintKo`가 꼭 있어야 합니다(사물 이름을 직접 말하지 않기). 없으면 빌드가 멈춥니다.
+  - 2차 도감은 1차 사물을 `STAGE2_UNLOCK_OBJECTS`(기본 5)종 모으면 열립니다. 아직 사진으로 찾을 수 없어 "서비스 준비 중"으로 보이고, 칸을 누르면 설명만 읽을 수 있습니다.
+- **저장 정책**: 사진은 저장하지 않습니다. 노벨상·사물 ID, 처음 찾은 날짜, 횟수만 이 브라우저의 localStorage(`nb_lense.collection.v1`)에 남습니다. 서버로 보내지 않으므로 기기·브라우저를 바꾸면 이어지지 않습니다. 저장이 막힌 환경에서는 화면을 닫을 때까지만 기록됩니다. 기록이 깨졌으면 `…v1.bak`에 원본을 남기고 새로 시작합니다.
+- **앱 캐시**: 배포본에서는 서비스 워커가 앱 셸·아이콘을 미리 받아 두고, 모델·wasm·글꼴은 처음 쓸 때 캐시합니다. 한 번 스캔한 뒤에는 오프라인에서도 스캔과 도감 기록이 됩니다. 개발 서버(`npm run dev`)에서는 등록하지 않으니 `npm run pages`로 확인하세요.
+
+### 단계별 인식 구조
+
+작은 모델이 먼저 처리하고, 못 찾은 것만 더 큰 모델로 넘기는 구조입니다(`src/lib/recognizers/`). 켜고 끄는 값은 `src/config.ts`의 `RECOGNIZERS`입니다.
+
+| 단계 | 엔진 | 위치 | 상태 |
+|---|---|---|---|
+| 1 | MediaPipe EfficientDet-Lite0 (COCO) — `coco.ts` | 기기 안 | 사용 중 |
+| 2 | 제로샷 이미지 분류 (예: MobileCLIP) — `zeroshot.ts` | 기기 안 | 준비 중 (스텁) |
+| 3 | 비전 LLM — `llm.ts` | 서버 | 준비 중 (스텁, 사용 전 동의 필요) |
+
+`pipeline.ts`는 켜진 엔진을 단계 순서대로 돌리되, 상위 단계는 하위 단계가 0개를 찾았고 사용자가 요청했을 때만 시도합니다. 모든 엔진은 사물 ID(`objects.json`의 `id`)를 돌려주고, 문구는 언제나 검수된 정적 데이터에서 나옵니다.
 
 ## 배포 (GitHub Pages)
 
@@ -122,6 +146,13 @@ GoatCounter 대시보드에서 아래 경로로 집계됩니다. 사진·인식 
 | `prize_open/<prizeId>` | 상세 열기 |
 | `share/share`, `share/download` | 공유 카드 |
 | `model_load_fail` | 모델 로드 실패 |
+| `collect_new/<prizeId>` | 노벨상을 도감에 처음 담음 |
+| `collection_progress/<0~13>` | 업로드 스캔 뒤 1차 도감 개수 |
+| `milestone/first`, `half`, `stage2`, `complete` | 마일스톤 첫 도달 |
+| `collection_open` | 도감 화면 진입 |
+| `collection_share/share`, `collection_share/download` | 도감 공유 카드 |
+| `stage_placeholder_tap/llm`, `stage_placeholder_tap/zeroshot` | 준비 중 기능(AI로 더 찾기, 2차 칸)을 누름 |
+| `collection_reset` | 도감 기록 지우기 |
 
 ## 법적 표기
 

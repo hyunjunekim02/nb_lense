@@ -1,0 +1,235 @@
+import { COLLECTION_STORAGE_KEY, STAGE2_UNLOCK_OBJECTS } from "../config";
+import { OBJECTS, PRIZES } from "../data";
+import type { Milestone, ObjectEntry, PrizeEntry, PrizeHit, ScanSource } from "../types";
+
+/**
+ * 노벨상 도감 (v1.1 명세 3·7장). 사진은 저장하지 않고 ID와 날짜만 브라우저(localStorage)에 남긴다.
+ * 1차·2차 구분은 데이터에서 자동 계산한다: 1단계(COCO)로 인식되는 사물에 연결된 노벨상이 1차.
+ */
+
+export type CollectionState = {
+  version: 1;
+  /** firstAt: 처음 찾은 날짜 (YYYY-MM-DD) */
+  prizes: Record<string, { firstAt: string; objectId: string; count: number }>;
+  objects: Record<string, { firstAt: string; count: number }>;
+  milestones: Partial<Record<Milestone, string>>;
+  /** 업로드 스캔 횟수 */
+  scans: number;
+  ui: { installHintDismissed?: boolean };
+};
+
+type Catalog = { objects: ObjectEntry[]; prizes: PrizeEntry[] };
+
+export type Tiers = {
+  /** 1차 노벨상 ID (연도 오름차순) */
+  stage1: string[];
+  /** 2차 노벨상 ID (연도 오름차순) */
+  stage2: string[];
+  /** 1차 사물 ID (1단계로 인식 가능) */
+  stage1Objects: string[];
+};
+
+const byYear = (a: PrizeEntry, b: PrizeEntry) => a.year - b.year || a.id.localeCompare(b.id);
+
+export function computeTiers(catalog: Catalog): Tiers {
+  const stage1Objects = catalog.objects.filter((o) => o.cocoClass && o.prizes.length > 0);
+  const stage1Ids = new Set(stage1Objects.flatMap((o) => o.prizes.map((l) => l.prizeId)));
+  const sorted = [...catalog.prizes].sort(byYear);
+  return {
+    stage1: sorted.filter((p) => stage1Ids.has(p.id)).map((p) => p.id),
+    stage2: sorted.filter((p) => !stage1Ids.has(p.id)).map((p) => p.id),
+    stage1Objects: stage1Objects.map((o) => o.id),
+  };
+}
+
+export const TIERS = computeTiers({ objects: OBJECTS, prizes: PRIZES });
+
+export function tierOf(prizeId: string, tiers: Tiers = TIERS): 1 | 2 | undefined {
+  if (tiers.stage1.includes(prizeId)) return 1;
+  if (tiers.stage2.includes(prizeId)) return 2;
+  return undefined;
+}
+
+export function emptyState(): CollectionState {
+  return { version: 1, prizes: {}, objects: {}, milestones: {}, scans: 0, ui: {} };
+}
+
+export type Progress = {
+  prizes: number;
+  prizeTotal: number;
+  objects: number;
+  objectTotal: number;
+  stage2Unlocked: boolean;
+};
+
+/** 데이터에서 사라진 ID는 기록에 남아 있어도 세지 않는다 */
+export function progress(state: CollectionState, tiers: Tiers = TIERS): Progress {
+  const prizes = tiers.stage1.filter((id) => state.prizes[id]).length;
+  const objects = tiers.stage1Objects.filter((id) => state.objects[id]).length;
+  return {
+    prizes,
+    prizeTotal: tiers.stage1.length,
+    objects,
+    objectTotal: tiers.stage1Objects.length,
+    stage2Unlocked: objects >= Math.min(STAGE2_UNLOCK_OBJECTS, tiers.stage1Objects.length),
+  };
+}
+
+function reached(p: Progress): Milestone[] {
+  const out: Milestone[] = [];
+  if (p.prizes >= 1) out.push("first");
+  if (p.prizeTotal > 0 && p.prizes >= Math.ceil(p.prizeTotal / 2)) out.push("half");
+  if (p.stage2Unlocked) out.push("stage2");
+  if (p.prizeTotal > 0 && p.prizes >= p.prizeTotal) out.push("complete");
+  return out;
+}
+
+/** 배너에 하나만 보여줄 때의 우선순위 (높은 것부터) */
+const MILESTONE_ORDER: Milestone[] = ["complete", "stage2", "half", "first"];
+
+export function topMilestone(milestones: Milestone[]): Milestone | undefined {
+  return MILESTONE_ORDER.find((m) => milestones.includes(m));
+}
+
+export type ScanInput = { source: ScanSource; objects: ObjectEntry[]; prizes: PrizeHit[] };
+
+export type ApplyResult = {
+  state: CollectionState;
+  newPrizeIds: string[];
+  newObjectIds: string[];
+  /** 이번 스캔에서 처음 도달한 마일스톤 */
+  milestones: Milestone[];
+};
+
+export function today(now: Date = new Date()): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+}
+
+/**
+ * 스캔 결과를 도감에 반영한다. 업로드 사진만 수집하고, 예시 사진은 상태를 바꾸지 않는다.
+ * 같은 노벨상을 다시 찾으면 count만 늘리고 firstAt은 유지한다. 입력 state는 바꾸지 않는다.
+ */
+export function applyScan(state: CollectionState, scan: ScanInput, now: Date = new Date(), tiers: Tiers = TIERS): ApplyResult {
+  if (scan.source !== "upload") return { state, newPrizeIds: [], newObjectIds: [], milestones: [] };
+
+  const date = today(now);
+  const next: CollectionState = {
+    ...state,
+    prizes: { ...state.prizes },
+    objects: { ...state.objects },
+    milestones: { ...state.milestones },
+    scans: state.scans + 1,
+  };
+  const newObjectIds: string[] = [];
+  const newPrizeIds: string[] = [];
+
+  for (const obj of scan.objects) {
+    const cur = next.objects[obj.id];
+    if (cur) next.objects[obj.id] = { ...cur, count: cur.count + 1 };
+    else {
+      next.objects[obj.id] = { firstAt: date, count: 1 };
+      newObjectIds.push(obj.id);
+    }
+  }
+  for (const hit of scan.prizes) {
+    const id = hit.prize.id;
+    const cur = next.prizes[id];
+    if (cur) next.prizes[id] = { ...cur, count: cur.count + 1 };
+    else {
+      next.prizes[id] = { firstAt: date, objectId: hit.where[0]?.objectId ?? "", count: 1 };
+      newPrizeIds.push(id);
+    }
+  }
+
+  const milestones = reached(progress(next, tiers)).filter((m) => !next.milestones[m]);
+  for (const m of milestones) next.milestones[m] = date;
+
+  return { state: next, newPrizeIds, newObjectIds, milestones };
+}
+
+/** 도감 칸을 눌렀을 때 시트의 "이 물건 속에서". 1차는 1차 사물만, 2차는 연결된 사물 전체 */
+export function whereFor(prizeId: string, catalog: Catalog = { objects: OBJECTS, prizes: PRIZES }, tiers: Tiers = TIERS) {
+  const tier = tierOf(prizeId, tiers);
+  return catalog.objects
+    .filter((o) => tier !== 1 || tiers.stage1Objects.includes(o.id))
+    .flatMap((o) => o.prizes.filter((l) => l.prizeId === prizeId).map((l) => ({ objectId: o.id, whereKo: l.whereKo })));
+}
+
+/** 잠긴 칸 힌트: 이 노벨상에 연결된 1차 사물 중 첫 번째의 hintKo */
+export function hintFor(prizeId: string, objects: ObjectEntry[] = OBJECTS, tiers: Tiers = TIERS): string | undefined {
+  return objects.find((o) => tiers.stage1Objects.includes(o.id) && o.hintKo && o.prizes.some((l) => l.prizeId === prizeId))
+    ?.hintKo;
+}
+
+// ---------- 저장소 ----------
+
+type StorageLike = Pick<Storage, "getItem" | "setItem" | "removeItem">;
+
+function defaultStorage(): StorageLike | null {
+  try {
+    return typeof localStorage === "undefined" ? null : localStorage;
+  } catch {
+    return null;
+  }
+}
+
+function isValid(v: unknown): v is CollectionState {
+  if (!v || typeof v !== "object") return false;
+  const s = v as Record<string, unknown>;
+  const isRecord = (x: unknown) => !!x && typeof x === "object" && !Array.isArray(x);
+  return (
+    s.version === 1 &&
+    isRecord(s.prizes) &&
+    isRecord(s.objects) &&
+    isRecord(s.milestones) &&
+    typeof s.scans === "number" &&
+    isRecord(s.ui)
+  );
+}
+
+/**
+ * 저장된 도감을 읽는다. 저장소를 쓸 수 없으면 persistent: false로 빈 도감을 돌려주고(메모리로 동작),
+ * 깨졌거나 알 수 없는 버전이면 원본을 .bak 키에 남기고 새로 시작한다.
+ */
+export function load(storage: StorageLike | null = defaultStorage()): { state: CollectionState; persistent: boolean } {
+  if (!storage) return { state: emptyState(), persistent: false };
+  let raw: string | null;
+  try {
+    raw = storage.getItem(COLLECTION_STORAGE_KEY);
+    // 읽기만 되고 쓰기는 막힌 환경을 걸러낸다
+    const probe = `${COLLECTION_STORAGE_KEY}.probe`;
+    storage.setItem(probe, "1");
+    storage.removeItem(probe);
+  } catch {
+    return { state: emptyState(), persistent: false };
+  }
+  if (raw == null) return { state: emptyState(), persistent: true };
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (isValid(parsed)) return { state: parsed, persistent: true };
+  } catch {
+    // 아래에서 백업 후 새로 시작
+  }
+  try {
+    storage.setItem(`${COLLECTION_STORAGE_KEY}.bak`, raw);
+  } catch {
+    // 백업 실패는 무시
+  }
+  return { state: emptyState(), persistent: true };
+}
+
+export function save(state: CollectionState, storage: StorageLike | null = defaultStorage()): boolean {
+  if (!storage) return false;
+  try {
+    storage.setItem(COLLECTION_STORAGE_KEY, JSON.stringify(state));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** 기록 지우기. 홈 화면 추가 안내를 닫은 기록 같은 화면 설정은 남긴다 */
+export function reset(state: CollectionState): CollectionState {
+  return { ...emptyState(), ui: state.ui };
+}

@@ -10,7 +10,14 @@ export type AnalyticsEvent =
   | { name: "scan_empty" }
   | { name: "prize_open"; prizeId: string }
   | { name: "share"; method: "share" | "download" }
-  | { name: "model_load_fail" };
+  | { name: "model_load_fail" }
+  | { name: "collect_new"; prizeId: string }
+  | { name: "collection_progress"; count: number }
+  | { name: "milestone"; milestone: "first" | "half" | "stage2" | "complete" }
+  | { name: "collection_open" }
+  | { name: "collection_share"; method: "share" | "download" }
+  | { name: "stage_placeholder_tap"; stage: "zeroshot" | "llm" }
+  | { name: "collection_reset" };
 
 function send(path: string, title: string, isEvent: boolean) {
   if (!GOATCOUNTER_CODE || typeof window === "undefined") return;
@@ -53,5 +60,19 @@ export function track(event: AnalyticsEvent) {
       return send(`share/${event.method}`, "share", true);
     case "model_load_fail":
       return send("model_load_fail", "model_load_fail", true);
+    case "collect_new":
+      return send(`collect_new/${event.prizeId}`, "collect_new", true);
+    case "collection_progress":
+      return send(`collection_progress/${event.count}`, "collection_progress", true);
+    case "milestone":
+      return send(`milestone/${event.milestone}`, "milestone", true);
+    case "collection_open":
+      return send("collection_open", "collection_open", true);
+    case "collection_share":
+      return send(`collection_share/${event.method}`, "collection_share", true);
+    case "stage_placeholder_tap":
+      return send(`stage_placeholder_tap/${event.stage}`, "stage_placeholder_tap", true);
+    case "collection_reset":
+      return send("collection_reset", "collection_reset", true);
   }
 }

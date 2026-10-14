@@ -7,10 +7,13 @@ import { Icon } from "./Icon";
 export function PrizeSheet({
   prize,
   where,
+  notice,
   onClose,
 }: {
   prize: PrizeEntry;
   where: { objectId: string; whereKo: string }[];
+  /** 시트 맨 위 안내 (예: 2차 도감의 "준비 중") */
+  notice?: string;
   onClose: () => void;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -47,6 +50,8 @@ export function PrizeSheet({
             <Icon name="ui-x" />
           </button>
         </div>
+
+        {notice && <p className="sheet__notice">{notice}</p>}
 
         <h3>어떤 연구인가요</h3>
         <p>{prize.descKo}</p>

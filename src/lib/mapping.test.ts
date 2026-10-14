@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { filterByObject, objectsFromDetections, prizesForObjects } from "./mapping";
+import { filterByObject, objectsFromDetections, objectsFromRecognitions, prizesForObjects } from "./mapping";
 import { OBJECTS, PRIZES, PRIZE_BY_ID } from "../data";
 import type { Detection, ObjectEntry, PrizeEntry } from "../types";
 
@@ -60,6 +60,22 @@ describe("objectsFromDetections", () => {
 
   it("아무것도 없으면 빈 배열", () => {
     expect(objectsFromDetections([], catalog)).toEqual([]);
+  });
+});
+
+describe("objectsFromRecognitions", () => {
+  it("엔진이 달라도 같은 사물은 하나로 합치고 점수 순으로 정렬한다", () => {
+    const result = objectsFromRecognitions(
+      [
+        { objectId: "tv", score: 0.6, by: "coco" },
+        { objectId: "phone", score: 0.4, by: "coco" },
+        { objectId: "phone", score: 0.8, by: "zeroshot" },
+        { objectId: "empty", score: 0.9, by: "coco" },
+        { objectId: "nope", score: 0.9, by: "llm" },
+      ],
+      catalog,
+    );
+    expect(result.map((o) => o.id)).toEqual(["phone", "tv"]);
   });
 });
 

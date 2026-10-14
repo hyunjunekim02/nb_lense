@@ -7,11 +7,14 @@ export function PrizeCard({
   hit,
   focusObjectId,
   showObjectName,
+  isNew,
   onOpen,
 }: {
   hit: PrizeHit;
   focusObjectId: string | null;
   showObjectName: boolean;
+  /** 이번 스캔으로 도감에 처음 담긴 노벨상 */
+  isNew?: boolean;
   onOpen: () => void;
 }) {
   const { prize } = hit;
@@ -25,7 +28,10 @@ export function PrizeCard({
           <span className="card__meta">
             {prize.year} · {prize.categoryKo}
           </span>
-          <span className="card__title">{prize.titleKo}</span>
+          <span className="card__title">
+            {prize.titleKo}
+            {isNew && <span className="tag-new">NEW</span>}
+          </span>
           <span className="card__where">
             {showObjectName && !focusObjectId && objectName ? `${objectName}: ` : ""}
             {where.whereKo}

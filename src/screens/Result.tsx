@@ -2,7 +2,8 @@ import { useState } from "react";
 import { DEBUG, NEURAL_NET_PRIZE_ID } from "../config";
 import { OBJECTS } from "../data";
 import { filterByObject } from "../lib/mapping";
-import type { ScanResult } from "../types";
+import { TIERS } from "../lib/collection";
+import type { Milestone, ScanResult } from "../types";
 import { ObjectChip } from "../components/ObjectChip";
 import { PrizeCard } from "../components/PrizeCard";
 import { Disclaimer } from "../components/Disclaimer";
@@ -11,6 +12,13 @@ import { DebugPanel } from "../components/DebugPanel";
 
 /** 빈 결과 안내에 쓰는 인식 가능한 사물 이름 */
 const AUTO_NAMES = OBJECTS.filter((o) => o.cocoClass).map((o) => o.nameKo).join(", ");
+
+const MILESTONE_TEXT: Record<Milestone, string> = {
+  first: "첫 노벨상을 찾았어요!",
+  half: "1차 도감 절반을 채웠어요",
+  stage2: "2차 도감이 열렸어요 · 서비스 준비 중",
+  complete: "1차 도감을 완성했어요",
+};
 
 function formatSeconds(ms: number) {
   const s = ms / 1000;
@@ -23,17 +31,27 @@ export function Result({
   onAgain,
   onShare,
   sharing,
+  onOpenCollection,
+  onShareCollection,
+  onPlaceholderTap,
 }: {
   result: ScanResult;
   onOpenPrize: (prizeId: string) => void;
   onAgain: () => void;
   onShare: () => void;
   sharing: boolean;
+  onOpenCollection: () => void;
+  onShareCollection: () => void;
+  /** 준비 중인 3단계(AI로 더 찾기)를 눌렀을 때. 수요 측정용 */
+  onPlaceholderTap: () => void;
 }) {
   const [focus, setFocus] = useState<string | null>(null);
   const toggle = (id: string) => setFocus((cur) => (cur === id ? null : id));
 
   const empty = result.prizes.length === 0;
+  const collected = result.collected;
+  const newIds = new Set(collected?.newPrizeIds);
+  const showBanner = !!collected && (newIds.size > 0 || !!collected.milestone);
   const hits = filterByObject(result.prizes, focus);
   const objectIds = new Set(result.objects.map((o) => o.id));
   // 사물별로 가장 점수가 높은 박스 하나만 표시한다
@@ -83,6 +101,10 @@ export function Result({
             <button type="button" className="btn btn--primary" onClick={onAgain}>
               다른 사진으로 해보기
             </button>
+            {/* 3단계(서버 AI) 자리. 눌러도 동작하지 않지만 수요를 재기 위해 탭은 기록한다 */}
+            <button type="button" className="btn btn--secondary" aria-disabled="true" onClick={onPlaceholderTap}>
+              AI로 더 찾기 · 서비스 준비 중
+            </button>
           </div>
           {DEBUG && result.rawDetections && (
           <DebugPanel detections={result.rawDetections} inferenceMs={result.inferenceMs} />
@@ -99,6 +121,29 @@ export function Result({
           이 사진에서 노벨상 <span className="num">{result.prizes.length}</span>개를
           찾았어요
         </h1>
+        {showBanner && (
+          <div className="banner" role="status">
+            <div className="banner__text">
+              <strong>{collected.milestone ? MILESTONE_TEXT[collected.milestone] : `도감에 ${newIds.size}개 추가`}</strong>
+              <span className="num">
+                {collected.milestone && newIds.size > 0 ? `도감에 ${newIds.size}개 추가 · ` : ""}
+                {TIERS.stage1.length}개 중 {collected.count}개
+              </span>
+            </div>
+            {collected.milestone === "complete" ? (
+              <button type="button" className="btn btn--primary banner__action" onClick={onShareCollection} disabled={sharing}>
+                도감 공유하기
+              </button>
+            ) : (
+              <button type="button" className="btn btn--text banner__action" onClick={onOpenCollection}>
+                도감 보기
+              </button>
+            )}
+          </div>
+        )}
+        {result.source === "sample" && (
+          <p className="sub sample-note">예시 사진 결과는 도감에 담기지 않아요. 직접 찍어서 모아 보세요.</p>
+        )}
       </div>
 
       {photo}
@@ -116,6 +161,7 @@ export function Result({
             hit={hit}
             focusObjectId={focus}
             showObjectName={result.objects.length > 1}
+            isNew={newIds.has(hit.prize.id)}
             onOpen={() => onOpenPrize(hit.prize.id)}
           />
         ))}

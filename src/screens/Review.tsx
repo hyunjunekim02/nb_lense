@@ -1,5 +1,6 @@
 import { OBJECTS, PRIZES, PRIZE_BY_ID } from "../data";
 import { Icon } from "../components/Icon";
+import { tierOf } from "../lib/collection";
 
 /**
  * 팀 검수용 화면 (주소 끝에 #review). 앱에 나오는 모든 문구를 한 페이지에 모아 보여준다.
@@ -22,7 +23,7 @@ export function Review() {
       {PRIZES.map((p) => (
         <article key={p.id} className="review-item">
           <div className="sub num">
-            {p.year} · {p.categoryKo} · <code>{p.id}</code>{" "}
+            {p.year} · {p.categoryKo} · <code>{p.id}</code> · 도감 {tierOf(p.id) ?? "?"}차{" "}
             <span className={p.verified ? "tag" : "tag tag--todo"}>{p.verified ? "검수 완료" : "검수 전"}</span>
           </div>
           <h3>{p.titleKo}</h3>
@@ -59,6 +60,12 @@ export function Review() {
             <Icon name={o.icon} />
             {o.nameKo}
           </h3>
+          {o.cocoClass && (
+            <>
+              <span className="review-label">도감 잠긴 칸 힌트 (hintKo)</span>
+              <p>{o.hintKo ?? "⚠ 없음"}</p>
+            </>
+          )}
           <ul>
             {o.prizes.map((l) => {
               const p = PRIZE_BY_ID.get(l.prizeId);

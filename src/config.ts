@@ -31,8 +31,21 @@ export const SAMPLES = [
  */
 export const GOATCOUNTER_CODE: string = import.meta.env.VITE_GOATCOUNTER_CODE ?? "";
 
-/** P2 AI 대체 인식. 기본 OFF (명세 5.2). MVP에는 구현하지 않았다. */
-export const ENABLE_AI_FALLBACK = import.meta.env.VITE_ENABLE_AI_FALLBACK === "true";
+/**
+ * 단계별 인식 엔진 (v1.1 명세 5장). 작은 모델이 먼저 처리하고, 못 찾은 것만 다음 단계로 넘긴다.
+ * 1단계: 기기 안 COCO 검출 / 2단계: 기기 안 제로샷 분류 / 3단계: 서버 비전 LLM
+ */
+export const RECOGNIZERS = {
+  coco: true,
+  zeroshot: false, // 2단계: 준비 중
+  llm: false, // 3단계: 준비 중
+} as const;
+
+/** 1차 도감에서 사물을 이만큼 모으면 2차 도감 섹션이 열린다 */
+export const STAGE2_UNLOCK_OBJECTS = 5;
+
+/** 도감 기록 localStorage 키. 형식을 바꾸면 버전을 올린다 */
+export const COLLECTION_STORAGE_KEY = "nb_lense.collection.v1";
 
 /** 결과 하단에서 "이 렌즈의 인식 모델도 인공신경망" 문구가 가리키는 카드 */
 export const NEURAL_NET_PRIZE_ID = "2024-physics";

@@ -4,6 +4,7 @@
     "nameKo": "스마트폰",
     "cocoClass": "cell phone",
     "icon": "phone.svg",
+    "hintKo": "지금 손에 들고 있을지도 몰라요",
     "prizes": [
       { "prizeId": "1956-physics", "whereKo": "칩 속에 든 수십억 개의 트랜지스터" },
       { "prizeId": "2000-physics-ic", "whereKo": "프로세서와 메모리 같은 집적회로 칩" },
@@ -21,6 +22,7 @@
     "nameKo": "노트북",
     "cocoClass": "laptop",
     "icon": "laptop.svg",
+    "hintKo": "책상 위를 찍어 보세요",
     "prizes": [
       { "prizeId": "1956-physics", "whereKo": "CPU 속 수십억 개의 트랜지스터" },
       { "prizeId": "2000-physics-ic", "whereKo": "프로세서와 메모리 같은 집적회로 칩" },
@@ -35,6 +37,7 @@
     "nameKo": "TV·모니터",
     "cocoClass": "tv",
     "icon": "tv.svg",
+    "hintKo": "거실 벽을 찍어 보세요",
     "prizes": [
       { "prizeId": "2014-physics", "whereKo": "화면 뒤에서 빛을 내는 LED 백라이트 (LCD 방식)" },
       { "prizeId": "2000-physics-ic", "whereKo": "화면을 구동하는 집적회로 칩" }
@@ -45,6 +48,7 @@
     "nameKo": "자동차",
     "cocoClass": "car",
     "icon": "car.svg",
+    "hintKo": "주차장이나 도로에서 찾아보세요",
     "prizes": [
       { "prizeId": "2019-chemistry", "whereKo": "전기차·하이브리드차를 움직이는 리튬이온 배터리" },
       { "prizeId": "1989-physics-clock", "whereKo": "내비게이션이 쓰는 GPS 위성 속 원자시계의 원리" },
@@ -56,6 +60,7 @@
     "nameKo": "신호등",
     "cocoClass": "traffic light",
     "icon": "traffic_light.svg",
+    "hintKo": "횡단보도 앞에서 찾아보세요",
     "prizes": [
       { "prizeId": "2014-physics", "whereKo": "LED 신호등의 초록불. 청색 LED와 같은 질화갈륨 계열 반도체예요 (빨강·노랑은 다른 재료)" }
     ]
@@ -65,6 +70,7 @@
     "nameKo": "시계",
     "cocoClass": "clock",
     "icon": "clock.svg",
+    "hintKo": "벽이나 손목을 찍어 보세요",
     "prizes": [
       { "prizeId": "1989-physics-clock", "whereKo": "시계가 맞춰 가는 세계 표준시를 정하는 원자시계의 원리" }
     ]
@@ -74,6 +80,7 @@
     "nameKo": "사람",
     "cocoClass": "person",
     "icon": "person.svg",
+    "hintKo": "친구와 함께 찍어 보세요",
     "prizes": [
       { "prizeId": "1962-medicine", "whereKo": "몸속 모든 세포에 든 설계도, DNA 이중나선 구조" },
       { "prizeId": "2003-medicine", "whereKo": "병원에서 몸속을 찍는 MRI" }
