@@ -1,7 +1,7 @@
 import { GOATCOUNTER_CODE } from "../config";
 
 /**
- * 쿠키 없는 경량 분석(GoatCounter). 사진·인식 이미지·위치 정보는 어떤 경우에도 보내지 않는다.
+ * 쿠키 없는 경량 분석(GoatCounter). 사진·인식 이미지·위치·화면 크기·이전 페이지는 보내지 않는다.
  * 이벤트는 GoatCounter 대시보드에서 경로로 집계되므로, 나눠 보고 싶은 값은 경로에, 세부 값은 제목에 넣는다.
  */
 export type AnalyticsEvent =
@@ -26,10 +26,8 @@ function send(path: string, title: string, isEvent: boolean) {
     p: path,
     t: title,
     e: String(isEvent),
-    s: `${screen.width},${screen.height},${Math.round(devicePixelRatio)}`,
     rnd: Math.random().toString(36).slice(2),
   });
-  if (!isEvent && document.referrer) params.set("r", document.referrer);
   const url = `https://${GOATCOUNTER_CODE}.goatcounter.com/count?${params}`;
   try {
     if (!navigator.sendBeacon?.(url)) new Image().src = url;

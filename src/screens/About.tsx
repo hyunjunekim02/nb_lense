@@ -18,7 +18,7 @@ export function About({ onBack }: { onBack: () => void }) {
       </p>
 
       <h2>만든 사람</h2>
-      <p>POSTECH 학생 4인이 Nobel Week 2026 파견단 활동의 하나로 만들었습니다.</p>
+      <p>POSTECH Nobel Week 2026 파견단 활동의 하나로 만들었습니다.</p>
       <ul>
         <li>김현준 (개발 담당)</li>
         <li>문준혁</li>
@@ -30,7 +30,10 @@ export function About({ onBack }: { onBack: () => void }) {
       <p>
         {PHOTO_NOTICE} 사물 인식은 이 기기의 브라우저에서 이루어지며, 얼굴은 인식하지 않습니다.
       </p>
-      <p>방문 수와 스캔 수 같은 익명 통계만 쿠키 없이 집계합니다.</p>
+      <p>
+        운영자가 분석을 켠 경우에만 방문 수와 스캔 수 같은 집계용 이벤트를 쿠키 없이 전송합니다. 사진, 위치, 화면
+        크기, 이전 페이지 주소는 보내지 않습니다.
+      </p>
 
       <h2>데이터 출처</h2>
       <p>

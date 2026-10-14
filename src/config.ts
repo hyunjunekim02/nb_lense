@@ -18,7 +18,7 @@ export const DETECTOR = {
   maxImageSide: 1024,
 } as const;
 
-/** 예시 사진. 팀이 직접 찍은 사진으로 교체한다(명세 11장 3번). */
+/** 인물이 실재하지 않는 AI 생성 예시 사진. */
 export const SAMPLES = [
   { src: `${ASSET_BASE}samples/sample-1.jpg`, label: "책상 위 폰과 노트북" },
   { src: `${ASSET_BASE}samples/sample-2.jpg`, label: "거리의 신호등과 자동차" },
