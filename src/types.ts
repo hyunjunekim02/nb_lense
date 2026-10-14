@@ -3,7 +3,7 @@ export type PrizeCategory = "physics" | "chemistry" | "medicine";
 export type ObjectEntry = {
   id: string;
   nameKo: string;
-  /** COCO 클래스명. 없으면 직접 고르기 전용 */
+  /** COCO 클래스명. 없으면 인식되지 않아 앱에 나오지 않는다 */
   cocoClass?: string;
   /** public/icons 안의 단색 SVG 파일명 */
   icon: string;
@@ -36,7 +36,7 @@ export type PrizeHit = {
   where: { objectId: string; whereKo: string }[];
 };
 
-export type ScanSource = "upload" | "sample" | "manual";
+export type ScanSource = "upload" | "sample";
 
 export type ScanResult = {
   source: ScanSource;

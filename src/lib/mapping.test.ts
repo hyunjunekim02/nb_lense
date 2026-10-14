@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { filterByObject, objectsFromDetections, objectsFromIds, prizesForObjects } from "./mapping";
+import { filterByObject, objectsFromDetections, prizesForObjects } from "./mapping";
 import { OBJECTS, PRIZES, PRIZE_BY_ID } from "../data";
 import type { Detection, ObjectEntry, PrizeEntry } from "../types";
 
@@ -60,13 +60,6 @@ describe("objectsFromDetections", () => {
 
   it("아무것도 없으면 빈 배열", () => {
     expect(objectsFromDetections([], catalog)).toEqual([]);
-  });
-});
-
-describe("objectsFromIds", () => {
-  it("중복과 알 수 없는 ID를 제거하고 순서를 유지한다", () => {
-    const result = objectsFromIds(["led_bulb", "nope", "phone", "led_bulb"], catalog);
-    expect(result.map((o) => o.id)).toEqual(["led_bulb", "phone"]);
   });
 });
 

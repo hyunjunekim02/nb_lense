@@ -192,6 +192,14 @@ a {
   padding-top: 15vh;
 }
 
+.brand {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: var(--fs-sub);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 .home__actions {
   display: flex;
   flex-direction: column;
@@ -524,40 +532,6 @@ a {
 .sheet ul {
   margin: 0;
   padding-left: 18px;
-}
-
-/* ---------- 직접 고르기 ---------- */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin: 4px 0 16px;
-}
-
-.tile {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 56px;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--bg);
-  text-align: left;
-  cursor: pointer;
-  word-break: keep-all;
-}
-
-.tile[aria-pressed="true"] {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.section-label {
-  margin: 16px 0 8px;
 }
 
 /* ---------- 오류 ---------- */

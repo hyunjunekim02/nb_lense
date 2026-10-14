@@ -5,7 +5,7 @@ import { GOATCOUNTER_CODE } from "../config";
  * 이벤트는 GoatCounter 대시보드에서 경로로 집계되므로, 나눠 보고 싶은 값은 경로에, 세부 값은 제목에 넣는다.
  */
 export type AnalyticsEvent =
-  | { name: "scan_start"; source: "upload" | "sample" | "manual" }
+  | { name: "scan_start"; source: "upload" | "sample" }
   | { name: "scan_success"; objects: number; prizes: number; ms?: number }
   | { name: "scan_empty" }
   | { name: "prize_open"; prizeId: string }

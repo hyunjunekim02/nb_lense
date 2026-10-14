@@ -1,16 +1,14 @@
 import { useRef, useState } from "react";
-import { SAMPLES } from "../config";
+import { SAMPLES, SERVICE_NAME } from "../config";
 import { Disclaimer } from "../components/Disclaimer";
 
 export function Home({
   onFile,
   onSample,
-  onPick,
   onAbout,
 }: {
   onFile: (file: File) => void;
   onSample: (src: string) => void;
-  onPick: () => void;
   onAbout: () => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -19,6 +17,7 @@ export function Home({
   return (
     <main className="page home">
       <div>
+        <p className="brand">{SERVICE_NAME}</p>
         <h1 className="headline">당신 폰에는 노벨상이 몇 개 들어 있을까?</h1>
         <p className="lead">사진을 올리면 그 속에 숨은 노벨상 연구를 찾아드려요.</p>
 
@@ -50,9 +49,6 @@ export function Home({
               onClick={() => setShowSamples((v) => !v)}
             >
               예시 사진으로 해보기
-            </button>
-            <button type="button" className="btn btn--text" onClick={onPick}>
-              직접 고르기
             </button>
           </div>
 
