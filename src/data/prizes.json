@@ -11,7 +11,7 @@
     "titleKo": "디프테리아 혈청 요법",
     "descKo": "병을 이겨 낸 동물의 혈청 속 '항독소'를 환자에게 넣어 디프테리아를 치료하는 방법을 개발했어요. 역사상 첫 노벨 생리의학상이에요. 아기들이 맞는 DTaP 백신의 D가 바로 디프테리아예요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1901/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1901-physics",
@@ -25,7 +25,7 @@
     "titleKo": "엑스선의 발견",
     "descKo": "물체를 뚫고 지나가는 정체 모를 빛을 발견하고, '미지의 X'라는 뜻으로 엑스선이라 불렀어요. 역사상 첫 노벨 물리학상이에요. 병원의 엑스레이 사진과 공항 보안 검색대가 이 발견에서 시작됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1901/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1902-medicine",
@@ -39,7 +39,7 @@
     "titleKo": "말라리아를 옮기는 모기",
     "descKo": "말라리아 원충이 모기 몸속에서 자라고, 모기가 물 때 옮겨진다는 것을 밝혔어요. 모기장과 방역으로 말라리아를 막는 방법의 출발점이 됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1902/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1903-physics-curie",
@@ -54,7 +54,7 @@
     "titleKo": "방사능 연구",
     "descKo": "피에르 퀴리와 마리 퀴리는 베크렐이 발견한 방사선 현상을 함께 연구했어요. 마리 퀴리는 노벨상을 받은 첫 여성이 됐고, 1911년에는 화학상까지 받았어요. 방사선은 오늘날 암 치료와 의료 영상에 쓰여요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1903/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1904-chemistry",
@@ -68,7 +68,7 @@
     "titleKo": "비활성 기체의 발견",
     "descKo": "공기 속에서 네온, 아르곤, 크립톤, 제논 같은 비활성 기체를 찾아내고 주기율표에 새로운 족으로 자리를 잡아 주었어요. 네온사인의 붉은빛이 바로 네온 기체가 내는 빛이에요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1904/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1904-physics",
@@ -82,7 +82,7 @@
     "titleKo": "아르곤의 발견",
     "descKo": "공기 속 기체의 밀도를 정밀하게 재다가, 질소에 섞여 있던 새로운 기체 아르곤을 찾아냈어요. 아르곤은 다른 물질과 거의 반응하지 않아 백열전구 속과 이중창 유리 사이를 채우는 데 쓰여요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1904/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1905-medicine",
@@ -96,7 +96,7 @@
     "titleKo": "결핵균 연구",
     "descKo": "결핵을 일으키는 세균인 결핵균을 발견하고, 어떤 세균이 어떤 병을 일으키는지 확인하는 방법을 세웠어요. 세계 결핵의 날(3월 24일)은 코흐가 결핵균 발견을 발표한 날이에요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1905/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1909-physics",
@@ -111,7 +111,7 @@
     "titleKo": "무선 통신",
     "descKo": "마르코니와 브라운은 전선 없이 전파로 신호를 멀리 보내는 무선 전신을 발전시켰어요. 라디오, 휴대폰, 와이파이처럼 전파로 주고받는 통신이 모두 이 길 위에 있어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1909/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1911-chemistry",
@@ -125,7 +125,7 @@
     "titleKo": "라듐과 폴로늄의 발견",
     "descKo": "마리 퀴리는 새로운 원소 라듐과 폴로늄을 발견하고 라듐을 순수하게 분리했어요. 서로 다른 두 과학 분야에서 노벨상을 받은 첫 사람이에요. 폴로늄은 그의 조국 폴란드에서 이름을 땄어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1911/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1912-chemistry-sabatier",
@@ -139,7 +139,7 @@
     "titleKo": "금속 촉매로 수소 붙이기",
     "descKo": "잘게 부순 니켈 같은 금속을 촉매로 써서 유기 화합물에 수소를 붙이는 방법을 개발했어요. 이 반응은 식물성 기름을 굳혀 마가린을 만드는 등 식품·화학 공업에 널리 쓰여요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1912/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1913-physics",
@@ -153,7 +153,7 @@
     "titleKo": "액체 헬륨과 극저온",
     "descKo": "헬륨을 처음으로 액체로 만들어 절대영도 가까이까지 온도를 낮췄어요. 그 덕분에 전기 저항이 사라지는 초전도 현상도 발견했어요. 병원 MRI의 초전도 자석은 지금도 액체 헬륨으로 차갑게 유지해요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1913/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1918-chemistry",
@@ -167,7 +167,7 @@
     "titleKo": "암모니아 합성",
     "descKo": "공기 속 질소와 수소로 암모니아를 직접 만드는 방법을 개발했어요. 이 암모니아로 만든 화학 비료가 지금 세계 인구의 상당 부분을 먹여 살리고 있어요. 한편 하버는 1차 세계대전 때 독가스 개발을 이끈 인물이기도 해요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1918/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1918-physics",
@@ -181,7 +181,7 @@
     "titleKo": "에너지 양자의 발견",
     "descKo": "플랑크는 빛과 열의 에너지가 연속적이지 않고 아주 작은 덩어리(양자) 단위로 주고받아진다는 생각을 처음 내놓았어요. 이 생각에서 양자역학이 시작됐고, 반도체와 레이저 같은 현대 기술의 바탕이 됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1918/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1921-physics",
@@ -209,7 +209,7 @@
     "titleKo": "원자의 구조",
     "descKo": "보어는 원자 속 전자가 정해진 에너지 궤도에만 머물고, 궤도를 옮길 때 특정한 색의 빛을 낸다고 설명했어요. 네온사인과 불꽃놀이의 색이 원소마다 다른 이유도 여기서 이해할 수 있어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1922/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1923-medicine",
@@ -224,7 +224,7 @@
     "titleKo": "인슐린의 발견",
     "descKo": "췌장에서 혈당을 낮추는 호르몬인 인슐린을 찾아내, 당뇨병 환자 치료에 처음 성공했어요. 치료법이 없던 1형 당뇨병이 관리할 수 있는 병이 됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1923/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1924-medicine",
@@ -238,7 +238,7 @@
     "titleKo": "심전도",
     "descKo": "심장이 뛸 때 생기는 아주 약한 전기 신호를 기록하는 심전도 장치를 만들었어요. 병원의 심전도 검사는 물론, 일부 스마트워치의 심전도 측정 기능도 같은 원리예요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1924/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1929-medicine-eijkman",
@@ -252,7 +252,7 @@
     "titleKo": "각기병과 비타민 발견의 실마리",
     "descKo": "껍질을 깎아 낸 흰쌀만 먹은 닭이 각기병과 비슷한 병에 걸리고, 쌀겨를 먹이면 낫는다는 것을 발견했어요. 이 연구는 음식 속 미량 영양소인 비타민 B1의 발견으로 이어졌어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1929/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1929-physics",
@@ -266,7 +266,7 @@
     "titleKo": "전자의 파동성",
     "descKo": "드브로이는 입자인 전자도 파동처럼 행동한다고 예측했어요. 전자의 짧은 파장을 이용해 빛으로는 볼 수 없는 아주 작은 것까지 보는 전자현미경이 이 생각에서 나왔어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1929/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1930-medicine",
@@ -280,7 +280,7 @@
     "titleKo": "ABO 혈액형",
     "descKo": "사람의 피가 A, B, O형 등으로 나뉘고, 맞지 않는 피를 섞으면 엉긴다는 것을 발견했어요. 덕분에 안전한 수혈이 가능해졌어요. 헌혈과 수혈 전에 혈액형을 확인하는 이유예요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1930/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1937-chemistry-haworth",
@@ -294,7 +294,7 @@
     "titleKo": "비타민 C의 구조",
     "descKo": "탄수화물의 구조를 연구하고 비타민 C의 구조를 밝혔으며, 비타민 C를 인공으로 합성하는 데에도 성공했어요. 구조를 알고 만들 수 있게 되면서 비타민 C가 영양제와 식품에 널리 쓰이게 됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1937/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1938-physics",
@@ -308,7 +308,7 @@
     "titleKo": "중성자로 일으키는 핵반응",
     "descKo": "페르미는 원자핵에 중성자를 쏘아 새로운 방사성 원소를 만들고, 느린 중성자가 핵반응을 훨씬 잘 일으킨다는 것을 발견했어요. 이 연구는 원자력 발전의 원자로로 이어졌어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1938/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1939-physics",
@@ -322,7 +322,7 @@
     "titleKo": "사이클로트론",
     "descKo": "입자를 빙글빙글 돌리며 가속하는 장치, 사이클로트론을 발명했어요. 지금 병원에서는 사이클로트론으로 PET 검사에 쓰는 방사성 의약품을 만들어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1939/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1944-chemistry",
@@ -336,7 +336,7 @@
     "titleKo": "핵분열의 발견",
     "descKo": "우라늄에 중성자를 쏘면 원자핵이 둘로 쪼개진다는 것을 발견했어요. 함께 연구한 리제 마이트너는 이 현상을 물리적으로 설명했지만 노벨상을 받지 못했어요. 핵분열은 원자력 발전의 원리예요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1944/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1945-medicine",
@@ -366,7 +366,7 @@
     "titleKo": "결핵 치료제 스트렙토마이신",
     "descKo": "흙 속 미생물에서 결핵에 듣는 첫 항생제인 스트렙토마이신을 찾아냈어요. 페니실린이 듣지 않던 결핵을 약으로 치료하는 시대가 열렸어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1952/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1952-physics",
@@ -381,7 +381,7 @@
     "titleKo": "핵자기공명(NMR)",
     "descKo": "블로흐와 퍼셀은 자기장 속 원자핵이 특정한 전파에 반응하는 현상을 정밀하게 재는 방법을 개발했어요. 이 핵자기공명은 화학 분석의 기본 도구가 됐고, 병원의 MRI로 이어졌어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1952/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1953-chemistry",
@@ -395,7 +395,7 @@
     "titleKo": "고분자의 발견",
     "descKo": "작은 분자 수천 개 이상이 사슬처럼 길게 이어진 '고분자'가 실제로 존재한다는 것을 밝혔어요. 플라스틱, 합성섬유, 고무가 모두 고분자예요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1953/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1953-physics",
@@ -409,7 +409,7 @@
     "titleKo": "위상차 현미경",
     "descKo": "투명해서 잘 보이지 않던 세포를 염색하지 않고도 또렷하게 보는 위상차 현미경을 발명했어요. 살아 있는 세포를 그대로 관찰할 수 있게 되어 생물학 실험실의 기본 장비가 됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1953/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1954-medicine",
@@ -425,7 +425,7 @@
     "titleKo": "소아마비 바이러스 배양",
     "descKo": "소아마비 바이러스를 실험실에서 세포 배양으로 키우는 방법을 개발했어요. 바이러스를 대량으로 얻을 수 있게 되면서 소아마비 백신이 만들어졌어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1954/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1956-physics",
@@ -455,7 +455,7 @@
     "titleKo": "인슐린의 아미노산 서열",
     "descKo": "단백질인 인슐린을 이루는 아미노산이 어떤 순서로 이어져 있는지 처음으로 밝혔어요. 단백질마다 정해진 서열이 있다는 걸 보여 준 연구예요. 생어는 1980년 DNA 서열 분석으로 노벨상을 한 번 더 받았어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1958/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1960-chemistry",
@@ -469,7 +469,7 @@
     "titleKo": "탄소-14 연대 측정",
     "descKo": "생물이 남긴 유물 속 탄소-14가 일정한 속도로 줄어든다는 점을 이용해, 유물의 나이를 재는 방법을 개발했어요. 박물관의 미라나 고대 유물이 얼마나 오래된 것인지 이 방법으로 알아내요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1960/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1961-chemistry",
@@ -483,7 +483,7 @@
     "titleKo": "광합성 속 이산화탄소의 길",
     "descKo": "식물이 공기 속 이산화탄소를 받아들여 당으로 바꾸는 화학 반응의 순서를 밝혔어요. 우리가 먹는 쌀과 채소의 영양분이 만들어지는 과정이에요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1961/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1962-medicine",
@@ -514,7 +514,7 @@
     "titleKo": "플라스틱을 만드는 촉매",
     "descKo": "새로운 촉매로 폴리에틸렌과 폴리프로필렌을 낮은 압력에서, 규칙적인 구조로 만드는 방법을 개발했어요. 밀폐 용기와 병뚜껑 같은 많은 생활 플라스틱이 이 기술로 만들어져요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1963/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1964-chemistry",
@@ -528,7 +528,7 @@
     "titleKo": "X선으로 밝힌 생체 분자 구조",
     "descKo": "X선 결정학으로 페니실린과 비타민 B12 같은 중요한 생체 물질의 구조를 밝혔어요. 구조를 알게 되면서 약을 개량하고 합성하는 길이 열렸어요. 호지킨은 나중에 인슐린의 구조도 밝혀냈어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1964/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1964-physics",
@@ -560,7 +560,7 @@
     "titleKo": "눈이 빛을 느끼는 원리",
     "descKo": "눈의 망막 세포가 빛을 받아 신호를 만드는 화학적·생리적 과정을 밝혔어요. 비타민 A가 시각 색소의 재료라는 사실도 밝혀져, 비타민 A가 부족하면 밤눈이 어두워지는 이유를 설명해 줬어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1967/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1971-physics",
@@ -574,7 +574,7 @@
     "titleKo": "홀로그래피",
     "descKo": "빛의 세기뿐 아니라 파동의 모양까지 기록해 입체 영상을 되살리는 홀로그래피를 발명했어요. 지폐와 신용카드의 위조 방지 홀로그램이 이 원리를 써요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1971/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1978-physics-cmb",
@@ -589,7 +589,7 @@
     "titleKo": "우주배경복사",
     "descKo": "펜지어스와 윌슨은 하늘 모든 방향에서 오는 희미한 전파 잡음을 발견했어요. 그 정체는 빅뱅 직후에 남은 빛, 우주배경복사였어요. 옛날 아날로그 TV의 지지직거리는 화면에도 이 빛이 조금 섞여 있었어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1978/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1979-medicine",
@@ -604,7 +604,7 @@
     "titleKo": "컴퓨터 단층촬영(CT)",
     "descKo": "여러 방향에서 찍은 엑스선 영상을 컴퓨터로 계산해 몸의 단면 영상을 만드는 CT를 개발했어요. 지금 병원의 응급 진단에 빠지지 않는 검사예요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1979/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1982-medicine",
@@ -620,7 +620,7 @@
     "titleKo": "프로스타글란딘과 아스피린",
     "descKo": "염증, 통증, 열에 관여하는 몸속 물질인 프로스타글란딘을 밝혔어요. 아스피린이 이 물질이 만들어지는 것을 막아서 통증과 열을 줄인다는 것도 이 연구로 밝혀졌어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1982/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1986-physics-em",
@@ -634,7 +634,7 @@
     "titleKo": "전자현미경",
     "descKo": "빛 대신 전자를 쓰는 전자현미경을 처음 설계했어요. 바이러스와 반도체 회로처럼 일반 현미경으로는 볼 수 없는 작은 구조를 볼 수 있게 됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1986/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1988-medicine",
@@ -650,7 +650,7 @@
     "titleKo": "표적을 겨냥한 신약 개발",
     "descKo": "병의 원인이 되는 분자를 겨냥해 약을 설계하는 원리를 세웠어요. 이 방법으로 고혈압·심장병에 쓰는 베타 차단제, 위궤양 치료제, 백혈병과 바이러스 감염 치료제 등이 탄생했어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1988/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1989-physics-clock",
@@ -679,7 +679,7 @@
     "titleKo": "장기·골수 이식",
     "descKo": "처음으로 신장 이식에 성공하고, 백혈병 치료를 위한 골수 이식을 발전시켰어요. 오늘날 장기 기증과 조혈모세포 기증으로 생명을 살리는 이식 치료의 바탕이에요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1990/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1993-chemistry-pcr",
@@ -693,7 +693,7 @@
     "titleKo": "PCR(중합효소 연쇄 반응)",
     "descKo": "아주 적은 양의 DNA를 몇 시간 만에 수백만 배 이상 불리는 PCR 방법을 발명했어요. 코로나19 진단 검사, 친자 확인, 범죄 수사의 DNA 분석이 모두 PCR을 써요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1993/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1995-chemistry",
@@ -707,9 +707,9 @@
     ],
     "motivationEn": "for their work in atmospheric chemistry, particularly concerning the formation and decomposition of ozone",
     "titleKo": "오존층 파괴의 원리",
-    "descKo": "대기 속 오존이 만들어지고 분해되는 과정을 밝히고, 냉장고와 스프레이에 쓰이던 프레온 가스(CFC)가 오존층을 파괴할 수 있음을 경고했어요. 이 연구는 프레온 사용을 금지한 몬트리올 의정서로 이어졌어요.",
+    "descKo": "대기 속 오존이 만들어지고 분해되는 과정을 밝히고, 냉장고와 스프레이에 쓰이던 프레온 가스(CFC)가 오존층을 파괴할 수 있음을 경고했어요. 이 연구는 프레온 사용을 단계적으로 없애기로 한 몬트리올 의정서로 이어졌어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1995/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1996-chemistry",
@@ -725,7 +725,7 @@
     "titleKo": "풀러렌",
     "descKo": "탄소 원자 60개가 축구공 모양으로 이어진 분자, 풀러렌을 발견했어요. 다이아몬드와 흑연에 이은 새로운 탄소의 모습으로, 탄소 나노 소재 연구의 문을 열었어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/1996/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1997-physics",
@@ -741,7 +741,7 @@
     "titleKo": "레이저로 원자 식히기",
     "descKo": "레이저 빛으로 원자의 움직임을 늦춰 절대영도 가까이까지 식히고 가두는 방법을 개발했어요. 이렇게 식힌 원자는 세계 표준시를 정하는 가장 정밀한 원자시계에 쓰여요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/1997/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "1998-medicine",
@@ -757,7 +757,7 @@
     "titleKo": "신호를 전하는 기체, 일산화질소",
     "descKo": "기체인 일산화질소(NO)가 혈관을 넓히라는 신호를 전한다는 것을 발견했어요. 협심증에 쓰는 니트로글리세린이 몸속에서 일산화질소를 내놓아 효과를 낸다는 것도 이 연구로 이해하게 됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/1998/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2000-chemistry",
@@ -773,7 +773,7 @@
     "titleKo": "전기가 통하는 플라스틱",
     "descKo": "보통은 전기가 통하지 않는 플라스틱도 처리 방법에 따라 금속처럼 전기가 통할 수 있다는 것을 발견했어요. 전도성 고분자는 정전기 방지 필름과 유기 발광 다이오드(OLED) 같은 유기 전자 소자 연구에 쓰여요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/2000/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2000-physics-hetero",
@@ -832,7 +832,7 @@
     "titleKo": "위궤양의 원인, 헬리코박터균",
     "descKo": "위염과 위궤양의 주요 원인이 스트레스가 아니라 헬리코박터 파일로리균이라는 것을 밝혔어요. 마셜은 이를 증명하려고 균을 직접 마시기도 했어요. 지금은 항생제로 균을 없애 위궤양을 치료해요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2005/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2007-chemistry",
@@ -846,7 +846,7 @@
     "titleKo": "고체 표면의 화학 반응",
     "descKo": "금속 표면에서 기체 분자가 반응하는 과정을 원자 수준에서 하나하나 밝혔어요. 자동차 배기가스를 정화하는 촉매 변환기와 암모니아 합성 공정을 이해하는 바탕이 됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/2007/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2007-physics",
@@ -877,7 +877,7 @@
     "titleKo": "초록 형광 단백질(GFP)",
     "descKo": "해파리에서 발견된 초록 형광 단백질(GFP)을 세포 속 표지로 쓰는 방법을 개발했어요. 보고 싶은 단백질에 GFP를 붙이면 그 단백질이 세포 속 어디서 무엇을 하는지 빛으로 따라갈 수 있어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/2008/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2008-medicine-hiv",
@@ -892,7 +892,7 @@
     "titleKo": "HIV의 발견",
     "descKo": "에이즈를 일으키는 바이러스인 HIV를 발견했어요. 덕분에 진단 검사와 치료제가 빠르게 개발되어, 지금은 꾸준히 치료하면 오래 건강하게 살 수 있는 병이 됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2008/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2008-medicine-hpv",
@@ -906,7 +906,7 @@
     "titleKo": "자궁경부암을 일으키는 HPV",
     "descKo": "인유두종바이러스(HPV)가 자궁경부암을 일으킨다는 것을 밝혔어요. 이 발견을 바탕으로 자궁경부암을 예방하는 HPV 백신이 개발됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2008/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2009-physics-ccd",
@@ -951,7 +951,7 @@
     "titleKo": "팔라듐 촉매 교차 결합",
     "descKo": "팔라듐 금속을 촉매로 써서 탄소 원자끼리 정확하게 이어 붙이는 방법을 개발했어요. 이 반응은 의약품, 농약, 화면용 유기 소재를 만드는 데 널리 쓰여요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/2010/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2010-medicine",
@@ -965,7 +965,7 @@
     "titleKo": "체외수정(시험관 아기)",
     "descKo": "몸 밖에서 난자와 정자를 수정시키는 체외수정 기술을 개발했어요. 1978년 첫 시험관 아기가 태어난 뒤, 이 기술로 전 세계에서 수백만 명이 넘는 아이가 태어났어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2010/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2010-physics",
@@ -980,7 +980,7 @@
     "titleKo": "그래핀",
     "descKo": "연필심의 흑연에 스카치테이프를 붙였다 떼는 방법으로, 탄소 원자 한 층짜리 물질인 그래핀을 떼어 냈어요. 얇고 단단하며 전기와 열을 잘 통해 차세대 소재로 연구되고 있어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2010/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2011-physics",
@@ -996,7 +996,7 @@
     "titleKo": "가속 팽창하는 우주",
     "descKo": "먼 곳의 초신성 밝기를 관측해, 우주의 팽창이 점점 빨라지고 있다는 사실을 발견했어요. 그 원인으로 꼽히는 '암흑 에너지'는 지금도 풀리지 않은 수수께끼예요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2011/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2012-medicine",
@@ -1011,7 +1011,7 @@
     "titleKo": "유도만능줄기세포",
     "descKo": "거든은 다 자란 세포의 핵에도 생명 전체를 만들 정보가 남아 있음을 보였고, 야마나카는 유전자 몇 개만 넣어 다 자란 세포를 만능 줄기세포(iPS 세포)로 되돌렸어요. 재생 의학과 신약 연구에 쓰이고 있어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2012/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2013-physics",
@@ -1026,7 +1026,7 @@
     "titleKo": "힉스 입자",
     "descKo": "앙글레르와 힉스는 기본 입자가 질량을 얻는 원리를 이론으로 예측했어요. 50년 가까이 지난 2012년, 유럽입자물리연구소(CERN)의 대형 강입자 충돌기에서 예측한 입자가 실제로 발견됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2013/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2014-medicine",
@@ -1042,7 +1042,7 @@
     "titleKo": "뇌 속의 GPS",
     "descKo": "뇌에서 지금 내가 어디에 있는지 알려 주는 '위치 세포'와 '격자 세포'를 발견했어요. 길을 찾고 장소를 기억하는 능력의 바탕이 되는 뇌 속 위치 시스템이에요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2014/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2014-physics",
@@ -1074,7 +1074,7 @@
     "titleKo": "DNA 수선",
     "descKo": "우리 몸의 DNA는 자외선과 화학 물질 때문에 매일 손상돼요. 세 수상자는 세포가 손상된 DNA를 고치는 방법을 분자 수준에서 밝혔어요. 이 연구는 암이 생기는 원리와 치료법 연구로 이어지고 있어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/2015/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2015-medicine-malaria",
@@ -1088,7 +1088,7 @@
     "titleKo": "말라리아 치료제 아르테미시닌",
     "descKo": "중국 전통 의서를 연구해 개똥쑥에서 말라리아 치료제 아르테미시닌을 찾아냈어요. 이 약은 지금도 말라리아 치료의 핵심 약으로 많은 생명을 구하고 있어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2015/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2017-chemistry",
@@ -1104,7 +1104,7 @@
     "titleKo": "극저온 전자현미경",
     "descKo": "생체 분자를 급속히 얼려 자연 상태 그대로 전자현미경으로 찍고, 원자 수준의 3차원 구조를 얻는 방법을 개발했어요. 코로나19 바이러스 표면 단백질의 구조도 이 방법으로 빠르게 밝혀졌어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/2017/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2017-medicine",
@@ -1120,7 +1120,7 @@
     "titleKo": "생체 시계",
     "descKo": "초파리 연구로 우리 몸의 하루 리듬을 만드는 생체 시계의 유전자와 작동 원리를 밝혔어요. 시차 적응이 힘들고 밤샘이 몸에 무리가 되는 이유를 설명해 줘요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2017/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2017-physics",
@@ -1136,7 +1136,7 @@
     "titleKo": "중력파 관측",
     "descKo": "아인슈타인이 예측한 시공간의 물결, 중력파를 LIGO 검출기로 처음 관측했어요. 약 13억 광년 떨어진 두 블랙홀이 합쳐지며 낸 신호였어요. 빛이 아닌 새로운 방법으로 우주를 보는 길이 열렸어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2017/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2018-chemistry-enzyme",
@@ -1150,7 +1150,7 @@
     "titleKo": "효소의 유도 진화",
     "descKo": "자연의 진화 원리를 실험실에서 빠르게 되풀이해, 원하는 일을 잘하는 효소를 만들어 내는 방법을 개발했어요. 이렇게 만든 효소는 친환경 의약품 생산과 바이오 연료 등에 쓰여요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/2018/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2018-medicine",
@@ -1165,7 +1165,7 @@
     "titleKo": "면역 항암제",
     "descKo": "면역세포에 걸린 '브레이크'를 풀어 주면 면역세포가 암세포를 더 잘 공격한다는 것을 발견했어요. 이 원리로 만든 면역관문억제제는 흑색종과 폐암 등의 치료에 쓰여요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2018/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2018-physics-cpa",
@@ -1180,7 +1180,7 @@
     "titleKo": "아주 짧고 강한 레이저 펄스",
     "descKo": "레이저 펄스를 길게 늘였다가 증폭한 뒤 다시 압축하는 방법으로, 아주 짧고 강한 빛을 만들어 냈어요. 이 기술은 각막을 정밀하게 자르는 레이저 시력 교정 수술과 정밀 가공에 쓰여요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2018/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2019-chemistry",
@@ -1212,7 +1212,7 @@
     "titleKo": "세포가 산소를 감지하는 원리",
     "descKo": "세포가 주변의 산소 농도를 감지하고 그에 맞춰 유전자 활동을 조절하는 원리를 밝혔어요. 높은 산에 오르면 몸이 적혈구를 더 만드는 것도 이 원리 때문이에요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2019/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2019-physics-exoplanet",
@@ -1227,7 +1227,7 @@
     "titleKo": "외계 행성의 발견",
     "descKo": "태양과 비슷한 별 주위를 도는 행성을 처음으로 발견했어요. 그 뒤 지금까지 수천 개의 외계 행성이 확인됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2019/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2020-chemistry",
@@ -1242,7 +1242,7 @@
     "titleKo": "유전자 가위 크리스퍼",
     "descKo": "세균의 면역 체계에서 찾은 크리스퍼(CRISPR-Cas9)를 DNA의 원하는 위치를 정확히 자르는 '유전자 가위'로 만들었어요. 2023년에는 이 기술로 만든 유전병 치료제가 처음 승인됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/2020/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2020-medicine",
@@ -1258,7 +1258,7 @@
     "titleKo": "C형 간염 바이러스의 발견",
     "descKo": "수혈 뒤에 생기던 원인 모를 간염의 정체가 C형 간염 바이러스라는 것을 밝혔어요. 덕분에 헌혈 혈액을 검사할 수 있게 됐고, 지금은 먹는 약으로 완치할 수 있어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2020/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2020-physics-blackhole",
@@ -1273,7 +1273,7 @@
     "titleKo": "우리 은하 중심의 블랙홀",
     "descKo": "우리 은하 중심 근처 별들의 움직임을 수십 년 동안 추적해, 그곳에 태양보다 약 400만 배 무거운 보이지 않는 천체가 있음을 밝혔어요. 초거대 블랙홀이 있다는 가장 확실한 증거예요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2020/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2021-medicine",
@@ -1288,7 +1288,7 @@
     "titleKo": "온도와 촉감을 느끼는 원리",
     "descKo": "고추의 매운 성분인 캡사이신으로 열을 느끼는 감각 수용체를 찾고, 누르는 힘을 느끼는 수용체도 찾아냈어요. 매운 음식을 먹으면 '뜨겁다'고 느끼는 이유가 바로 이 수용체 때문이에요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2021/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2021-physics-climate",
@@ -1303,7 +1303,7 @@
     "titleKo": "기후 모델과 지구 온난화 예측",
     "descKo": "지구의 기후를 물리 법칙으로 계산하는 모델을 만들고, 이산화탄소가 늘면 지구가 더워진다는 것을 수치로 보였어요. 오늘날 기후 변화 예측의 바탕이 된 연구예요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2021/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2022-physics",
@@ -1319,7 +1319,7 @@
     "titleKo": "양자 얽힘 실험",
     "descKo": "얽힌 빛 알갱이(광자) 쌍으로 실험해, 멀리 떨어진 두 입자가 서로 연결된 듯 행동하는 양자 얽힘이 실제임을 보였어요. 양자 암호 통신과 양자 컴퓨터 같은 양자 정보 기술의 출발점이 됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2022/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2023-chemistry",
@@ -1335,7 +1335,7 @@
     "titleKo": "양자점",
     "descKo": "크기에 따라 내는 빛의 색이 달라지는 아주 작은 반도체 알갱이, 양자점을 발견하고 만드는 방법을 개발했어요. 양자점은 QLED TV와 모니터의 선명한 색을 만드는 데 쓰여요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/2023/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2023-medicine",
@@ -1366,7 +1366,7 @@
     "titleKo": "아토초 빛 펄스",
     "descKo": "100경 분의 1초(아토초) 수준으로 아주 짧게 번쩍이는 빛을 만드는 방법을 개발했어요. 원자 속 전자가 움직이는 모습을 들여다보는 '초고속 카메라'가 생긴 셈이에요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2023/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2024-chemistry-alphafold",
@@ -1381,7 +1381,7 @@
     "titleKo": "AI로 하는 단백질 구조 예측",
     "descKo": "아미노산 서열만으로 단백질의 3차원 구조를 예측하는 인공지능 '알파폴드'를 개발했어요. 몇 년씩 걸리던 구조 분석을 훨씬 빠르게 해내, 신약과 효소 연구에 쓰이고 있어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/2024/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2024-physics",
@@ -1412,7 +1412,7 @@
     "titleKo": "금속-유기 골격체(MOF)",
     "descKo": "금속 이온과 유기 분자를 레고처럼 이어, 속에 빈 공간이 아주 많은 결정 구조인 금속-유기 골격체를 개발했어요. 사막 공기에서 물을 모으거나 이산화탄소를 붙잡는 소재로 연구되고 있어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/chemistry/2025/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2025-medicine",
@@ -1428,7 +1428,7 @@
     "titleKo": "면역 관용과 조절 T세포",
     "descKo": "면역계가 자기 몸을 공격하지 않도록 지키는 '경비원'인 조절 T세포와 그 핵심 유전자를 밝혔어요. 류마티스 관절염 같은 자가면역 질환, 장기 이식, 암 치료 연구에 쓰이고 있어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/medicine/2025/summary/",
-    "verified": false
+    "verified": true
   },
   {
     "id": "2025-physics",
@@ -1444,6 +1444,6 @@
     "titleKo": "전기 회로 속 양자 현상",
     "descKo": "손에 쥘 만한 크기의 초전도 전기 회로에서도 양자 터널링과 에너지 양자화가 일어난다는 것을 실험으로 보였어요. 이 연구는 초전도 양자 컴퓨터의 바탕이 됐어요.",
     "sourceUrl": "https://www.nobelprize.org/prizes/physics/2025/summary/",
-    "verified": false
+    "verified": true
   }
 ]

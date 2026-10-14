@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent }
 import { PRIZE_BY_ID } from "../data";
 import { hintFor, iconFor, progress, TIERS, type CollectionState } from "../lib/collection";
 import { Icon } from "../components/Icon";
+import type { PrizeCategory } from "../types";
 
 /** 2026-10-14 → "10월 14일" (올해가 아니면 연도도) */
 function formatDate(iso: string) {
@@ -24,6 +25,14 @@ function isStandalone() {
 }
 
 type Tab = "stage1" | "stage2";
+type Filter = PrizeCategory | "all";
+
+const FILTERS: { id: Filter; label: string }[] = [
+  { id: "all", label: "전체" },
+  { id: "physics", label: "물리학상" },
+  { id: "chemistry", label: "화학상" },
+  { id: "medicine", label: "생리의학상" },
+];
 
 /** 내 노벨상 도감 (v1.1 명세 4.2). 1차·2차 도감을 탭으로 나눠 보여준다 */
 export function Collection({
@@ -47,7 +56,12 @@ export function Collection({
 }) {
   const p = progress(state);
   const [tab, setTab] = useState<Tab>("stage1");
+  const [filter, setFilter] = useState<Filter>("all");
   const [confirming, setConfirming] = useState(false);
+  const matches = (id: string) => filter === "all" || PRIZE_BY_ID.get(id)?.category === filter;
+  const stage1Ids = TIERS.stage1.filter(matches);
+  const stage2Ids = TIERS.stage2.filter(matches);
+  const emptyNote = <p className="sub filter-empty">이 부문의 노벨상은 여기에 없어요.</p>;
   const tabRefs = useRef<Record<Tab, HTMLButtonElement | null>>({ stage1: null, stage2: null });
   const showInstallHint = persistent && !state.ui.installHintDismissed && isIosSafari() && !isStandalone();
 
@@ -107,9 +121,6 @@ export function Collection({
         >
           <div className="meter__bar" style={{ width: `${(p.prizes / Math.max(1, p.prizeTotal)) * 100}%` }} />
         </div>
-        <p className="sub num">
-          사물 {p.objectTotal}종 중 {p.objects}종
-        </p>
       </section>
 
       <div className="tabs" role="tablist" aria-label="도감 단계">
@@ -125,10 +136,19 @@ export function Collection({
         </button>
       </div>
 
+      <div className="chips filters" role="group" aria-label="부문으로 거르기">
+        {FILTERS.map((f) => (
+          <button key={f.id} type="button" className="chip" aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}>
+            {f.label}
+          </button>
+        ))}
+      </div>
+
       {tab === "stage1" ? (
         <section role="tabpanel" id="panel-stage1" aria-labelledby="tab-stage1" className="tabs__panel">
+          {stage1Ids.length === 0 && emptyNote}
           <ul className="tiles">
-            {TIERS.stage1.map((id) => {
+            {stage1Ids.map((id) => {
               const prize = PRIZE_BY_ID.get(id)!;
               const got = state.prizes[id];
               const meta = (
@@ -167,10 +187,11 @@ export function Collection({
             지금의 기기 안 인식 모델로는 아직 사진에서 찾을 수 없는 노벨상들이에요. 더 많은 물건을 알아보는 인식 기능을 준비하고
             있어요.
           </p>
+          {stage2Ids.length === 0 && emptyNote}
           <div className={p.stage2Unlocked ? "stage2" : "stage2 stage2--locked"}>
             {/* 잠겨 있으면 목록은 보여주되 누를 수 없게 하고, 스크린리더에는 아래 안내만 읽힌다 */}
             <ul className="tiles" aria-hidden={!p.stage2Unlocked} inert={!p.stage2Unlocked}>
-              {TIERS.stage2.map((id) => {
+              {stage2Ids.map((id) => {
                 const prize = PRIZE_BY_ID.get(id)!;
                 return (
                   <li key={id}>
@@ -222,7 +243,6 @@ export function Collection({
       {confirming && (
         <ConfirmSheet
           prizes={p.prizes}
-          objects={p.objects}
           onCancel={() => setConfirming(false)}
           onConfirm={() => {
             setConfirming(false);
@@ -237,12 +257,10 @@ export function Collection({
 /** 기록 지우기 확인. 브라우저 기본 confirm()은 쓰지 않는다 (명세 4.2) */
 function ConfirmSheet({
   prizes,
-  objects,
   onCancel,
   onConfirm,
 }: {
   prizes: number;
-  objects: number;
   onCancel: () => void;
   onConfirm: () => void;
 }) {
@@ -266,8 +284,7 @@ function ConfirmSheet({
       <div className="sheet" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-desc">
         <h2 id="confirm-title">도감 기록을 지울까요?</h2>
         <p id="confirm-desc">
-          찾은 노벨상 <span className="num">{prizes}</span>개와 사물 <span className="num">{objects}</span>종 기록이 모두
-          지워져요. 되돌릴 수 없어요.
+          찾은 노벨상 <span className="num">{prizes}</span>개 기록이 모두 지워져요. 되돌릴 수 없어요.
         </p>
         <div className="sheet__actions">
           <button ref={cancelRef} type="button" className="btn btn--secondary" onClick={onCancel}>

@@ -5,7 +5,7 @@
 > 이 서비스는 POSTECH 학생들이 만든 비공식 교육용 프로젝트로, 노벨재단 및 Nobel Prize Outreach와 관련이 없습니다. 수상 정보 출처: NobelPrize.org (CC0)
 
 - 사물 인식: [MediaPipe Object Detector](https://developers.google.com/edge/mediapipe/solutions/vision/object_detector) (EfficientDet-Lite0 int8, COCO), 기기 안에서 실행
-- 설명은 모두 사람이 쓰고 검수한 정적 텍스트이며, LLM 호출은 없습니다
+- 설명은 모두 미리 작성해 둔 정적 텍스트이며, 앱에서 LLM을 호출하지 않습니다
 - 사진은 기기 밖으로 전송되지 않습니다. 분석은 쿠키 없는 GoatCounter로 이벤트 수만 집계합니다
 - 직접 찍은 사진으로 찾은 노벨상은 **노벨상 도감**에 모입니다 (v1.1, 아래 "도감" 참고)
 
@@ -122,7 +122,7 @@ scripts/         fetch-prizes.ts(공식 API → prizes.json), check-data.mjs(빌
 | 2 | 제로샷 이미지 분류 (예: MobileCLIP) — `zeroshot.ts` | 기기 안 | 준비 중 (스텁) |
 | 3 | 비전 LLM — `llm.ts` | 서버 | 준비 중 (스텁, 사용 전 동의 필요) |
 
-`pipeline.ts`는 켜진 엔진을 단계 순서대로 돌리되, 상위 단계는 하위 단계가 0개를 찾았고 사용자가 요청했을 때만 시도합니다. 모든 엔진은 사물 ID(`objects.json`의 `id`)를 돌려주고, 문구는 언제나 검수된 정적 데이터에서 나옵니다.
+`pipeline.ts`는 켜진 엔진을 단계 순서대로 돌리되, 상위 단계는 하위 단계가 0개를 찾았고 사용자가 요청했을 때만 시도합니다. 모든 엔진은 사물 ID(`objects.json`의 `id`)를 돌려주고, 문구는 언제나 미리 작성한 정적 데이터에서 나옵니다.
 
 ## 배포 (GitHub Pages)
 

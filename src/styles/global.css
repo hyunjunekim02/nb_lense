@@ -690,6 +690,19 @@ a {
   position: relative;
 }
 
+/* 걸러서 카드가 적어도 잠금 안내가 들어갈 높이 */
+.stage2--locked {
+  min-height: 280px;
+}
+
+.filters {
+  margin: 0 0 12px;
+}
+
+.filter-empty {
+  margin: 8px 0 16px;
+}
+
 .stage2--locked .tiles {
   filter: grayscale(1);
   opacity: 0.55;

@@ -40,7 +40,7 @@ export function About({ onBack }: { onBack: () => void }) {
         <a href="https://www.nobelprize.org/" target="_blank" rel="noopener noreferrer">
           NobelPrize.org
         </a>
-        의 공개 데이터(CC0)를 원문 그대로 사용합니다. 한국어 설명은 팀이 직접 쓰고 검수했습니다.
+        의 공개 데이터(CC0)를 원문 그대로 사용합니다. 한국어 설명은 공식 수상 사유와 공개 자료를 바탕으로 정리했습니다.
       </p>
       <p>
         사물 인식: MediaPipe Object Detector (EfficientDet-Lite0, COCO). 아이콘:{" "}
