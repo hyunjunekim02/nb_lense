@@ -212,11 +212,7 @@ export function Collection({
                 <div className="stage2__message" role="note">
                   <Icon name="lock" />
                   <strong>1차 도감을 모두 모으면 열려요</strong>
-                  <span className="num">
-                    지금 {p.prizeTotal}개 중 {p.prizes}개
-                  </span>
                   <span className="tag">서비스 준비 중</span>
-                  <span className="sub">열린 뒤에는 카드를 눌러 설명을 읽을 수 있어요.</span>
                 </div>
               </div>
             )}
