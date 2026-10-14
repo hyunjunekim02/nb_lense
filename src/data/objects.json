@@ -6,15 +6,46 @@
     "icon": "phone.svg",
     "hintKo": "지금 손에 들고 있을지도 몰라요",
     "prizes": [
-      { "prizeId": "1956-physics", "whereKo": "칩 속에 든 수십억 개의 트랜지스터" },
-      { "prizeId": "2000-physics-ic", "whereKo": "프로세서와 메모리 같은 집적회로 칩" },
-      { "prizeId": "2000-physics-hetero", "whereKo": "전파 신호를 다루는 고속 통신 반도체" },
-      { "prizeId": "2009-physics-ccd", "whereKo": "카메라 이미지 센서의 뿌리가 된 CCD (지금은 주로 CMOS 센서)" },
-      { "prizeId": "2009-physics-fiber", "whereKo": "스마트폰을 인터넷에 이어 주는 광섬유 통신망" },
-      { "prizeId": "2014-physics", "whereKo": "카메라 플래시와 LCD 화면 백라이트의 흰빛 LED" },
-      { "prizeId": "2019-chemistry", "whereKo": "매일 충전하는 리튬이온 배터리" },
-      { "prizeId": "1921-physics", "whereKo": "빛을 전기 신호로 바꾸는 카메라 센서의 바탕 원리(광전효과)" },
-      { "prizeId": "2024-physics", "whereKo": "사진 보정과 음성 인식 같은 AI 기능의 바탕(인공신경망)" }
+      {
+        "prizeId": "1956-physics",
+        "whereKo": "칩 속에 든 수십억 개의 트랜지스터"
+      },
+      {
+        "prizeId": "2000-physics-ic",
+        "whereKo": "프로세서와 메모리 같은 집적회로 칩"
+      },
+      {
+        "prizeId": "2000-physics-hetero",
+        "whereKo": "전파 신호를 다루는 고속 통신 반도체"
+      },
+      {
+        "prizeId": "2009-physics-ccd",
+        "whereKo": "카메라 이미지 센서의 뿌리가 된 CCD (지금은 주로 CMOS 센서)"
+      },
+      {
+        "prizeId": "2009-physics-fiber",
+        "whereKo": "스마트폰을 인터넷에 이어 주는 광섬유 통신망"
+      },
+      {
+        "prizeId": "2014-physics",
+        "whereKo": "카메라 플래시와 LCD 화면 백라이트의 흰빛 LED"
+      },
+      {
+        "prizeId": "2019-chemistry",
+        "whereKo": "매일 충전하는 리튬이온 배터리"
+      },
+      {
+        "prizeId": "1921-physics",
+        "whereKo": "빛을 전기 신호로 바꾸는 카메라 센서의 바탕 원리(광전효과)"
+      },
+      {
+        "prizeId": "2024-physics",
+        "whereKo": "사진 보정과 음성 인식 같은 AI 기능의 바탕(인공신경망)"
+      },
+      {
+        "prizeId": "1909-physics",
+        "whereKo": "전화가 오가는 전파 통신, 그 시작이 된 무선 전신"
+      }
     ]
   },
   {
@@ -24,12 +55,34 @@
     "icon": "laptop.svg",
     "hintKo": "책상 위를 찍어 보세요",
     "prizes": [
-      { "prizeId": "1956-physics", "whereKo": "CPU 속 수십억 개의 트랜지스터" },
-      { "prizeId": "2000-physics-ic", "whereKo": "프로세서와 메모리 같은 집적회로 칩" },
-      { "prizeId": "2014-physics", "whereKo": "화면을 밝히는 LED 백라이트" },
-      { "prizeId": "2019-chemistry", "whereKo": "충전해서 쓰는 리튬이온 배터리" },
-      { "prizeId": "2024-physics", "whereKo": "음성 인식과 번역 같은 AI 기능의 바탕(인공신경망)" },
-      { "prizeId": "2007-physics", "whereKo": "하드디스크(HDD)의 읽기 헤드 (SSD만 쓰는 기종은 해당 없음)" }
+      {
+        "prizeId": "1956-physics",
+        "whereKo": "CPU 속 수십억 개의 트랜지스터"
+      },
+      {
+        "prizeId": "2000-physics-ic",
+        "whereKo": "프로세서와 메모리 같은 집적회로 칩"
+      },
+      {
+        "prizeId": "2014-physics",
+        "whereKo": "화면을 밝히는 LED 백라이트"
+      },
+      {
+        "prizeId": "2019-chemistry",
+        "whereKo": "충전해서 쓰는 리튬이온 배터리"
+      },
+      {
+        "prizeId": "2024-physics",
+        "whereKo": "음성 인식과 번역 같은 AI 기능의 바탕(인공신경망)"
+      },
+      {
+        "prizeId": "2007-physics",
+        "whereKo": "하드디스크(HDD)의 읽기 헤드 (SSD만 쓰는 기종은 해당 없음)"
+      },
+      {
+        "prizeId": "1909-physics",
+        "whereKo": "와이파이처럼 전파로 데이터를 주고받는 무선 통신의 출발점"
+      }
     ]
   },
   {
@@ -39,8 +92,18 @@
     "icon": "tv.svg",
     "hintKo": "거실 벽을 찍어 보세요",
     "prizes": [
-      { "prizeId": "2014-physics", "whereKo": "화면 뒤에서 빛을 내는 LED 백라이트 (LCD 방식)" },
-      { "prizeId": "2000-physics-ic", "whereKo": "화면을 구동하는 집적회로 칩" }
+      {
+        "prizeId": "2014-physics",
+        "whereKo": "화면 뒤에서 빛을 내는 LED 백라이트 (LCD 방식)"
+      },
+      {
+        "prizeId": "2000-physics-ic",
+        "whereKo": "화면을 구동하는 집적회로 칩"
+      },
+      {
+        "prizeId": "2023-chemistry",
+        "whereKo": "QLED 화면에서 선명한 색을 내는 양자점"
+      }
     ]
   },
   {
@@ -50,9 +113,22 @@
     "icon": "car.svg",
     "hintKo": "주차장이나 도로에서 찾아보세요",
     "prizes": [
-      { "prizeId": "2019-chemistry", "whereKo": "전기차·하이브리드차를 움직이는 리튬이온 배터리" },
-      { "prizeId": "1989-physics-clock", "whereKo": "내비게이션이 쓰는 GPS 위성 속 원자시계의 원리" },
-      { "prizeId": "2014-physics", "whereKo": "밝고 전기를 적게 쓰는 LED 전조등" }
+      {
+        "prizeId": "2019-chemistry",
+        "whereKo": "전기차·하이브리드차를 움직이는 리튬이온 배터리"
+      },
+      {
+        "prizeId": "1989-physics-clock",
+        "whereKo": "내비게이션이 쓰는 GPS 위성 속 원자시계의 원리"
+      },
+      {
+        "prizeId": "2014-physics",
+        "whereKo": "밝고 전기를 적게 쓰는 LED 전조등"
+      },
+      {
+        "prizeId": "2007-chemistry",
+        "whereKo": "배기가스의 유해 물질을 바꿔 주는 촉매 변환기 속 표면 화학 반응"
+      }
     ]
   },
   {
@@ -62,7 +138,10 @@
     "icon": "traffic_light.svg",
     "hintKo": "횡단보도 앞에서 찾아보세요",
     "prizes": [
-      { "prizeId": "2014-physics", "whereKo": "LED 신호등의 초록불. 청색 LED와 같은 질화갈륨 계열 반도체예요 (빨강·노랑은 다른 재료)" }
+      {
+        "prizeId": "2014-physics",
+        "whereKo": "LED 신호등의 초록불. 청색 LED와 같은 질화갈륨 계열 반도체예요 (빨강·노랑은 다른 재료)"
+      }
     ]
   },
   {
@@ -72,7 +151,14 @@
     "icon": "clock.svg",
     "hintKo": "벽이나 손목을 찍어 보세요",
     "prizes": [
-      { "prizeId": "1989-physics-clock", "whereKo": "시계가 맞춰 가는 세계 표준시를 정하는 원자시계의 원리" }
+      {
+        "prizeId": "1989-physics-clock",
+        "whereKo": "시계가 맞춰 가는 세계 표준시를 정하는 원자시계의 원리"
+      },
+      {
+        "prizeId": "1997-physics",
+        "whereKo": "원자를 레이저로 식혀 더 정밀해진 원자시계"
+      }
     ]
   },
   {
@@ -82,8 +168,137 @@
     "icon": "person.svg",
     "hintKo": "친구와 함께 찍어 보세요",
     "prizes": [
-      { "prizeId": "1962-medicine", "whereKo": "몸속 모든 세포에 든 설계도, DNA 이중나선 구조" },
-      { "prizeId": "2003-medicine", "whereKo": "병원에서 몸속을 찍는 MRI" }
+      {
+        "prizeId": "1962-medicine",
+        "whereKo": "몸속 모든 세포에 든 설계도, DNA 이중나선 구조"
+      },
+      {
+        "prizeId": "2003-medicine",
+        "whereKo": "병원에서 몸속을 찍는 MRI"
+      },
+      {
+        "prizeId": "1930-medicine",
+        "whereKo": "수혈 전에 꼭 확인하는 ABO 혈액형"
+      },
+      {
+        "prizeId": "1967-medicine",
+        "whereKo": "눈이 빛과 색을 느끼는 원리"
+      },
+      {
+        "prizeId": "2021-medicine",
+        "whereKo": "피부가 온도와 촉감을 느끼는 원리"
+      },
+      {
+        "prizeId": "2014-medicine",
+        "whereKo": "길을 찾게 해 주는 뇌 속 위치 세포"
+      },
+      {
+        "prizeId": "2019-medicine",
+        "whereKo": "세포가 산소의 양을 감지하는 원리"
+      },
+      {
+        "prizeId": "1924-medicine",
+        "whereKo": "심장의 전기 신호를 기록하는 심전도"
+      }
+    ]
+  },
+  {
+    "id": "potted_plant",
+    "nameKo": "화분",
+    "cocoClass": "potted plant",
+    "icon": "potted_plant.svg",
+    "hintKo": "창가나 베란다에서 초록색을 찾아보세요",
+    "prizes": [
+      {
+        "prizeId": "1961-chemistry",
+        "whereKo": "잎이 햇빛으로 이산화탄소를 양분으로 바꾸는 광합성의 경로"
+      }
+    ]
+  },
+  {
+    "id": "orange",
+    "nameKo": "오렌지·귤",
+    "cocoClass": "orange",
+    "icon": "orange.svg",
+    "hintKo": "새콤한 과일을 찾아보세요",
+    "prizes": [
+      {
+        "prizeId": "1937-chemistry-haworth",
+        "whereKo": "과즙 속 비타민 C의 분자 구조"
+      }
+    ]
+  },
+  {
+    "id": "broccoli",
+    "nameKo": "브로콜리",
+    "cocoClass": "broccoli",
+    "icon": "broccoli.svg",
+    "hintKo": "초록 채소를 찾아보세요",
+    "prizes": [
+      {
+        "prizeId": "1937-chemistry-haworth",
+        "whereKo": "채소에 풍부한 비타민 C의 분자 구조"
+      },
+      {
+        "prizeId": "1918-chemistry",
+        "whereKo": "작물을 키운 질소 비료를 만드는 암모니아 합성"
+      }
+    ]
+  },
+  {
+    "id": "bottle",
+    "nameKo": "병",
+    "cocoClass": "bottle",
+    "icon": "bottle.svg",
+    "hintKo": "마시고 난 뒤 손에 남는 것을 찾아보세요",
+    "prizes": [
+      {
+        "prizeId": "1953-chemistry",
+        "whereKo": "플라스틱 병을 이루는 아주 긴 사슬 분자, 고분자"
+      },
+      {
+        "prizeId": "1963-chemistry",
+        "whereKo": "병뚜껑 같은 폴리에틸렌·폴리프로필렌을 만드는 촉매"
+      }
+    ]
+  },
+  {
+    "id": "bowl",
+    "nameKo": "그릇",
+    "cocoClass": "bowl",
+    "icon": "bowl.svg",
+    "hintKo": "식탁 위를 찍어 보세요",
+    "prizes": [
+      {
+        "prizeId": "1929-medicine-eijkman",
+        "whereKo": "흰쌀밥만 먹으면 생기는 각기병에서 찾은 비타민의 실마리"
+      }
+    ]
+  },
+  {
+    "id": "bed",
+    "nameKo": "침대",
+    "cocoClass": "bed",
+    "icon": "bed.svg",
+    "hintKo": "하루를 마무리하는 곳을 찍어 보세요",
+    "prizes": [
+      {
+        "prizeId": "2017-medicine",
+        "whereKo": "밤이 되면 졸리게 하는 몸속 생체 시계"
+      }
+    ]
+  },
+  {
+    "id": "refrigerator",
+    "nameKo": "냉장고",
+    "cocoClass": "refrigerator",
+    "icon": "refrigerator.svg",
+    "hintKo": "부엌에서 가장 차가운 곳을 찾아보세요",
+    "prizes": [
+      {
+        "prizeId": "1913-physics",
+        "whereKo": "기체를 압축·팽창시켜 온도를 낮추는 원리를 극한까지 밀어붙인 극저온 연구"
+      }
     ]
   },
   {
@@ -91,7 +306,10 @@
     "nameKo": "LED 전구",
     "icon": "led_bulb.svg",
     "prizes": [
-      { "prizeId": "2014-physics", "whereKo": "청색 LED에 형광체를 더해 만든 흰빛 LED 조명" }
+      {
+        "prizeId": "2014-physics",
+        "whereKo": "청색 LED에 형광체를 더해 만든 흰빛 LED 조명"
+      }
     ]
   },
   {
@@ -99,7 +317,10 @@
     "nameKo": "보조배터리",
     "icon": "battery.svg",
     "prizes": [
-      { "prizeId": "2019-chemistry", "whereKo": "안에 든 리튬이온 배터리" }
+      {
+        "prizeId": "2019-chemistry",
+        "whereKo": "안에 든 리튬이온 배터리"
+      }
     ]
   },
   {
@@ -107,7 +328,10 @@
     "nameKo": "공유기·인터넷",
     "icon": "router.svg",
     "prizes": [
-      { "prizeId": "2009-physics-fiber", "whereKo": "집까지 인터넷을 실어 오는 광섬유 통신" }
+      {
+        "prizeId": "2009-physics-fiber",
+        "whereKo": "집까지 인터넷을 실어 오는 광섬유 통신"
+      }
     ]
   },
   {
@@ -115,7 +339,10 @@
     "nameKo": "태양광 패널",
     "icon": "solar_panel.svg",
     "prizes": [
-      { "prizeId": "1921-physics", "whereKo": "빛을 전기로 바꾸는 태양전지의 바탕 원리(광전효과)" }
+      {
+        "prizeId": "1921-physics",
+        "whereKo": "빛을 전기로 바꾸는 태양전지의 바탕 원리(광전효과)"
+      }
     ]
   },
   {
@@ -123,8 +350,14 @@
     "nameKo": "바코드 스캐너",
     "icon": "barcode.svg",
     "prizes": [
-      { "prizeId": "1964-physics", "whereKo": "바코드를 읽는 레이저의 원리" },
-      { "prizeId": "2000-physics-hetero", "whereKo": "작고 효율적인 반도체 레이저" }
+      {
+        "prizeId": "1964-physics",
+        "whereKo": "바코드를 읽는 레이저의 원리"
+      },
+      {
+        "prizeId": "2000-physics-hetero",
+        "whereKo": "작고 효율적인 반도체 레이저"
+      }
     ]
   },
   {
@@ -132,7 +365,10 @@
     "nameKo": "백신",
     "icon": "vaccine.svg",
     "prizes": [
-      { "prizeId": "2023-medicine", "whereKo": "코로나19 mRNA 백신 기술" }
+      {
+        "prizeId": "2023-medicine",
+        "whereKo": "코로나19 mRNA 백신 기술"
+      }
     ]
   },
   {
@@ -140,7 +376,10 @@
     "nameKo": "항생제",
     "icon": "antibiotic.svg",
     "prizes": [
-      { "prizeId": "1945-medicine", "whereKo": "세계 최초로 널리 쓰인 항생제, 페니실린" }
+      {
+        "prizeId": "1945-medicine",
+        "whereKo": "세계 최초로 널리 쓰인 항생제, 페니실린"
+      }
     ]
   },
   {
@@ -148,7 +387,10 @@
     "nameKo": "MRI",
     "icon": "mri.svg",
     "prizes": [
-      { "prizeId": "2003-medicine", "whereKo": "자기장으로 몸속을 찍는 자기공명영상" }
+      {
+        "prizeId": "2003-medicine",
+        "whereKo": "자기장으로 몸속을 찍는 자기공명영상"
+      }
     ]
   }
 ]
