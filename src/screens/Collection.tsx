@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
-import { RECOGNIZERS, TEST_UNLOCK } from "../config";
+import { TEST_UNLOCK } from "../config";
 import { PRIZE_BY_ID } from "../data";
-import { hintFor, iconFor, progress, TIERS, type CollectionState } from "../lib/collection";
+import { hintFor, iconFor, isStage2Photo, progress, TIERS, type CollectionState } from "../lib/collection";
 import { Icon } from "../components/Icon";
 import type { PrizeCategory } from "../types";
 
@@ -63,7 +63,7 @@ export function Collection({
   const stage1Ids = TIERS.stage1.filter(matches);
   const stage2Ids = TIERS.stage2.filter(matches);
   // 2단계(제로샷)가 켜져 있으면 2차 중 일부는 1차처럼 사진으로 모은다
-  const photo = new Set(RECOGNIZERS.zeroshot ? TIERS.stage2Photo : []);
+  const photo = new Set(TIERS.stage2.filter((id) => isStage2Photo(id)));
   const emptyNote = <p className="sub filter-empty" role="status">이 단계에는 해당 부문의 노벨상이 없어요.</p>;
   const tabRefs = useRef<Record<Tab, HTMLButtonElement | null>>({ stage1: null, stage2: null });
   const showInstallHint = persistent && !state.ui.installHintDismissed && isIosSafari() && !isStandalone();

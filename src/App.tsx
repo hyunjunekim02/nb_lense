@@ -194,7 +194,7 @@ export function App() {
   const openPrize = useCallback(
     (prizeId: string) => {
       track({ name: "prize_open", prizeId });
-      if (screen.name === "collection" && collection.tierOf(prizeId) === 2) {
+      if (screen.name === "collection" && collection.tierOf(prizeId) === 2 && !collection.isStage2Photo(prizeId)) {
         track({ name: "stage_placeholder_tap", stage: "zeroshot" });
       }
       setSheet(prizeId);
@@ -329,8 +329,8 @@ export function App() {
     const where = result?.prizes.find((h) => h.prize.id === sheet)?.where ?? [];
     sheetView = <PrizeSheet prize={sheetPrize} where={where} onClose={closeSheet} />;
   } else if (sheet && sheetPrize && screen.name === "collection") {
-    // 도감에서는 찾은 칸과 2차 칸만 열린다. 2차는 읽기 전용 안내를 붙인다
-    const stage2 = collection.tierOf(sheet) === 2;
+    // 도감에서는 찾은 칸과 2차 칸만 열린다. 사진으로 못 모으는 2차는 읽기 전용 안내를 붙인다
+    const stage2 = collection.tierOf(sheet) === 2 && !collection.isStage2Photo(sheet);
     sheetView = (
       <PrizeSheet
         prize={sheetPrize}

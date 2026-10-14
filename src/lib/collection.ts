@@ -1,4 +1,4 @@
-import { COLLECTION_STORAGE_KEY } from "../config";
+import { COLLECTION_STORAGE_KEY, RECOGNIZERS } from "../config";
 import { OBJECTS, PRIZES } from "../data";
 import type { Milestone, ObjectEntry, PrizeEntry, PrizeHit, ScanSource } from "../types";
 
@@ -59,6 +59,11 @@ export function tierOf(prizeId: string, tiers: Tiers = TIERS): 1 | 2 | undefined
   if (tiers.stage1.includes(prizeId)) return 1;
   if (tiers.stage2.includes(prizeId)) return 2;
   return undefined;
+}
+
+/** 2차 노벨상 중 지금 사진으로 모을 수 있는가 (2단계 제로샷이 켜져 있고 제로샷 사물에 연결됨) */
+export function isStage2Photo(prizeId: string, enabled: boolean = RECOGNIZERS.zeroshot, tiers: Tiers = TIERS): boolean {
+  return enabled && tiers.stage2Photo.includes(prizeId);
 }
 
 export function emptyState(): CollectionState {

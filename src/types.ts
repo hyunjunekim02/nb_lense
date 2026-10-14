@@ -5,7 +5,7 @@ export type PrizeCategory = "physics" | "chemistry" | "medicine";
 export type ObjectEntry = {
   id: string;
   nameKo: string;
-  /** COCO 클래스명. 없으면 인식되지 않아 앱에 나오지 않는다 */
+  /** COCO 클래스명 (1단계). 없으면 zeroshotLabelsEn이 있을 때만 2단계로 인식되고, 둘 다 없으면 앱에 나오지 않는다 */
   cocoClass?: string;
   /** public/icons 안의 단색 SVG 파일명 */
   icon: string;
