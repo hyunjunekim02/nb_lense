@@ -29,10 +29,31 @@ for (const o of stage1Objects) {
     errors++;
   }
 }
+// 2단계(제로샷) 사물: 영어 라벨이 있는 비COCO 사물. 잠긴 칸 힌트가 필요하다
+const stage2Objects = objects.filter((o) => !o.cocoClass && o.zeroshotLabelsEn?.length && o.prizes.length > 0);
+for (const o of stage2Objects) {
+  if (!o.hintKo) {
+    console.error(`[check-data] ${o.id}: 2단계(제로샷) 사물은 도감 잠긴 칸 힌트(hintKo)가 필요합니다`);
+    errors++;
+  }
+}
+const labels = new Map();
+for (const o of objects) {
+  for (const label of o.zeroshotLabelsEn ?? []) {
+    if (labels.has(label)) {
+      console.error(`[check-data] ${o.id}: 제로샷 라벨 "${label}"이 ${labels.get(label)}와 겹칩니다`);
+      errors++;
+    }
+    labels.set(label, o.id);
+  }
+}
 const stage1Ids = new Set(stage1Objects.flatMap((o) => o.prizes.map((l) => l.prizeId)));
 const stage2 = prizes.filter((p) => !stage1Ids.has(p.id)).map((p) => p.id);
+const photoIds = new Set(stage2Objects.flatMap((o) => o.prizes.map((l) => l.prizeId)));
+const stage2Photo = stage2.filter((id) => photoIds.has(id));
 console.log(
-  `[check-data] 도감: 1차 노벨상 ${prizes.length - stage2.length}개 · 2차 ${stage2.length}개 · 1차 사물 ${stage1Objects.length}종`,
+  `[check-data] 도감: 1차 노벨상 ${prizes.length - stage2.length}개 · 2차 ${stage2.length}개` +
+    `(사진으로 ${stage2Photo.length}개) · 1차 사물 ${stage1Objects.length}종 · 2차 사물 ${stage2Objects.length}종`,
 );
 
 const unverified = prizes.filter((p) => !p.verified).map((p) => p.id);

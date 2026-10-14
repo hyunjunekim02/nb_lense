@@ -1,7 +1,20 @@
 import { describe, expect, it } from "vitest";
 import { COLLECTION_STORAGE_KEY } from "../config";
 import { OBJECT_BY_ID, OBJECTS, PRIZE_BY_ID } from "../data";
-import { applyScan, emptyState, hintFor, iconFor, load, progress, reset, save, TIERS, tierOf, whereFor } from "./collection";
+import {
+  applyScan,
+  emptyState,
+  hintFor,
+  iconFor,
+  load,
+  progress,
+  reset,
+  save,
+  TIERS,
+  tierOf,
+  unlockStage1,
+  whereFor,
+} from "./collection";
 import { prizesForObjects } from "./mapping";
 import type { ScanSource } from "../types";
 
@@ -71,6 +84,34 @@ describe("1차·2차 계산", () => {
       "bed",
       "refrigerator",
     ]);
+    expect(TIERS.stage2Photo).toEqual([
+      "1901-physics",
+      "1902-medicine",
+      "1904-chemistry",
+      "1904-physics",
+      "1912-chemistry-sabatier",
+      "1923-medicine",
+      "1924-medicine",
+      "1930-medicine",
+      "1945-medicine",
+      "1953-physics",
+      "1958-chemistry",
+      "1960-chemistry",
+      "1964-physics",
+      "1971-physics",
+      "1979-medicine",
+      "1982-medicine",
+      "1988-medicine",
+      "1993-chemistry-pcr",
+      "1995-chemistry",
+      "1996-chemistry",
+      "2003-medicine",
+      "2008-chemistry",
+      "2010-physics",
+      "2019-physics-exoplanet",
+      "2023-medicine",
+    ]);
+    expect(TIERS.stage2Photo.every((id) => TIERS.stage2.includes(id))).toBe(true);
     expect(tierOf("2014-physics")).toBe(1);
     expect(tierOf("2023-medicine")).toBe(2);
     expect(tierOf("nope")).toBeUndefined();
@@ -84,14 +125,16 @@ describe("1차·2차 계산", () => {
   it("칸 아이콘은 사물이 없으면 부문 아이콘을 쓴다", () => {
     expect(iconFor("2014-physics", "tv")).toBe("tv.svg");
     expect(iconFor("1945-medicine")).toBe("antibiotic.svg");
-    expect(iconFor("1901-physics")).toBe("atom");
+    expect(iconFor("2013-physics")).toBe("atom");
     expect(iconFor("2010-chemistry")).toBe("flask-conical");
     expect(iconFor("1901-medicine")).toBe("heart-pulse");
   });
 
   it("잠긴 칸 힌트는 연결된 1차 사물에서 가져온다", () => {
     expect(hintFor("2007-physics")).toBe(OBJECT_BY_ID.get("laptop")!.hintKo);
-    expect(hintFor("1945-medicine")).toBeUndefined();
+    // 2차는 2단계(제로샷) 사물의 힌트, 사진으로 못 찾는 노벨상은 힌트 없음
+    expect(hintFor("1945-medicine")).toBe(OBJECT_BY_ID.get("antibiotic")!.hintKo);
+    expect(hintFor("2013-physics")).toBeUndefined();
   });
 });
 
@@ -138,6 +181,29 @@ describe("applyScan", () => {
     const complete = applyScan(almost.state, scan("upload", "refrigerator"));
     expect(complete.milestones).toEqual(["complete"]);
     expect(progress(complete.state)).toMatchObject({ prizes: 26, prizeTotal: 26, objects: 13, objectTotal: 14, stage2Unlocked: true });
+  });
+
+  it("2차 노벨상은 2차 도감이 열린 뒤에 찍은 사진만 담는다", () => {
+    const before = applyScan(emptyState(), scan("upload", "mosquito"));
+    expect(before.newPrizeIds).toEqual([]);
+    expect(before.state.objects.mosquito).toBeDefined();
+
+    // 1차를 모두 채운 상태
+    const all1 = applyScan(emptyState(), scan("upload", ...TIERS.stage1Objects)).state;
+    expect(progress(all1).stage2Unlocked).toBe(true);
+    const after = applyScan(all1, scan("upload", "mosquito"));
+    expect(after.newPrizeIds).toEqual(["1902-medicine"]);
+    expect(progress(after.state)).toMatchObject({ stage2Prizes: 1, stage2PrizeTotal: 25 });
+  });
+
+  it("테스트용 unlockStage1은 1차를 모두 채우고 기존 기록은 유지한다", () => {
+    const s = applyScan(emptyState(), scan("upload", "phone"), day("2026-10-01")).state;
+    const u = unlockStage1(s, day("2026-10-14"));
+    expect(progress(u)).toMatchObject({ prizes: 26, stage2Unlocked: true });
+    expect(u.prizes["2014-physics"].firstAt).toBe("2026-10-01");
+    expect(u.prizes["1913-physics"]).toEqual({ firstAt: "2026-10-14", objectId: "refrigerator", count: 1 });
+    // 열린 뒤에는 2차를 바로 담을 수 있다
+    expect(applyScan(u, scan("upload", "pencil")).newPrizeIds).toEqual(["2010-physics"]);
   });
 
   it("데이터에서 사라진 ID는 진행률에서 빠진다", () => {

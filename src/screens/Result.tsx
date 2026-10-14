@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { DEBUG, NEURAL_NET_PRIZE_ID } from "../config";
-import { OBJECTS } from "../data";
+import { DEBUG, NEURAL_NET_PRIZE_ID, RECOGNIZERS } from "../config";
+import { OBJECTS, ZEROSHOT_OBJECTS } from "../data";
 import { filterByObject } from "../lib/mapping";
-import { TIERS } from "../lib/collection";
+import { TIERS, tierOf } from "../lib/collection";
 import type { Milestone, ScanResult } from "../types";
 import { ObjectChip } from "../components/ObjectChip";
 import { PrizeCard } from "../components/PrizeCard";
@@ -11,7 +11,9 @@ import { Icon } from "../components/Icon";
 import { DebugPanel } from "../components/DebugPanel";
 
 /** 빈 결과 안내에 쓰는 인식 가능한 사물 이름 */
-const AUTO_NAMES = OBJECTS.filter((o) => o.cocoClass).map((o) => o.nameKo).join(", ");
+const AUTO_NAMES = [...OBJECTS.filter((o) => o.cocoClass), ...(RECOGNIZERS.zeroshot ? ZEROSHOT_OBJECTS : [])]
+  .map((o) => o.nameKo)
+  .join(", ");
 
 const MILESTONE_TEXT: Record<Milestone, string> = {
   first: "첫 노벨상을 찾았어요!",
@@ -116,7 +118,7 @@ export function Result({
             </button>
           </div>
           {DEBUG && result.rawDetections && (
-            <DebugPanel detections={result.rawDetections} inferenceMs={result.inferenceMs} />
+            <DebugPanel detections={result.rawDetections} inferenceMs={result.inferenceMs} zeroshot={result.zeroshot} />
           )}
         </div>
       </main>
@@ -154,6 +156,9 @@ export function Result({
               </button>
             )}
           </div>
+        )}
+        {collected && !collected.stage2Open && result.prizes.some((h) => tierOf(h.prize.id) === 2) && (
+          <p className="sub sample-note">2차 도감의 노벨상은 1차 도감을 완성한 뒤부터 모을 수 있어요.</p>
         )}
         {result.source === "sample" && (
           <p className="sub sample-note">예시 체험이에요. 내 사진으로 찾으면 도감에 모을 수 있어요.</p>
@@ -200,7 +205,7 @@ export function Result({
           </span>
         )}
         {DEBUG && result.rawDetections && (
-          <DebugPanel detections={result.rawDetections} inferenceMs={result.inferenceMs} />
+          <DebugPanel detections={result.rawDetections} inferenceMs={result.inferenceMs} zeroshot={result.zeroshot} />
         )}
         <div style={{ marginTop: 20 }}>
           <Disclaimer />

@@ -1,4 +1,4 @@
-import { GITHUB_URL, SERVICE_NAME } from "../config";
+import { GITHUB_URL, RECOGNIZERS, SERVICE_NAME } from "../config";
 import { Disclaimer, PHOTO_NOTICE } from "../components/Disclaimer";
 import { Icon } from "../components/Icon";
 
@@ -44,7 +44,8 @@ export function About({ onBack }: { onBack: () => void }) {
         의 공개 데이터(CC0)를 원문 그대로 사용합니다. 한국어 설명은 공식 수상 사유와 공개 자료를 바탕으로 정리했습니다.
       </p>
       <p>
-        사물 인식: MediaPipe Object Detector (EfficientDet-Lite0, COCO). 아이콘:{" "}
+        사물 인식: MediaPipe Object Detector (EfficientDet-Lite0, COCO)
+        {RECOGNIZERS.zeroshot && ", Transformers.js + MobileCLIP-S0 (실험 중)"}. 아이콘:{" "}
         <a href="https://lucide.dev/" target="_blank" rel="noopener noreferrer">
           Lucide
         </a>{" "}

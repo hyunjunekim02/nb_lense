@@ -8,8 +8,10 @@ import { track } from "./lib/analytics";
 import { renderCollectionCard, renderShareCard, shareOrDownload } from "./lib/shareCard";
 import * as collection from "./lib/collection";
 import type { Detection, ScanResult, ScanSource } from "./types";
+import type { ZeroshotRaw } from "./lib/recognizers/zeroshot";
+import { RECOGNIZERS, TEST_UNLOCK } from "./config";
 import { Home } from "./screens/Home";
-import { Analyzing } from "./screens/Analyzing";
+import { Analyzing, type AnalyzingPhase } from "./screens/Analyzing";
 import { Result } from "./screens/Result";
 import { Collection } from "./screens/Collection";
 import { About } from "./screens/About";
@@ -19,7 +21,7 @@ import { PrizeSheet } from "./components/PrizeSheet";
 
 type Screen =
   | { name: "home" }
-  | { name: "analyzing"; imageUrl: string; phase: "model" | "detect" }
+  | { name: "analyzing"; imageUrl: string; phase: AnalyzingPhase }
   | { name: "result" }
   | { name: "collection" }
   | { name: "about" }
@@ -27,7 +29,10 @@ type Screen =
   | { name: "error"; kind: "model" | "decode" };
 
 const catalog = { objects: OBJECTS, prizeById: PRIZE_BY_ID };
-const initialCollection = collection.load();
+const initialCollection = (() => {
+  const loaded = collection.load();
+  return TEST_UNLOCK ? { ...loaded, state: collection.unlockStage1(loaded.state) } : loaded;
+})();
 
 export function App() {
   const [screen, setScreen] = useState<Screen>({ name: "home" });
@@ -114,7 +119,18 @@ export function App() {
 
       // detect()는 동기라 UI를 막는다. 분석 중 화면이 그려진 뒤 호출한다 (명세 5.1)
       await nextPaint(2);
-      const { recognitions, ms, raw } = await pipeline.run(prepared.canvas);
+      // 2단계(제로샷)는 켜져 있으면 1단계가 아무것도 못 찾았을 때 이어서 돌린다
+      const { recognitions, ms, raw, ran, failed } = await pipeline.run(
+        prepared.canvas,
+        RECOGNIZERS.zeroshot ? ["zeroshot"] : [],
+        {
+          onLoad: (stage) => {
+            if (stage === "zeroshot" && id === scanId.current) {
+              setScreen({ name: "analyzing", imageUrl: prepared.url, phase: "zeroshot-model" });
+            }
+          },
+        },
+      );
       if (id !== scanId.current) return;
 
       // 박스 표시와 ?debug 점수표는 1단계(COCO) 원본을 쓴다
@@ -126,10 +142,16 @@ export function App() {
 
       let collected: ScanResult["collected"];
       if (source === "upload") {
+        const stage2Open = collection.progress(recordRef.current).stage2Unlocked;
         const applied = collection.applyScan(recordRef.current, { source, objects, prizes });
         updateRecord(applied.state);
         const count = collection.progress(applied.state).prizes;
-        collected = { newPrizeIds: applied.newPrizeIds, milestone: collection.topMilestone(applied.milestones), count };
+        collected = {
+          newPrizeIds: applied.newPrizeIds,
+          milestone: collection.topMilestone(applied.milestones),
+          count,
+          stage2Open,
+        };
         for (const prizeId of applied.newPrizeIds) track({ name: "collect_new", prizeId });
         for (const milestone of applied.milestones) track({ name: "milestone", milestone });
         track({ name: "collection_progress", count });
@@ -142,6 +164,10 @@ export function App() {
         prizes,
         detections: usableDetections(rawDetections),
         rawDetections,
+        zeroshot:
+          ran.includes("zeroshot") || failed.includes("zeroshot")
+            ? { raw: raw.zeroshot as ZeroshotRaw | undefined, failed: failed.includes("zeroshot") }
+            : undefined,
         imageUrl: prepared.url,
         inferenceMs: ms,
         collected,
@@ -168,7 +194,7 @@ export function App() {
   const openPrize = useCallback(
     (prizeId: string) => {
       track({ name: "prize_open", prizeId });
-      if (screen.name === "collection" && collection.tierOf(prizeId) === 2) {
+      if (screen.name === "collection" && collection.tierOf(prizeId) === 2 && !collection.isStage2Photo(prizeId)) {
         track({ name: "stage_placeholder_tap", stage: "zeroshot" });
       }
       setSheet(prizeId);
@@ -303,8 +329,8 @@ export function App() {
     const where = result?.prizes.find((h) => h.prize.id === sheet)?.where ?? [];
     sheetView = <PrizeSheet prize={sheetPrize} where={where} onClose={closeSheet} />;
   } else if (sheet && sheetPrize && screen.name === "collection") {
-    // 도감에서는 찾은 칸과 2차 칸만 열린다. 2차는 읽기 전용 안내를 붙인다
-    const stage2 = collection.tierOf(sheet) === 2;
+    // 도감에서는 찾은 칸과 2차 칸만 열린다. 사진으로 못 모으는 2차는 읽기 전용 안내를 붙인다
+    const stage2 = collection.tierOf(sheet) === 2 && !collection.isStage2Photo(sheet);
     sheetView = (
       <PrizeSheet
         prize={sheetPrize}

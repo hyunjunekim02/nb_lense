@@ -6,6 +6,9 @@
 | --- | --- | --- | --- |
 | MediaPipe Tasks Vision | 브라우저 객체 감지 런타임 | [`@mediapipe/tasks-vision` 1.1.0](https://www.npmjs.com/package/@mediapipe/tasks-vision/v/1.1.0) | [Apache-2.0](https://github.com/google-ai-edge/mediapipe/blob/master/LICENSE) |
 | EfficientDet-Lite0 int8 | 객체 감지 모델 | [Google MediaPipe 모델](https://storage.googleapis.com/mediapipe-models/object_detector/efficientdet_lite0/int8/1/efficientdet_lite0.tflite) | Apache-2.0 |
+| Transformers.js | 2단계 제로샷 분류 런타임 (실험 중, `?zeroshot`) | [`@huggingface/transformers` 4.3.0](https://www.npmjs.com/package/@huggingface/transformers/v/4.3.0) | [Apache-2.0](https://github.com/huggingface/transformers.js/blob/main/LICENSE) |
+| ONNX Runtime Web | Transformers.js의 추론 엔진 (빌드에 wasm 포함) | [`onnxruntime-web`](https://www.npmjs.com/package/onnxruntime-web) | [MIT](https://github.com/microsoft/onnxruntime/blob/main/LICENSE) |
+| MobileCLIP-S0 (ONNX 변환본) | 2단계 제로샷 분류 모델. 저장소에 포함하지 않고 실행 시 내려받음 | [Xenova/mobileclip_s0](https://huggingface.co/Xenova/mobileclip_s0), 원본 [apple/ml-mobileclip](https://github.com/apple/ml-mobileclip) | 모델 카드의 라이선스를 따름 (정식 공개 전 확인 필요) |
 | Pretendard | 웹폰트 | [`pretendard` 1.3.9](https://github.com/orioncactus/pretendard/tree/v1.3.9) | [SIL Open Font License 1.1](https://github.com/orioncactus/pretendard/blob/v1.3.9/packages/pretendard/dist/LICENSE.txt) |
 | Lucide | 인터페이스 아이콘 | [`lucide-static` 1.56.0](https://www.npmjs.com/package/lucide-static/v/1.56.0) | [ISC](https://github.com/lucide-icons/lucide/blob/main/LICENSE) |
 | Feather Icons | 일부 Lucide 아이콘의 원저작물 | [Feather](https://github.com/feathericons/feather) | [MIT](https://github.com/feathericons/feather/blob/main/LICENSE) |

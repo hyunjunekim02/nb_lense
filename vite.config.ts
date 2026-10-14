@@ -28,7 +28,9 @@ function serviceWorker(): Plugin {
       }
       const icons = readdirSync("public/icons").map((f) => `icons/${f}`);
       const extra = ["manifest.webmanifest", "app-icon-192.png", "apple-touch-icon.png", "favicon-32.png"];
-      const precache = [BASE, ...built.filter((f) => f !== "index.html"), ...icons, ...extra].map((f) =>
+      // 2단계(제로샷)용 Transformers.js는 켠 사람만 쓰므로 미리 받지 않는다 (처음 쓸 때 assets/ 캐시 우선 규칙으로 저장)
+      const optional = (f: string) => f.includes("transformers");
+      const precache = [BASE, ...built.filter((f) => f !== "index.html" && !optional(f)), ...icons, ...extra].map((f) =>
         f === BASE ? f : BASE + f,
       );
       const pkg = JSON.parse(readFileSync("package.json", "utf8"));

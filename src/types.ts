@@ -1,15 +1,17 @@
+import type { ZeroshotRaw } from "./lib/recognizers/zeroshot";
+
 export type PrizeCategory = "physics" | "chemistry" | "medicine";
 
 export type ObjectEntry = {
   id: string;
   nameKo: string;
-  /** COCO 클래스명. 없으면 인식되지 않아 앱에 나오지 않는다 */
+  /** COCO 클래스명 (1단계). 없으면 zeroshotLabelsEn이 있을 때만 2단계로 인식되고, 둘 다 없으면 앱에 나오지 않는다 */
   cocoClass?: string;
   /** public/icons 안의 단색 SVG 파일명 */
   icon: string;
   /** 도감 잠긴 칸 힌트. 1차 사물(cocoClass 있음)은 필수, 사물 이름을 직접 말하지 않는다 */
   hintKo?: string;
-  /** 2단계 제로샷 인식용 영어 라벨 (준비 중, 지금은 비어 있어도 된다) */
+  /** 2단계 제로샷 인식용 영어 라벨 ("a photo of …"에 들어갈 말). 있으면 hintKo도 필요하다 */
   zeroshotLabelsEn?: string[];
   prizes: { prizeId: string; whereKo: string }[];
 };
@@ -50,6 +52,8 @@ export type ScanResult = {
   detections: Detection[];
   /** 디버그 모드 점수표용 원본 인식 */
   rawDetections?: Detection[];
+  /** 2단계(제로샷)를 돌렸을 때: 디버그 점수표용 원본 점수, 실패했으면 failed */
+  zeroshot?: { raw?: ZeroshotRaw; failed?: boolean };
   /** 업로드·예시일 때 화면에 보여줄 사진 (object URL) */
   imageUrl?: string;
   /** 추론 시간 (ms) */
@@ -61,6 +65,8 @@ export type ScanResult = {
     milestone?: Milestone;
     /** 스캔 후 1차 노벨상 수집 개수 */
     count: number;
+    /** 스캔 전에 2차 도감이 열려 있었는가 (아니면 2차 노벨상은 담지 않았다) */
+    stage2Open: boolean;
   };
 };
 

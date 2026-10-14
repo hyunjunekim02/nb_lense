@@ -10,12 +10,20 @@ export type PipelineOutput = {
   /** 돌린 엔진별 원본 출력 (?debug 점수표용) */
   raw: Partial<Record<RecognizerId, unknown>>;
   ran: RecognizerId[];
+  /** 상위 단계가 실패했을 때 (모델을 못 받는 등). 하위 단계 결과는 그대로 쓴다 */
+  failed: RecognizerId[];
+};
+
+export type RunOptions = {
+  /** 아직 준비되지 않은 엔진의 모델을 받기 직전에 불린다 (분석 중 화면 안내용) */
+  onLoad?: (id: RecognizerId) => void;
 };
 
 /**
  * 켜진 엔진을 단계 순서대로 돌린다 (v1.1 명세 5.1).
  * - 1단계는 항상 돌린다. 무언가 찾았으면 거기서 멈춘다.
- * - 상위 단계는 하위 단계가 0개를 찾았고, 엔진이 켜져 있고, 사용자가 그 단계를 요청했을 때만 시도한다.
+ * - 상위 단계는 하위 단계가 0개를 찾았고, 엔진이 켜져 있고, 그 단계를 요청했을 때만 시도한다.
+ * - 1단계 실패는 그대로 던지고(오류 화면), 상위 단계 실패는 기록만 하고 넘어간다.
  */
 export function createPipeline(recognizers: Recognizer[]) {
   const ordered = [...recognizers].sort((a, b) => a.stage - b.stage);
@@ -27,13 +35,22 @@ export function createPipeline(recognizers: Recognizer[]) {
     load: async () => {
       await first?.load();
     },
-    async run(image: HTMLCanvasElement, requested: RecognizerId[] = []): Promise<PipelineOutput> {
-      const out: PipelineOutput = { recognitions: [], ms: 0, raw: {}, ran: [] };
+    async run(image: HTMLCanvasElement, requested: RecognizerId[] = [], options: RunOptions = {}): Promise<PipelineOutput> {
+      const out: PipelineOutput = { recognitions: [], ms: 0, raw: {}, ran: [], failed: [] };
       for (const r of ordered) {
         if (!r.enabled) continue;
         if (r.stage > 1 && (out.recognitions.length > 0 || !requested.includes(r.id))) continue;
-        await r.load();
-        const res = await r.recognize(image);
+        let res;
+        try {
+          if (!r.isReady()) options.onLoad?.(r.id);
+          await r.load();
+          res = await r.recognize(image);
+        } catch (err) {
+          if (r.stage === 1) throw err;
+          console.warn(err);
+          out.failed.push(r.id);
+          continue;
+        }
         out.recognitions.push(...res.recognitions);
         out.ms += res.ms;
         out.raw[r.id] = res.raw;
