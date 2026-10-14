@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { STAGE2_UNLOCK_OBJECTS } from "../config";
-import { OBJECTS, PRIZE_BY_ID } from "../data";
-import { hintFor, progress, TIERS, type CollectionState } from "../lib/collection";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { PRIZE_BY_ID } from "../data";
+import { hintFor, iconFor, progress, TIERS, type CollectionState } from "../lib/collection";
 import { Icon } from "../components/Icon";
 
 /** 2026-10-14 → "10월 14일" (올해가 아니면 연도도) */
@@ -9,14 +8,6 @@ function formatDate(iso: string) {
   const [y, m, d] = iso.split("-").map(Number);
   const md = `${m}월 ${d}일`;
   return y === new Date().getFullYear() ? md : `${y}년 ${md}`;
-}
-
-/** 노벨상 칸에 보여줄 사물 아이콘: 찾은 칸은 처음 찾은 사물, 그 밖에는 연결된 첫 사물 */
-function iconFor(prizeId: string, objectId?: string) {
-  const obj =
-    (objectId && OBJECTS.find((o) => o.id === objectId)) ||
-    OBJECTS.find((o) => o.prizes.some((l) => l.prizeId === prizeId));
-  return obj?.icon;
 }
 
 function isIosSafari() {
@@ -32,7 +23,9 @@ function isStandalone() {
   );
 }
 
-/** 내 노벨상 도감 (v1.1 명세 4.2) */
+type Tab = "stage1" | "stage2";
+
+/** 내 노벨상 도감 (v1.1 명세 4.2). 1차·2차 도감을 탭으로 나눠 보여준다 */
 export function Collection({
   state,
   persistent,
@@ -53,9 +46,33 @@ export function Collection({
   onDismissInstallHint: () => void;
 }) {
   const p = progress(state);
+  const [tab, setTab] = useState<Tab>("stage1");
   const [confirming, setConfirming] = useState(false);
+  const tabRefs = useRef<Record<Tab, HTMLButtonElement | null>>({ stage1: null, stage2: null });
   const showInstallHint = persistent && !state.ui.installHintDismissed && isIosSafari() && !isStandalone();
-  const complete = p.prizes === p.prizeTotal;
+
+  // 탭 키보드 이동 (WAI-ARIA tabs: 좌우 화살표)
+  const onTabKey = (e: ReactKeyboardEvent) => {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    e.preventDefault();
+    const next: Tab = tab === "stage1" ? "stage2" : "stage1";
+    setTab(next);
+    tabRefs.current[next]?.focus();
+  };
+  const tabProps = (id: Tab) => ({
+    ref: (el: HTMLButtonElement | null) => {
+      tabRefs.current[id] = el;
+    },
+    type: "button" as const,
+    role: "tab",
+    id: `tab-${id}`,
+    "aria-selected": tab === id,
+    "aria-controls": `panel-${id}`,
+    tabIndex: tab === id ? 0 : -1,
+    className: "tabs__tab",
+    onClick: () => setTab(id),
+    onKeyDown: onTabKey,
+  });
 
   return (
     <main className="page collection">
@@ -95,73 +112,101 @@ export function Collection({
         </p>
       </section>
 
-      <h2 className="section-title">1차 도감</h2>
-      <ul className="tiles">
-        {TIERS.stage1.map((id) => {
-          const prize = PRIZE_BY_ID.get(id)!;
-          const got = state.prizes[id];
-          const meta = (
-            <span className="tile__meta num">
-              {prize.year} · {prize.categoryKo}
-            </span>
-          );
-          if (!got) {
-            return (
-              <li key={id} className="tile tile--locked">
-                <span className="tile__mark" aria-hidden="true">
-                  ?
-                </span>
-                {meta}
-                <span className="visually-hidden">아직 찾지 못한 노벨상.</span>
-                <span className="tile__hint">{hintFor(id)}</span>
-              </li>
-            );
-          }
-          const icon = iconFor(id, got.objectId);
-          return (
-            <li key={id}>
-              <button type="button" className="tile" onClick={() => onOpenPrize(id)}>
-                {icon && <Icon name={icon} />}
-                {meta}
-                <span className="tile__title">{prize.titleKo}</span>
-                <span className="tile__date">{formatDate(got.firstAt)} 처음 찾음</span>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+      <div className="tabs" role="tablist" aria-label="도감 단계">
+        <button {...tabProps("stage1")}>
+          1차 도감{" "}
+          <span className="num tabs__count">
+            {p.prizes}/{p.prizeTotal}
+          </span>
+        </button>
+        <button {...tabProps("stage2")}>
+          2차 도감 <span className="num tabs__count">{TIERS.stage2.length}</span>
+          {!p.stage2Unlocked && <Icon name="lock" small />}
+        </button>
+      </div>
 
-      <h2 className="section-title">2차 도감 · 서비스 준비 중</h2>
-      <p className="sub section-desc">더 많은 물건을 알아보는 인식 기능을 준비하고 있어요.</p>
-      {p.stage2Unlocked ? (
-        <ul className="tiles">
-          {TIERS.stage2.map((id) => {
-            const prize = PRIZE_BY_ID.get(id)!;
-            const icon = iconFor(id);
-            return (
-              <li key={id}>
-                <button type="button" className="tile tile--stage2" onClick={() => onOpenPrize(id)}>
-                  {icon && <Icon name={icon} />}
-                  <span className="tile__meta num">
-                    {prize.year} · {prize.categoryKo}
-                  </span>
-                  <span className="tile__title">{prize.titleKo}</span>
-                  <span className="tag">준비 중</span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+      {tab === "stage1" ? (
+        <section role="tabpanel" id="panel-stage1" aria-labelledby="tab-stage1" className="tabs__panel">
+          <ul className="tiles">
+            {TIERS.stage1.map((id) => {
+              const prize = PRIZE_BY_ID.get(id)!;
+              const got = state.prizes[id];
+              const meta = (
+                <span className="tile__meta num">
+                  {prize.year} · {prize.categoryKo}
+                </span>
+              );
+              if (!got) {
+                return (
+                  <li key={id} className="tile tile--locked">
+                    <span className="tile__mark" aria-hidden="true">
+                      ?
+                    </span>
+                    {meta}
+                    <span className="visually-hidden">아직 찾지 못한 노벨상.</span>
+                    <span className="tile__hint">{hintFor(id)}</span>
+                  </li>
+                );
+              }
+              return (
+                <li key={id}>
+                  <button type="button" className="tile" onClick={() => onOpenPrize(id)}>
+                    <Icon name={iconFor(id, got.objectId)} />
+                    {meta}
+                    <span className="tile__title">{prize.titleKo}</span>
+                    <span className="tile__date">{formatDate(got.firstAt)} 처음 찾음</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
       ) : (
-        <p className="callout">
-          1차 도감에서 사물 {STAGE2_UNLOCK_OBJECTS}종을 모으면 열려요 (현재 <span className="num">{p.objects}</span>종)
-        </p>
+        <section role="tabpanel" id="panel-stage2" aria-labelledby="tab-stage2" className="tabs__panel">
+          <p className="sub section-desc">
+            지금의 기기 안 인식 모델로는 아직 사진에서 찾을 수 없는 노벨상들이에요. 더 많은 물건을 알아보는 인식 기능을 준비하고
+            있어요.
+          </p>
+          <div className={p.stage2Unlocked ? "stage2" : "stage2 stage2--locked"}>
+            {/* 잠겨 있으면 목록은 보여주되 누를 수 없게 하고, 스크린리더에는 아래 안내만 읽힌다 */}
+            <ul className="tiles" aria-hidden={!p.stage2Unlocked} inert={!p.stage2Unlocked}>
+              {TIERS.stage2.map((id) => {
+                const prize = PRIZE_BY_ID.get(id)!;
+                return (
+                  <li key={id}>
+                    <button type="button" className="tile tile--stage2" onClick={() => onOpenPrize(id)}>
+                      <Icon name={iconFor(id)} />
+                      <span className="tile__meta num">
+                        {prize.year} · {prize.categoryKo}
+                      </span>
+                      <span className="tile__title">{prize.titleKo}</span>
+                      <span className="tag">준비 중</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+            {!p.stage2Unlocked && (
+              <div className="stage2__overlay">
+                <div className="stage2__message" role="note">
+                  <Icon name="lock" />
+                  <strong>1차 도감을 모두 모으면 열려요</strong>
+                  <span className="num">
+                    지금 {p.prizeTotal}개 중 {p.prizes}개
+                  </span>
+                  <span className="tag">서비스 준비 중</span>
+                  <span className="sub">열린 뒤에는 카드를 눌러 설명을 읽을 수 있어요.</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
       )}
 
       <div className="collection__foot">
         <button
           type="button"
-          className={complete ? "btn btn--primary" : "btn btn--secondary"}
+          className={p.stage2Unlocked ? "btn btn--primary" : "btn btn--secondary"}
           onClick={onShare}
           disabled={sharing || p.prizes === 0}
         >

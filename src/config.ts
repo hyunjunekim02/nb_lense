@@ -41,9 +41,6 @@ export const RECOGNIZERS = {
   llm: false, // 3단계: 준비 중
 } as const;
 
-/** 1차 도감에서 사물을 이만큼 모으면 2차 도감 섹션이 열린다 */
-export const STAGE2_UNLOCK_OBJECTS = 5;
-
 /** 도감 기록 localStorage 키. 형식을 바꾸면 버전을 올린다 */
 export const COLLECTION_STORAGE_KEY = "nb_lense.collection.v1";
 

@@ -64,4 +64,4 @@ export type ScanResult = {
   };
 };
 
-export type Milestone = "first" | "half" | "stage2" | "complete";
+export type Milestone = "first" | "half" | "complete";

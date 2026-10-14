@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { SAMPLES, SERVICE_NAME } from "../config";
+import { Icon } from "../components/Icon";
 import { Disclaimer } from "../components/Disclaimer";
 
 export function Home({
@@ -23,8 +24,27 @@ export function Home({
 
   return (
     <main className="page home">
-      <div>
+      <header className="home__top">
         <p className="brand">{SERVICE_NAME}</p>
+        <button
+          type="button"
+          className="collection-btn"
+          onClick={onCollection}
+          aria-label={collected > 0 ? `내 도감, ${collectionTotal}개 중 ${collected}개` : "내 도감"}
+        >
+          <Icon name="book-open" />
+          <span className="collection-btn__label" aria-hidden="true">
+            {collected > 0 ? (
+              <span className="num">
+                {collected}/{collectionTotal}
+              </span>
+            ) : (
+              "도감"
+            )}
+          </span>
+        </button>
+      </header>
+      <div>
         <h1 className="headline">당신 폰에는 노벨상이 몇 개 들어 있을까?</h1>
         <p className="lead">사진을 올리면 그 속에 숨은 노벨상 연구를 찾아드려요.</p>
 
@@ -56,21 +76,6 @@ export function Home({
               onClick={() => setShowSamples((v) => !v)}
             >
               예시 사진으로 해보기
-            </button>
-            <span className="home__sep" aria-hidden="true">
-              ·
-            </span>
-            <button type="button" className="btn btn--text" onClick={onCollection}>
-              {collected > 0 ? (
-                <span>
-                  내 도감{" "}
-                  <span className="num">
-                    {collected}/{collectionTotal}
-                  </span>
-                </span>
-              ) : (
-                "내 도감"
-              )}
             </button>
           </div>
 

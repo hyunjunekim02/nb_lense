@@ -13,7 +13,7 @@ export type AnalyticsEvent =
   | { name: "model_load_fail" }
   | { name: "collect_new"; prizeId: string }
   | { name: "collection_progress"; count: number }
-  | { name: "milestone"; milestone: "first" | "half" | "stage2" | "complete" }
+  | { name: "milestone"; milestone: "first" | "half" | "complete" }
   | { name: "collection_open" }
   | { name: "collection_share"; method: "share" | "download" }
   | { name: "stage_placeholder_tap"; stage: "zeroshot" | "llm" }
