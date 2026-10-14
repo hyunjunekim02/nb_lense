@@ -1,7 +1,7 @@
 /* 색·크기는 이 토큰으로만 정의한다. 강조색은 1개 (금색 계열 금지: 메달 연상 방지). */
 :root {
   --bg: #ffffff;
-  --surface: #f4f5f7;
+  --surface: #f6f7f9;
   --text: #16181d;
   --text-sub: #5b6170;
   --line: #e3e5ea;
@@ -11,7 +11,7 @@
   --scrim: rgb(0 0 0 / 0.4);
 
   --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-  --fs-headline: 24px;
+  --fs-headline: 26px;
   --fs-title: 17px;
   --fs-body: 15px;
   --fs-sub: 13px;
@@ -19,7 +19,7 @@
 
   --page-max: 480px;
   --gutter: 20px;
-  --radius: 12px;
+  --radius: 14px;
   --tap: 44px;
   --button-h: 52px;
   --dur: 150ms;

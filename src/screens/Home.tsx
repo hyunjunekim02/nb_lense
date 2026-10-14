@@ -34,19 +34,25 @@ export function Home({
         >
           <Icon name="book-open" />
           <span className="collection-btn__label" aria-hidden="true">
-            {collected > 0 ? (
-              <span className="num">
+            도감
+            {collected > 0 && (
+              <span className="num collection-btn__count">
                 {collected}/{collectionTotal}
               </span>
-            ) : (
-              "도감"
             )}
           </span>
         </button>
       </header>
-      <div>
-        <h1 className="headline">당신 폰에는 노벨상이 몇 개 들어 있을까?</h1>
-        <p className="lead">사진을 올리면 그 속에 숨은 노벨상 연구를 찾아드려요.</p>
+      <div className="home__hero">
+        <span className="home__symbol" aria-hidden="true">
+          <Icon name="atom" />
+        </span>
+        <h1 className="headline">
+          일상 속 노벨상,<br />사진으로 찾아보세요
+        </h1>
+        <p className="lead">
+          물건 속에 숨은 연구를 발견하고<br />나만의 노벨상 도감을 채워보세요.
+        </p>
 
         <div className="home__actions">
           {/* capture 속성은 쓰지 않는다: 갤러리 선택을 막지 않기 위해 (명세 4.1) */}
@@ -75,7 +81,7 @@ export function Home({
               aria-controls="samples"
               onClick={() => setShowSamples((v) => !v)}
             >
-              예시 사진으로 해보기
+              {showSamples ? "예시 사진 접기" : "예시로 먼저 둘러보기"}
             </button>
           </div>
 
@@ -83,7 +89,8 @@ export function Home({
             <div id="samples" className="samples" role="group" aria-label="예시 사진">
               {SAMPLES.map((s) => (
                 <button key={s.src} type="button" className="sample" onClick={() => onSample(s.src)}>
-                  <img src={s.src} alt={s.label} loading="lazy" />
+                  <img src={s.src} alt="" loading="lazy" />
+                  <span>{s.label}</span>
                 </button>
               ))}
             </div>
@@ -92,12 +99,10 @@ export function Home({
       </div>
 
       <footer className="home__footer">
-        <p className="sub">
-          사진은 기기 밖으로 전송되지 않아요 ·{" "}
-          <button type="button" className="btn btn--text" style={{ padding: 0, fontSize: "inherit" }} onClick={onAbout}>
-            비공식 학생 프로젝트
-          </button>
-        </p>
+        <p className="sub">사진은 저장·전송 없이 기기 안에서만 처리돼요.</p>
+        <button type="button" className="btn btn--text btn--quiet" onClick={onAbout}>
+          노벨 렌즈 소개
+        </button>
         <Disclaimer />
       </footer>
     </main>

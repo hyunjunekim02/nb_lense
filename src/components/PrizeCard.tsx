@@ -30,7 +30,7 @@ export function PrizeCard({
           </span>
           <span className="card__title">
             {prize.titleKo}
-            {isNew && <span className="tag-new">NEW</span>}
+            {isNew && <span className="tag-new">새 발견</span>}
           </span>
           <span className="card__where">
             {showObjectName && !focusObjectId && objectName ? `${objectName}: ` : ""}
