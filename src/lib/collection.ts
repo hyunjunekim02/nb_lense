@@ -5,7 +5,8 @@ import type { Milestone, ObjectEntry, PrizeEntry, PrizeHit, ScanSource } from ".
 /**
  * 노벨상 도감 (v1.1 명세 3·7장). 사진은 저장하지 않고 ID와 날짜만 브라우저(localStorage)에 남긴다.
  * 1차·2차 구분은 데이터에서 자동 계산한다: 1단계(COCO)로 인식되는 사물에 연결된 노벨상이 1차.
- * 2차 도감은 1차 도감을 모두 채우면 열린다(아직 사진으로 찾을 수는 없어 "서비스 준비 중").
+ * 2차 도감은 1차 도감을 모두 채우면 열린다. 2차 중 2단계(제로샷)로 인식되는 사물에 연결된 노벨상은
+ * 그때부터 사진으로 모을 수 있고, 나머지는 열람만 한다.
  */
 
 export type CollectionState = {
@@ -28,6 +29,10 @@ export type Tiers = {
   stage2: string[];
   /** 1차 사물 ID (1단계로 인식 가능) */
   stage1Objects: string[];
+  /** 2차 중 사진으로 모을 수 있는 노벨상 ID (2단계 제로샷 사물에 연결됨, 연도 오름차순) */
+  stage2Photo: string[];
+  /** 2단계(제로샷)로 인식하는 사물 ID */
+  stage2Objects: string[];
 };
 
 const byYear = (a: PrizeEntry, b: PrizeEntry) => a.year - b.year || a.id.localeCompare(b.id);
@@ -35,11 +40,16 @@ const byYear = (a: PrizeEntry, b: PrizeEntry) => a.year - b.year || a.id.localeC
 export function computeTiers(catalog: Catalog): Tiers {
   const stage1Objects = catalog.objects.filter((o) => o.cocoClass && o.prizes.length > 0);
   const stage1Ids = new Set(stage1Objects.flatMap((o) => o.prizes.map((l) => l.prizeId)));
+  const stage2Objects = catalog.objects.filter((o) => !o.cocoClass && o.zeroshotLabelsEn?.length && o.prizes.length > 0);
+  const photoIds = new Set(stage2Objects.flatMap((o) => o.prizes.map((l) => l.prizeId)));
   const sorted = [...catalog.prizes].sort(byYear);
+  const stage2 = sorted.filter((p) => !stage1Ids.has(p.id)).map((p) => p.id);
   return {
     stage1: sorted.filter((p) => stage1Ids.has(p.id)).map((p) => p.id),
-    stage2: sorted.filter((p) => !stage1Ids.has(p.id)).map((p) => p.id),
+    stage2,
     stage1Objects: stage1Objects.map((o) => o.id),
+    stage2Photo: stage2.filter((id) => photoIds.has(id)),
+    stage2Objects: stage2Objects.map((o) => o.id),
   };
 }
 
@@ -62,6 +72,9 @@ export type Progress = {
   objectTotal: number;
   /** 1차 도감을 모두 채우면 2차 도감이 열린다 */
   stage2Unlocked: boolean;
+  /** 2차 중 사진으로 모은 노벨상 수 / 사진으로 모을 수 있는 수 */
+  stage2Prizes: number;
+  stage2PrizeTotal: number;
 };
 
 /** 데이터에서 사라진 ID는 기록에 남아 있어도 세지 않는다 */
@@ -74,6 +87,8 @@ export function progress(state: CollectionState, tiers: Tiers = TIERS): Progress
     objects,
     objectTotal: tiers.stage1Objects.length,
     stage2Unlocked: tiers.stage1.length > 0 && prizes >= tiers.stage1.length,
+    stage2Prizes: tiers.stage2Photo.filter((id) => state.prizes[id]).length,
+    stage2PrizeTotal: tiers.stage2Photo.length,
   };
 }
 
@@ -110,11 +125,13 @@ export function today(now: Date = new Date()): string {
 /**
  * 스캔 결과를 도감에 반영한다. 업로드 사진만 수집하고, 예시 사진은 상태를 바꾸지 않는다.
  * 같은 노벨상을 다시 찾으면 count만 늘리고 firstAt은 유지한다. 입력 state는 바꾸지 않는다.
+ * 2차 노벨상은 스캔 전에 2차 도감이 열려 있었을 때만 담는다.
  */
 export function applyScan(state: CollectionState, scan: ScanInput, now: Date = new Date(), tiers: Tiers = TIERS): ApplyResult {
   if (scan.source !== "upload") return { state, newPrizeIds: [], newObjectIds: [], milestones: [] };
 
   const date = today(now);
+  const stage2Open = progress(state, tiers).stage2Unlocked;
   const next: CollectionState = {
     ...state,
     prizes: { ...state.prizes },
@@ -135,6 +152,7 @@ export function applyScan(state: CollectionState, scan: ScanInput, now: Date = n
   }
   for (const hit of scan.prizes) {
     const id = hit.prize.id;
+    if (!stage2Open && tierOf(id, tiers) === 2) continue;
     const cur = next.prizes[id];
     if (cur) next.prizes[id] = { ...cur, count: cur.count + 1 };
     else {
@@ -166,10 +184,11 @@ export function whereFor(prizeId: string, catalog: Catalog = { objects: OBJECTS,
     .flatMap((o) => o.prizes.filter((l) => l.prizeId === prizeId).map((l) => ({ objectId: o.id, whereKo: l.whereKo })));
 }
 
-/** 잠긴 칸 힌트: 이 노벨상에 연결된 1차 사물 중 첫 번째의 hintKo */
+/** 잠긴 칸 힌트: 이 노벨상에 연결된, 사진으로 찾을 수 있는 사물 중 첫 번째의 hintKo (1차 사물 우선) */
 export function hintFor(prizeId: string, objects: ObjectEntry[] = OBJECTS, tiers: Tiers = TIERS): string | undefined {
-  return objects.find((o) => tiers.stage1Objects.includes(o.id) && o.hintKo && o.prizes.some((l) => l.prizeId === prizeId))
-    ?.hintKo;
+  const linked = (ids: string[]) =>
+    objects.find((o) => ids.includes(o.id) && o.hintKo && o.prizes.some((l) => l.prizeId === prizeId))?.hintKo;
+  return linked(tiers.stage1Objects) ?? linked(tiers.stage2Objects);
 }
 
 // ---------- 저장소 ----------

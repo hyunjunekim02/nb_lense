@@ -54,13 +54,18 @@ export function Review() {
       {OBJECTS.map((o) => (
         <article key={o.id} className="review-item">
           <div className="sub">
-            <code>{o.id}</code> · {o.cocoClass ? `자동 인식 (COCO: ${o.cocoClass})` : "인식 안 됨 (앱에 나오지 않음)"}
+            <code>{o.id}</code> ·{" "}
+            {o.cocoClass
+              ? `1단계 자동 인식 (COCO: ${o.cocoClass})`
+              : o.zeroshotLabelsEn?.length
+                ? `2단계 제로샷 (?zeroshot): ${o.zeroshotLabelsEn.join(" / ")}`
+                : "인식 안 됨 (앱에 나오지 않음)"}
           </div>
           <h3 style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <Icon name={o.icon} />
             {o.nameKo}
           </h3>
-          {o.cocoClass && (
+          {(o.cocoClass || !!o.zeroshotLabelsEn?.length) && (
             <>
               <span className="review-label">도감 잠긴 칸 힌트 (hintKo)</span>
               <p>{o.hintKo ?? "⚠ 없음"}</p>

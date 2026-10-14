@@ -8,8 +8,10 @@ import { track } from "./lib/analytics";
 import { renderCollectionCard, renderShareCard, shareOrDownload } from "./lib/shareCard";
 import * as collection from "./lib/collection";
 import type { Detection, ScanResult, ScanSource } from "./types";
+import type { ZeroshotRaw } from "./lib/recognizers/zeroshot";
+import { RECOGNIZERS } from "./config";
 import { Home } from "./screens/Home";
-import { Analyzing } from "./screens/Analyzing";
+import { Analyzing, type AnalyzingPhase } from "./screens/Analyzing";
 import { Result } from "./screens/Result";
 import { Collection } from "./screens/Collection";
 import { About } from "./screens/About";
@@ -19,7 +21,7 @@ import { PrizeSheet } from "./components/PrizeSheet";
 
 type Screen =
   | { name: "home" }
-  | { name: "analyzing"; imageUrl: string; phase: "model" | "detect" }
+  | { name: "analyzing"; imageUrl: string; phase: AnalyzingPhase }
   | { name: "result" }
   | { name: "collection" }
   | { name: "about" }
@@ -114,7 +116,18 @@ export function App() {
 
       // detect()는 동기라 UI를 막는다. 분석 중 화면이 그려진 뒤 호출한다 (명세 5.1)
       await nextPaint(2);
-      const { recognitions, ms, raw } = await pipeline.run(prepared.canvas);
+      // 2단계(제로샷)는 켜져 있으면 1단계가 아무것도 못 찾았을 때 이어서 돌린다
+      const { recognitions, ms, raw, ran, failed } = await pipeline.run(
+        prepared.canvas,
+        RECOGNIZERS.zeroshot ? ["zeroshot"] : [],
+        {
+          onLoad: (stage) => {
+            if (stage === "zeroshot" && id === scanId.current) {
+              setScreen({ name: "analyzing", imageUrl: prepared.url, phase: "zeroshot-model" });
+            }
+          },
+        },
+      );
       if (id !== scanId.current) return;
 
       // 박스 표시와 ?debug 점수표는 1단계(COCO) 원본을 쓴다
@@ -126,10 +139,16 @@ export function App() {
 
       let collected: ScanResult["collected"];
       if (source === "upload") {
+        const stage2Open = collection.progress(recordRef.current).stage2Unlocked;
         const applied = collection.applyScan(recordRef.current, { source, objects, prizes });
         updateRecord(applied.state);
         const count = collection.progress(applied.state).prizes;
-        collected = { newPrizeIds: applied.newPrizeIds, milestone: collection.topMilestone(applied.milestones), count };
+        collected = {
+          newPrizeIds: applied.newPrizeIds,
+          milestone: collection.topMilestone(applied.milestones),
+          count,
+          stage2Open,
+        };
         for (const prizeId of applied.newPrizeIds) track({ name: "collect_new", prizeId });
         for (const milestone of applied.milestones) track({ name: "milestone", milestone });
         track({ name: "collection_progress", count });
@@ -142,6 +161,10 @@ export function App() {
         prizes,
         detections: usableDetections(rawDetections),
         rawDetections,
+        zeroshot:
+          ran.includes("zeroshot") || failed.includes("zeroshot")
+            ? { raw: raw.zeroshot as ZeroshotRaw | undefined, failed: failed.includes("zeroshot") }
+            : undefined,
         imageUrl: prepared.url,
         inferenceMs: ms,
         collected,

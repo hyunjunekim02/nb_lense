@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { RECOGNIZERS } from "../config";
 import { PRIZE_BY_ID } from "../data";
 import { hintFor, iconFor, progress, TIERS, type CollectionState } from "../lib/collection";
 import { Icon } from "../components/Icon";
@@ -61,6 +62,8 @@ export function Collection({
   const matches = (id: string) => filter === "all" || PRIZE_BY_ID.get(id)?.category === filter;
   const stage1Ids = TIERS.stage1.filter(matches);
   const stage2Ids = TIERS.stage2.filter(matches);
+  // 2단계(제로샷)가 켜져 있으면 2차 중 일부는 1차처럼 사진으로 모은다
+  const photo = new Set(RECOGNIZERS.zeroshot ? TIERS.stage2Photo : []);
   const emptyNote = <p className="sub filter-empty" role="status">이 단계에는 해당 부문의 노벨상이 없어요.</p>;
   const tabRefs = useRef<Record<Tab, HTMLButtonElement | null>>({ stage1: null, stage2: null });
   const showInstallHint = persistent && !state.ui.installHintDismissed && isIosSafari() && !isStandalone();
@@ -140,7 +143,10 @@ export function Collection({
           </span>
         </button>
         <button {...tabProps("stage2")}>
-          2차 도감 <span className="num tabs__count">{TIERS.stage2.length}</span>
+          2차 도감{" "}
+          <span className="num tabs__count">
+            {photo.size > 0 ? `${p.stage2Prizes}/${p.stage2PrizeTotal}` : TIERS.stage2.length}
+          </span>
           {!p.stage2Unlocked && <Icon name="lock" small />}
         </button>
       </div>
@@ -157,43 +163,17 @@ export function Collection({
         <section role="tabpanel" id="panel-stage1" aria-labelledby="tab-stage1" className="tabs__panel">
           {stage1Ids.length === 0 && emptyNote}
           <ul className="tiles">
-            {stage1Ids.map((id) => {
-              const prize = PRIZE_BY_ID.get(id)!;
-              const got = state.prizes[id];
-              const meta = (
-                <span className="tile__meta num">
-                  {prize.year} · {prize.categoryKo}
-                </span>
-              );
-              if (!got) {
-                return (
-                  <li key={id} className="tile tile--locked">
-                    <span className="tile__mark" aria-hidden="true">
-                      ?
-                    </span>
-                    {meta}
-                    <span className="visually-hidden">아직 찾지 못한 노벨상.</span>
-                    <span className="tile__hint">{hintFor(id)}</span>
-                  </li>
-                );
-              }
-              return (
-                <li key={id}>
-                  <button type="button" className="tile" onClick={() => onOpenPrize(id)}>
-                    <Icon name={iconFor(id, got.objectId)} />
-                    {meta}
-                    <span className="tile__title">{prize.titleKo}</span>
-                    <span className="tile__date">{formatDate(got.firstAt)} 발견</span>
-                  </button>
-                </li>
-              );
-            })}
+            {stage1Ids.map((id) => (
+              <PrizeTile key={id} id={id} state={state} onOpenPrize={onOpenPrize} />
+            ))}
           </ul>
         </section>
       ) : (
         <section role="tabpanel" id="panel-stage2" aria-labelledby="tab-stage2" className="tabs__panel">
           <p className="sub section-desc">
-            더 많은 노벨상 연구를 둘러보세요. 사진으로 찾는 기능은 준비 중이에요.
+            {photo.size > 0
+              ? `${photo.size}개는 1차처럼 사진으로 찾을 수 있어요. 나머지는 연구를 둘러보세요.`
+              : "더 많은 노벨상 연구를 둘러보세요. 사진으로 찾는 기능은 준비 중이에요."}
           </p>
           {stage2Ids.length === 0 && emptyNote}
           <div className={p.stage2Unlocked ? "stage2" : "stage2 stage2--locked"}>
@@ -201,6 +181,7 @@ export function Collection({
             <ul className="tiles" aria-hidden={!p.stage2Unlocked} inert={!p.stage2Unlocked}>
               {stage2Ids.map((id) => {
                 const prize = PRIZE_BY_ID.get(id)!;
+                if (photo.has(id)) return <PrizeTile key={id} id={id} state={state} onOpenPrize={onOpenPrize} />;
                 return (
                   <li key={id}>
                     <button type="button" className="tile tile--stage2" onClick={() => onOpenPrize(id)}>
@@ -257,6 +238,39 @@ export function Collection({
         />
       )}
     </main>
+  );
+}
+
+/** 사진으로 모으는 칸: 찾았으면 노벨상, 아니면 잠긴 칸과 힌트 */
+function PrizeTile({ id, state, onOpenPrize }: { id: string; state: CollectionState; onOpenPrize: (id: string) => void }) {
+  const prize = PRIZE_BY_ID.get(id)!;
+  const got = state.prizes[id];
+  const meta = (
+    <span className="tile__meta num">
+      {prize.year} · {prize.categoryKo}
+    </span>
+  );
+  if (!got) {
+    return (
+      <li className="tile tile--locked">
+        <span className="tile__mark" aria-hidden="true">
+          ?
+        </span>
+        {meta}
+        <span className="visually-hidden">아직 찾지 못한 노벨상.</span>
+        <span className="tile__hint">{hintFor(id)}</span>
+      </li>
+    );
+  }
+  return (
+    <li>
+      <button type="button" className="tile" onClick={() => onOpenPrize(id)}>
+        <Icon name={iconFor(id, got.objectId)} />
+        {meta}
+        <span className="tile__title">{prize.titleKo}</span>
+        <span className="tile__date">{formatDate(got.firstAt)} 발견</span>
+      </button>
+    </li>
   );
 }
 

@@ -31,14 +31,47 @@ export const SAMPLES = [
  */
 export const GOATCOUNTER_CODE: string = import.meta.env.VITE_GOATCOUNTER_CODE ?? "";
 
+/** 주소 쿼리 (?debug, ?zeroshot 같은 실험용 스위치) */
+const params = typeof location !== "undefined" ? new URLSearchParams(location.search) : new URLSearchParams();
+
 /**
  * 단계별 인식 엔진 (v1.1 명세 5장). 작은 모델이 먼저 처리하고, 못 찾은 것만 다음 단계로 넘긴다.
  * 1단계: 기기 안 COCO 검출 / 2단계: 기기 안 제로샷 분류 / 3단계: 서버 비전 LLM
  */
 export const RECOGNIZERS = {
   coco: true,
-  zeroshot: false, // 2단계: 준비 중
+  /** 2단계: 정확도 실험 중이라 주소에 ?zeroshot 을 붙였을 때만 켠다 */
+  zeroshot: params.has("zeroshot"),
   llm: false, // 3단계: 준비 중
+} as const;
+
+/**
+ * 2단계 제로샷 분류 (MobileCLIP, Transformers.js). 1단계가 아무것도 못 찾았을 때 사진 전체를
+ * 사물 라벨 문장들(objects.json의 zeroshotLabelsEn)과 비교해 가장 가까운 사물 하나를 고른다.
+ * 모델은 처음 쓸 때 Hugging Face에서 받고 브라우저 캐시에 남긴다.
+ */
+export const ZEROSHOT = {
+  modelId: "Xenova/mobileclip_s0",
+  /** 라벨 앞에 붙이는 문장 틀 */
+  promptTemplate: "a photo of {}",
+  /**
+   * 어느 사물에도 해당하지 않는 사진을 걸러 내는 라벨. 이쪽이 이기면 아무것도 찾지 않은 것으로 본다
+   */
+  negativeLabelsEn: [
+    "a room",
+    "a person",
+    "a selfie",
+    "food on a table",
+    "a street",
+    "a building",
+    "a landscape",
+    "a desk",
+    "a pet",
+    "a screenshot",
+    "a document with text",
+  ],
+  /** 사물 하나의 확률(그 사물 라벨들의 softmax 합)이 이 값 이상이어야 인정한다. 실기기 실험 후 조정 */
+  threshold: 0.5,
 } as const;
 
 /** 도감 기록 localStorage 키. 형식을 바꾸면 버전을 올린다 */
@@ -52,7 +85,6 @@ export const NEURAL_NET_PRIZE_ID = "2024-physics";
  * 켜지면 80개 COCO 클래스를 낮은 점수까지 모두 받아 결과 화면에 점수표로 보여준다.
  * ?debug&threshold=0.25 처럼 임계값을 바꿔 실험할 수 있다.
  */
-const params = typeof location !== "undefined" ? new URLSearchParams(location.search) : new URLSearchParams();
 export const DEBUG = params.has("debug");
 const thresholdParam = Number(params.get("threshold"));
 /** 실제로 결과에 쓰는 임계값 */
@@ -60,3 +92,6 @@ export const SCORE_THRESHOLD =
   DEBUG && thresholdParam > 0 && thresholdParam < 1 ? thresholdParam : DETECTOR.scoreThreshold;
 /** 디버그 모드에서 모델이 돌려주는 최저 점수 */
 export const DEBUG_MIN_SCORE = 0.1;
+const zsThresholdParam = Number(params.get("zs"));
+/** 2단계 제로샷 임계값. ?zeroshot&zs=0.4 처럼 바꿔 실험할 수 있다 */
+export const ZEROSHOT_THRESHOLD = zsThresholdParam > 0 && zsThresholdParam < 1 ? zsThresholdParam : ZEROSHOT.threshold;

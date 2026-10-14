@@ -285,6 +285,11 @@
     "id": "led_bulb",
     "nameKo": "LED 전구",
     "icon": "led_bulb.svg",
+    "hintKo": "천장이나 스탠드의 불빛을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "an LED light bulb",
+      "a white LED lamp"
+    ],
     "prizes": [
       {
         "prizeId": "2014-physics",
@@ -296,6 +301,11 @@
     "id": "battery",
     "nameKo": "보조배터리",
     "icon": "battery.svg",
+    "hintKo": "가방 속 충전용 물건을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a portable power bank",
+      "a power bank charging a phone"
+    ],
     "prizes": [
       {
         "prizeId": "2019-chemistry",
@@ -307,6 +317,11 @@
     "id": "router",
     "nameKo": "공유기·인터넷",
     "icon": "router.svg",
+    "hintKo": "인터넷 선이 모이는 곳을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a wifi router with antennas",
+      "an internet modem"
+    ],
     "prizes": [
       {
         "prizeId": "2009-physics-fiber",
@@ -318,6 +333,11 @@
     "id": "solar_panel",
     "nameKo": "태양광 패널",
     "icon": "solar_panel.svg",
+    "hintKo": "지붕이나 옥상에서 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a solar panel",
+      "solar panels on a roof"
+    ],
     "prizes": [
       {
         "prizeId": "1921-physics",
@@ -329,6 +349,11 @@
     "id": "barcode",
     "nameKo": "바코드 스캐너",
     "icon": "barcode.svg",
+    "hintKo": "계산대에서 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a barcode scanner at a store checkout",
+      "a barcode on a product"
+    ],
     "prizes": [
       {
         "prizeId": "1964-physics",
@@ -344,6 +369,11 @@
     "id": "vaccine",
     "nameKo": "백신",
     "icon": "vaccine.svg",
+    "hintKo": "예방 접종을 떠올려 보세요",
+    "zeroshotLabelsEn": [
+      "a vaccine vial",
+      "a nurse giving a vaccine injection"
+    ],
     "prizes": [
       {
         "prizeId": "2023-medicine",
@@ -355,6 +385,11 @@
     "id": "antibiotic",
     "nameKo": "항생제",
     "icon": "antibiotic.svg",
+    "hintKo": "약 상자 속 캡슐을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "antibiotic capsules",
+      "a pill capsule"
+    ],
     "prizes": [
       {
         "prizeId": "1945-medicine",
@@ -366,10 +401,314 @@
     "id": "mri",
     "nameKo": "MRI",
     "icon": "mri.svg",
+    "hintKo": "병원 영상의학과를 떠올려 보세요",
+    "zeroshotLabelsEn": [
+      "an MRI scanner in a hospital",
+      "an MRI scan image of a brain"
+    ],
     "prizes": [
       {
         "prizeId": "2003-medicine",
         "whereKo": "자기장으로 몸속을 찍는 자기공명영상"
+      }
+    ]
+  },
+  {
+    "id": "mosquito",
+    "nameKo": "모기",
+    "icon": "mosquito.svg",
+    "hintKo": "여름밤 귓가에서 앵앵거리는 것을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a mosquito",
+      "a mosquito on skin"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1902-medicine",
+        "whereKo": "말라리아를 옮기는 모기. 그 경로를 밝힌 연구"
+      }
+    ]
+  },
+  {
+    "id": "microscope",
+    "nameKo": "현미경",
+    "icon": "microscope.svg",
+    "hintKo": "과학실에서 작은 세상을 보는 도구를 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a microscope",
+      "a laboratory microscope"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1953-physics",
+        "whereKo": "투명한 세포도 또렷이 보이게 하는 위상차 현미경의 원리"
+      }
+    ]
+  },
+  {
+    "id": "xray",
+    "nameKo": "엑스레이 사진",
+    "icon": "xray.svg",
+    "hintKo": "몸속 뼈가 보이는 사진을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "an X-ray image of bones",
+      "a chest X-ray"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1901-physics",
+        "whereKo": "몸을 뚫고 뼈를 비추는 빛, 엑스선"
+      }
+    ]
+  },
+  {
+    "id": "ct_scanner",
+    "nameKo": "CT 촬영기",
+    "icon": "ct_scanner.svg",
+    "hintKo": "병원의 커다란 고리 모양 기계를 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a CT scanner in a hospital",
+      "a CT scan image"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1979-medicine",
+        "whereKo": "여러 방향의 엑스선으로 몸속 단면을 그려 내는 컴퓨터 단층촬영"
+      }
+    ]
+  },
+  {
+    "id": "insulin_pen",
+    "nameKo": "인슐린 펜",
+    "icon": "insulin_pen.svg",
+    "hintKo": "혈당을 관리하는 주사 도구를 찾아보세요",
+    "zeroshotLabelsEn": [
+      "an insulin pen",
+      "a blood glucose meter"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1923-medicine",
+        "whereKo": "당뇨병 환자가 맞는 인슐린의 발견"
+      },
+      {
+        "prizeId": "1958-chemistry",
+        "whereKo": "인슐린을 이루는 아미노산의 순서"
+      }
+    ]
+  },
+  {
+    "id": "pills",
+    "nameKo": "알약",
+    "icon": "pills.svg",
+    "hintKo": "두통이 있을 때 먹는 하얀 것을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "white pills",
+      "a blister pack of tablets",
+      "aspirin tablets"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1982-medicine",
+        "whereKo": "아스피린이 통증과 열을 줄이는 원리, 프로스타글란딘"
+      },
+      {
+        "prizeId": "1988-medicine",
+        "whereKo": "병의 원인을 겨냥해 약을 설계하는 신약 개발 방식"
+      }
+    ]
+  },
+  {
+    "id": "blood_bag",
+    "nameKo": "혈액 팩",
+    "icon": "blood_bag.svg",
+    "hintKo": "헌혈의 집을 떠올려 보세요",
+    "zeroshotLabelsEn": [
+      "a blood bag",
+      "a blood donation"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1930-medicine",
+        "whereKo": "수혈 전에 꼭 확인하는 ABO 혈액형"
+      }
+    ]
+  },
+  {
+    "id": "ecg_monitor",
+    "nameKo": "심전도 모니터",
+    "icon": "ecg_monitor.svg",
+    "hintKo": "병원 침대 옆에서 삑삑 소리 내는 화면을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "an ECG heart monitor",
+      "an electrocardiogram trace"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1924-medicine",
+        "whereKo": "심장의 전기 신호를 그래프로 기록하는 심전도"
+      }
+    ]
+  },
+  {
+    "id": "neon_sign",
+    "nameKo": "네온사인",
+    "icon": "neon_sign.svg",
+    "hintKo": "밤거리의 빛나는 간판을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a glowing neon sign",
+      "neon lights at night"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1904-chemistry",
+        "whereKo": "네온사인을 빛나게 하는 네온 같은 비활성 기체"
+      },
+      {
+        "prizeId": "1904-physics",
+        "whereKo": "간판 속 유리관에 함께 채우는 아르곤"
+      }
+    ]
+  },
+  {
+    "id": "spray_can",
+    "nameKo": "스프레이 캔",
+    "icon": "spray_can.svg",
+    "hintKo": "누르면 칙 하고 나오는 것을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "an aerosol spray can"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1995-chemistry",
+        "whereKo": "예전 스프레이 속 프레온 가스가 오존층을 망가뜨리는 원리"
+      }
+    ]
+  },
+  {
+    "id": "margarine",
+    "nameKo": "마가린",
+    "icon": "margarine.svg",
+    "hintKo": "빵에 바르는 노란 것을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a tub of margarine",
+      "margarine spread on bread"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1912-chemistry-sabatier",
+        "whereKo": "식물성 기름에 수소를 붙여 굳히는 금속 촉매 반응"
+      }
+    ]
+  },
+  {
+    "id": "hologram",
+    "nameKo": "홀로그램",
+    "icon": "hologram.svg",
+    "hintKo": "각도에 따라 반짝이며 바뀌는 무늬를 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a hologram sticker",
+      "the hologram on a credit card"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1971-physics",
+        "whereKo": "카드와 지폐의 위조 방지 홀로그램"
+      }
+    ]
+  },
+  {
+    "id": "telescope",
+    "nameKo": "망원경",
+    "icon": "telescope.svg",
+    "hintKo": "밤하늘을 가까이 보는 도구를 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a telescope",
+      "an astronomical telescope"
+    ],
+    "prizes": [
+      {
+        "prizeId": "2019-physics-exoplanet",
+        "whereKo": "망원경으로 별빛을 살펴 찾아낸 외계 행성"
+      }
+    ]
+  },
+  {
+    "id": "pencil",
+    "nameKo": "연필",
+    "icon": "pencil.svg",
+    "hintKo": "필통 속을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a pencil",
+      "pencils on a desk"
+    ],
+    "prizes": [
+      {
+        "prizeId": "2010-physics",
+        "whereKo": "연필심 흑연에서 한 겹만 떼어 낸 그래핀"
+      }
+    ]
+  },
+  {
+    "id": "soccer_ball",
+    "nameKo": "축구공",
+    "icon": "soccer_ball.svg",
+    "hintKo": "운동장에서 굴러다니는 것을 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a soccer ball"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1996-chemistry",
+        "whereKo": "축구공처럼 생긴 탄소 분자, 풀러렌"
+      }
+    ]
+  },
+  {
+    "id": "jellyfish",
+    "nameKo": "해파리",
+    "icon": "jellyfish.svg",
+    "hintKo": "수족관이나 바다에서 찾아보세요",
+    "zeroshotLabelsEn": [
+      "a jellyfish",
+      "a glowing jellyfish in an aquarium"
+    ],
+    "prizes": [
+      {
+        "prizeId": "2008-chemistry",
+        "whereKo": "해파리에서 찾은 초록 형광 단백질(GFP)"
+      }
+    ]
+  },
+  {
+    "id": "fossil",
+    "nameKo": "화석·유물",
+    "icon": "fossil.svg",
+    "hintKo": "박물관 전시실을 떠올려 보세요",
+    "zeroshotLabelsEn": [
+      "a fossil",
+      "an ancient artifact in a museum"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1960-chemistry",
+        "whereKo": "유물의 나이를 재는 탄소-14 연대 측정"
+      }
+    ]
+  },
+  {
+    "id": "pcr_test",
+    "nameKo": "PCR 검사 키트",
+    "icon": "pcr_test.svg",
+    "hintKo": "코로나19 검사를 떠올려 보세요",
+    "zeroshotLabelsEn": [
+      "a COVID-19 PCR test swab",
+      "a test tube in a laboratory"
+    ],
+    "prizes": [
+      {
+        "prizeId": "1993-chemistry-pcr",
+        "whereKo": "아주 적은 유전자도 불려서 찾아내는 PCR"
       }
     ]
   }

@@ -52,4 +52,28 @@ describe("pipeline", () => {
     expect(out.recognitions.map((r) => r.objectId)).toEqual(["led_bulb"]);
     expect(out.ms).toBe(20);
   });
+
+  it("상위 단계가 실패하면 기록만 하고, 모델을 받기 전에 onLoad를 부른다", async () => {
+    const coco = fake("coco", 1, true, []);
+    const zs = fake("zeroshot", 2, true, []);
+    zs.isReady = () => false;
+    zs.load = vi.fn(async () => {
+      throw new Error("offline");
+    });
+    const onLoad = vi.fn();
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const out = await createPipeline([coco, zs]).run(image, ["zeroshot"], { onLoad });
+    expect(onLoad).toHaveBeenCalledWith("zeroshot");
+    expect(out.ran).toEqual(["coco"]);
+    expect(out.failed).toEqual(["zeroshot"]);
+    warn.mockRestore();
+  });
+
+  it("1단계가 실패하면 그대로 던진다", async () => {
+    const coco = fake("coco", 1, true, []);
+    coco.recognize = vi.fn(async () => {
+      throw new Error("model");
+    });
+    await expect(createPipeline([coco]).run(image)).rejects.toThrow("model");
+  });
 });

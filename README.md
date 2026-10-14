@@ -21,6 +21,7 @@
 
 - 도감에는 항목 ID, 처음 찾은 날짜, 발견 횟수만 `localStorage`에 저장됩니다.
 - 모델과 WebAssembly 파일은 이 사이트에서 내려받아 브라우저 캐시에 보관할 수 있습니다.
+- 실험 중인 2단계 제로샷 인식(`?zeroshot`)을 켜면 MobileCLIP 모델 파일을 Hugging Face에서 내려받습니다. 이때도 사진은 기기 밖으로 나가지 않습니다.
 - 운영자가 GoatCounter를 설정한 배포본만 방문·기능 사용 이벤트를 쿠키 없이 전송합니다. 사진, 위치, 화면 크기, 이전 페이지 주소는 보내지 않습니다.
 - GoatCounter 설정이 비어 있는 기본 빌드는 분석 요청을 보내지 않습니다.
 
@@ -28,7 +29,8 @@
 
 - React 19, TypeScript, Vite
 - MediaPipe Tasks Vision 1.1.0
-- EfficientDet-Lite0 int8 객체 감지 모델
+- EfficientDet-Lite0 int8 객체 감지 모델 (1단계)
+- Transformers.js + MobileCLIP-S0 제로샷 분류 (2단계, 실험 중)
 - GitHub Pages와 서비스 워커 기반 PWA
 - Nobel Prize API 기반 수상자·공식 수상 사유 데이터
 
@@ -54,6 +56,16 @@ npm run dev
 | `npm run fetch-prizes` | Nobel Prize API에서 공식 데이터 갱신 |
 
 문구 검수는 `/nb_lense/#review`, 모델 결과 확인은 `/nb_lense/?debug`에서 할 수 있습니다. `?debug&threshold=0.25`처럼 임계값을 임시로 바꿀 수도 있습니다.
+
+### 2단계 제로샷 인식 실험
+
+COCO에 없는 물건(모기, 현미경, 알약 등)은 2단계 제로샷 분류로 찾습니다. 아직 정확도를 확인하는 중이라 기본으로는 꺼져 있고, 주소에 `?zeroshot`을 붙였을 때만 켜집니다.
+
+- `/nb_lense/?zeroshot&debug`: 1단계가 아무것도 못 찾으면 MobileCLIP이 사진 전체를 라벨 문장들과 비교합니다. 결과 화면 아래 디버그 표에 사물별 확률과 상위 라벨 문장이 나옵니다.
+- `&zs=0.4`처럼 제로샷 임계값(기본 0.5, `src/config.ts`의 `ZEROSHOT.threshold`)을 바꿔 볼 수 있습니다.
+- 처음 한 번은 Hugging Face에서 모델(수십 MB)을 받느라 오래 걸리고, 이후에는 브라우저 캐시를 씁니다.
+- 라벨은 `src/data/objects.json`의 `zeroshotLabelsEn`, 어느 사물에도 해당하지 않는 사진을 거르는 라벨은 `ZEROSHOT.negativeLabelsEn`에서 고칩니다.
+- 2차 노벨상은 1차 도감을 완성한 뒤에 찍은 사진만 도감에 담깁니다.
 
 ## 프로젝트 구조
 
