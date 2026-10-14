@@ -1,10 +1,11 @@
-import { COLLECTION_STORAGE_KEY, STAGE2_UNLOCK_OBJECTS } from "../config";
+import { COLLECTION_STORAGE_KEY } from "../config";
 import { OBJECTS, PRIZES } from "../data";
 import type { Milestone, ObjectEntry, PrizeEntry, PrizeHit, ScanSource } from "../types";
 
 /**
  * 노벨상 도감 (v1.1 명세 3·7장). 사진은 저장하지 않고 ID와 날짜만 브라우저(localStorage)에 남긴다.
  * 1차·2차 구분은 데이터에서 자동 계산한다: 1단계(COCO)로 인식되는 사물에 연결된 노벨상이 1차.
+ * 2차 도감은 1차 도감을 모두 채우면 열린다(아직 사진으로 찾을 수는 없어 "서비스 준비 중").
  */
 
 export type CollectionState = {
@@ -59,6 +60,7 @@ export type Progress = {
   prizeTotal: number;
   objects: number;
   objectTotal: number;
+  /** 1차 도감을 모두 채우면 2차 도감이 열린다 */
   stage2Unlocked: boolean;
 };
 
@@ -71,7 +73,7 @@ export function progress(state: CollectionState, tiers: Tiers = TIERS): Progress
     prizeTotal: tiers.stage1.length,
     objects,
     objectTotal: tiers.stage1Objects.length,
-    stage2Unlocked: objects >= Math.min(STAGE2_UNLOCK_OBJECTS, tiers.stage1Objects.length),
+    stage2Unlocked: tiers.stage1.length > 0 && prizes >= tiers.stage1.length,
   };
 }
 
@@ -79,13 +81,12 @@ function reached(p: Progress): Milestone[] {
   const out: Milestone[] = [];
   if (p.prizes >= 1) out.push("first");
   if (p.prizeTotal > 0 && p.prizes >= Math.ceil(p.prizeTotal / 2)) out.push("half");
-  if (p.stage2Unlocked) out.push("stage2");
   if (p.prizeTotal > 0 && p.prizes >= p.prizeTotal) out.push("complete");
   return out;
 }
 
 /** 배너에 하나만 보여줄 때의 우선순위 (높은 것부터) */
-const MILESTONE_ORDER: Milestone[] = ["complete", "stage2", "half", "first"];
+const MILESTONE_ORDER: Milestone[] = ["complete", "half", "first"];
 
 export function topMilestone(milestones: Milestone[]): Milestone | undefined {
   return MILESTONE_ORDER.find((m) => milestones.includes(m));
@@ -146,6 +147,15 @@ export function applyScan(state: CollectionState, scan: ScanInput, now: Date = n
   for (const m of milestones) next.milestones[m] = date;
 
   return { state: next, newPrizeIds, newObjectIds, milestones };
+}
+
+/** 노벨상 칸 아이콘: 처음 찾은 사물 → 연결된 첫 사물 → 부문 아이콘 순 */
+export function iconFor(prizeId: string, objectId?: string, objects: ObjectEntry[] = OBJECTS): string {
+  const obj =
+    (objectId && objects.find((o) => o.id === objectId)) || objects.find((o) => o.prizes.some((l) => l.prizeId === prizeId));
+  if (obj) return obj.icon;
+  const category = PRIZES.find((p) => p.id === prizeId)?.category;
+  return category === "chemistry" ? "flask-conical" : category === "medicine" ? "heart-pulse" : "atom";
 }
 
 /** 도감 칸을 눌렀을 때 시트의 "이 물건 속에서". 1차는 1차 사물만, 2차는 연결된 사물 전체 */

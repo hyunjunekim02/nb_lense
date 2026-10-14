@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { COLLECTION_STORAGE_KEY } from "../config";
 import { OBJECT_BY_ID, OBJECTS, PRIZE_BY_ID } from "../data";
-import { applyScan, emptyState, hintFor, load, progress, reset, save, TIERS, tierOf, whereFor } from "./collection";
+import { applyScan, emptyState, hintFor, iconFor, load, progress, reset, save, TIERS, tierOf, whereFor } from "./collection";
 import { prizesForObjects } from "./mapping";
 import type { ScanSource } from "../types";
 
@@ -39,7 +39,9 @@ describe("1차·2차 계산", () => {
       "2019-chemistry",
       "2024-physics",
     ]);
-    expect(TIERS.stage2).toEqual(["1945-medicine", "1964-physics", "2023-medicine"]);
+    expect(TIERS.stage2).toEqual(expect.arrayContaining(["1945-medicine", "1964-physics", "2023-medicine"]));
+    expect(TIERS.stage1.length + TIERS.stage2.length).toBe(PRIZE_BY_ID.size);
+    expect(TIERS.stage2.filter((id) => TIERS.stage1.includes(id))).toEqual([]);
     expect(TIERS.stage1Objects).toEqual(["phone", "laptop", "tv", "car", "traffic_light", "clock", "person"]);
     expect(tierOf("2014-physics")).toBe(1);
     expect(tierOf("2023-medicine")).toBe(2);
@@ -49,6 +51,14 @@ describe("1차·2차 계산", () => {
   it("1차 노벨상의 where는 1차 사물만, 2차는 연결된 사물 전체", () => {
     expect(whereFor("2014-physics").map((w) => w.objectId)).toEqual(["phone", "laptop", "tv", "car", "traffic_light"]);
     expect(whereFor("1945-medicine").map((w) => w.objectId)).toEqual(["antibiotic"]);
+  });
+
+  it("칸 아이콘은 사물이 없으면 부문 아이콘을 쓴다", () => {
+    expect(iconFor("2014-physics", "tv")).toBe("tv.svg");
+    expect(iconFor("1945-medicine")).toBe("antibiotic.svg");
+    expect(iconFor("1901-physics")).toBe("atom");
+    expect(iconFor("1918-chemistry")).toBe("flask-conical");
+    expect(iconFor("1930-medicine")).toBe("heart-pulse");
   });
 
   it("잠긴 칸 힌트는 연결된 1차 사물에서 가져온다", () => {
@@ -88,13 +98,13 @@ describe("applyScan", () => {
     expect(half.milestones).toEqual(["half"]);
     expect(applyScan(half.state, scan("upload", "phone")).milestones).toEqual([]);
 
-    const stage2 = applyScan(half.state, scan("upload", "laptop", "tv", "car"));
-    expect(stage2.milestones).toEqual(["stage2"]);
-    expect(progress(stage2.state).stage2Unlocked).toBe(true);
+    const almost = applyScan(half.state, scan("upload", "laptop", "tv", "car"));
+    expect(almost.milestones).toEqual([]);
+    expect(progress(almost.state).stage2Unlocked).toBe(false);
 
-    const complete = applyScan(stage2.state, scan("upload", "person"));
+    const complete = applyScan(almost.state, scan("upload", "person"));
     expect(complete.milestones).toEqual(["complete"]);
-    expect(progress(complete.state)).toMatchObject({ prizes: 13, prizeTotal: 13, objects: 6, objectTotal: 7 });
+    expect(progress(complete.state)).toMatchObject({ prizes: 13, prizeTotal: 13, objects: 6, objectTotal: 7, stage2Unlocked: true });
   });
 
   it("데이터에서 사라진 ID는 진행률에서 빠진다", () => {

@@ -32,7 +32,7 @@ for (const o of stage1Objects) {
 const stage1Ids = new Set(stage1Objects.flatMap((o) => o.prizes.map((l) => l.prizeId)));
 const stage2 = prizes.filter((p) => !stage1Ids.has(p.id)).map((p) => p.id);
 console.log(
-  `[check-data] 도감: 1차 노벨상 ${prizes.length - stage2.length}개 · 2차 ${stage2.length}개 (${stage2.join(", ")}) · 1차 사물 ${stage1Objects.length}종`,
+  `[check-data] 도감: 1차 노벨상 ${prizes.length - stage2.length}개 · 2차 ${stage2.length}개 · 1차 사물 ${stage1Objects.length}종`,
 );
 
 const unverified = prizes.filter((p) => !p.verified).map((p) => p.id);

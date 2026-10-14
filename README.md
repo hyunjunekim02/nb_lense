@@ -5,7 +5,7 @@
 > 이 서비스는 POSTECH 학생들이 만든 비공식 교육용 프로젝트로, 노벨재단 및 Nobel Prize Outreach와 관련이 없습니다. 수상 정보 출처: NobelPrize.org (CC0)
 
 - 사물 인식: [MediaPipe Object Detector](https://developers.google.com/edge/mediapipe/solutions/vision/object_detector) (EfficientDet-Lite0 int8, COCO), 기기 안에서 실행
-- 설명은 모두 사람이 쓰고 검수한 정적 텍스트이며, LLM 호출은 없습니다
+- 설명은 모두 미리 작성해 둔 정적 텍스트이며, 앱에서 LLM을 호출하지 않습니다
 - 사진은 기기 밖으로 전송되지 않습니다. 분석은 쿠키 없는 GoatCounter로 이벤트 수만 집계합니다
 - 직접 찍은 사진으로 찾은 노벨상은 **노벨상 도감**에 모입니다 (v1.1, 아래 "도감" 참고)
 
@@ -106,7 +106,9 @@ scripts/         fetch-prizes.ts(공식 API → prizes.json), check-data.mjs(빌
 - **무엇이 담기나**: 사진 올리기로 찾은 노벨상만 담깁니다. 예시 사진 결과는 보여주기만 하고 담지 않습니다.
 - **1차·2차**: `cocoClass`가 있는 사물(지금 기기 안 모델로 인식되는 것)에 연결된 노벨상이 1차, 나머지가 2차입니다. 데이터에서 자동 계산되며(`src/lib/collection.ts`), `npm run check`가 개수를 출력합니다.
   - 1차 사물에는 잠긴 칸 힌트 `hintKo`가 꼭 있어야 합니다(사물 이름을 직접 말하지 않기). 없으면 빌드가 멈춥니다.
-  - 2차 도감은 1차 사물을 `STAGE2_UNLOCK_OBJECTS`(기본 5)종 모으면 열립니다. 아직 사진으로 찾을 수 없어 "서비스 준비 중"으로 보이고, 칸을 누르면 설명만 읽을 수 있습니다.
+  - 도감 화면은 1차·2차 탭으로 나뉩니다. 2차 탭은 언제든 목록을 볼 수 있지만, 1차 도감을 모두 채우기 전에는 회색 막과 "1차 도감을 모두 모으면 열려요 · 서비스 준비 중" 안내가 덮여 있습니다. 열린 뒤에는 칸을 눌러 설명을 읽을 수 있습니다(사진으로 찾는 기능은 준비 중).
+  - 2차 도감에는 공식 노벨상 목록에서 일상과 연결되는 물리·화학·생리의학상을 골라 넣었습니다(전체 100개 이내 유지). 사물과 연결되지 않은 노벨상은 부문 아이콘(원자·플라스크·심박)으로 표시됩니다.
+  - 홈 화면 오른쪽 위의 도감 버튼으로 들어갑니다.
 - **저장 정책**: 사진은 저장하지 않습니다. 노벨상·사물 ID, 처음 찾은 날짜, 횟수만 이 브라우저의 localStorage(`nb_lense.collection.v1`)에 남습니다. 서버로 보내지 않으므로 기기·브라우저를 바꾸면 이어지지 않습니다. 저장이 막힌 환경에서는 화면을 닫을 때까지만 기록됩니다. 기록이 깨졌으면 `…v1.bak`에 원본을 남기고 새로 시작합니다.
 - **앱 캐시**: 배포본에서는 서비스 워커가 앱 셸·아이콘을 미리 받아 두고, 모델·wasm·글꼴은 처음 쓸 때 캐시합니다. 한 번 스캔한 뒤에는 오프라인에서도 스캔과 도감 기록이 됩니다. 개발 서버(`npm run dev`)에서는 등록하지 않으니 `npm run pages`로 확인하세요.
 
@@ -120,7 +122,7 @@ scripts/         fetch-prizes.ts(공식 API → prizes.json), check-data.mjs(빌
 | 2 | 제로샷 이미지 분류 (예: MobileCLIP) — `zeroshot.ts` | 기기 안 | 준비 중 (스텁) |
 | 3 | 비전 LLM — `llm.ts` | 서버 | 준비 중 (스텁, 사용 전 동의 필요) |
 
-`pipeline.ts`는 켜진 엔진을 단계 순서대로 돌리되, 상위 단계는 하위 단계가 0개를 찾았고 사용자가 요청했을 때만 시도합니다. 모든 엔진은 사물 ID(`objects.json`의 `id`)를 돌려주고, 문구는 언제나 검수된 정적 데이터에서 나옵니다.
+`pipeline.ts`는 켜진 엔진을 단계 순서대로 돌리되, 상위 단계는 하위 단계가 0개를 찾았고 사용자가 요청했을 때만 시도합니다. 모든 엔진은 사물 ID(`objects.json`의 `id`)를 돌려주고, 문구는 언제나 미리 작성한 정적 데이터에서 나옵니다.
 
 ## 배포 (GitHub Pages)
 
@@ -148,7 +150,7 @@ GoatCounter 대시보드에서 아래 경로로 집계됩니다. 사진·인식 
 | `model_load_fail` | 모델 로드 실패 |
 | `collect_new/<prizeId>` | 노벨상을 도감에 처음 담음 |
 | `collection_progress/<0~13>` | 업로드 스캔 뒤 1차 도감 개수 |
-| `milestone/first`, `half`, `stage2`, `complete` | 마일스톤 첫 도달 |
+| `milestone/first`, `half`, `complete` | 마일스톤 첫 도달 (`complete`는 2차 도감 열림과 같음) |
 | `collection_open` | 도감 화면 진입 |
 | `collection_share/share`, `collection_share/download` | 도감 공유 카드 |
 | `stage_placeholder_tap/llm`, `stage_placeholder_tap/zeroshot` | 준비 중 기능(AI로 더 찾기, 2차 칸)을 누름 |

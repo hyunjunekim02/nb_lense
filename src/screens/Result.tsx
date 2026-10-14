@@ -16,8 +16,7 @@ const AUTO_NAMES = OBJECTS.filter((o) => o.cocoClass).map((o) => o.nameKo).join(
 const MILESTONE_TEXT: Record<Milestone, string> = {
   first: "첫 노벨상을 찾았어요!",
   half: "1차 도감 절반을 채웠어요",
-  stage2: "2차 도감이 열렸어요 · 서비스 준비 중",
-  complete: "1차 도감을 완성했어요",
+  complete: "1차 도감을 완성했어요 · 2차 도감이 열렸어요",
 };
 
 function formatSeconds(ms: number) {
