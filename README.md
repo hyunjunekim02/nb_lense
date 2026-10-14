@@ -1,10 +1,10 @@
 # 노벨 렌즈
 
-사진 속 일상 사물을 브라우저에서 인식하고, 그 물건과 이어지는 노벨상 연구를 보여주는 모바일 웹 앱입니다. POSTECH 학생 4인이 Nobel Week 2026 파견단 활동의 하나로 만들었습니다.
+사진 속 일상 사물을 브라우저에서 인식하고, 그 물건과 이어지는 노벨상 연구를 보여주는 모바일 웹 앱입니다. Nobel Week 2026 파견단 활동의 하나로 만들었습니다.
 
 **데모:** [hyunjunekim02.github.io/nb_lense](https://hyunjunekim02.github.io/nb_lense/)
 
-> 노벨 렌즈는 학생들이 만든 비공식 교육용 프로젝트입니다. 노벨재단 및 Nobel Prize Outreach와 관련이 없습니다.
+> 노벨 렌즈는 비공식 교육용 프로젝트입니다. 노벨재단 및 Nobel Prize Outreach와 관련이 없습니다.
 
 ## 무엇을 할 수 있나요?
 
