@@ -81,7 +81,7 @@ export function PrizeSheet({
         <h3>출처</h3>
         <p>
           <a href={prize.sourceUrl} target="_blank" rel="noopener noreferrer">
-            NobelPrize.org에서 {prize.year}년 {prize.categoryKo} 보기
+            NobelPrize.org에서 수상 정보 보기
           </a>
         </p>
       </div>

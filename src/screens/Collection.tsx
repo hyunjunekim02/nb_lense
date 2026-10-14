@@ -61,7 +61,7 @@ export function Collection({
   const matches = (id: string) => filter === "all" || PRIZE_BY_ID.get(id)?.category === filter;
   const stage1Ids = TIERS.stage1.filter(matches);
   const stage2Ids = TIERS.stage2.filter(matches);
-  const emptyNote = <p className="sub filter-empty">이 부문의 노벨상은 여기에 없어요.</p>;
+  const emptyNote = <p className="sub filter-empty" role="status">이 단계에는 해당 부문의 노벨상이 없어요.</p>;
   const tabRefs = useRef<Record<Tab, HTMLButtonElement | null>>({ stage1: null, stage2: null });
   const showInstallHint = persistent && !state.ui.installHintDismissed && isIosSafari() && !isStandalone();
 
@@ -97,7 +97,7 @@ export function Collection({
         <h1>내 노벨상 도감</h1>
       </header>
 
-      {!persistent && <p className="callout">이 브라우저에서는 기록을 저장할 수 없어요. 이 화면을 닫으면 기록이 사라져요.</p>}
+      {!persistent && <p className="callout">기록을 저장할 수 없는 브라우저예요. 앱을 닫으면 기록이 사라져요.</p>}
       {showInstallHint && (
         <div className="callout callout--row">
           <span>홈 화면에 추가하면 기록이 더 오래 보관돼요</span>
@@ -108,9 +108,18 @@ export function Collection({
       )}
 
       <section className="collection__summary">
+        <p className="sub collection__eyebrow">사진으로 모은 노벨상</p>
         <h2 className="headline">
-          노벨상 <span className="num">{p.prizeTotal}</span>개 중 <span className="num">{p.prizes}</span>개를 찾았어요
+          <span className="num">{p.prizes}</span>개 발견
+          <span className="collection__total num"> / {p.prizeTotal}개</span>
         </h2>
+        <p className="lead">
+          {p.stage2Unlocked
+            ? "1차 도감 완성! 2차 도감도 둘러보세요."
+            : p.prizes === 0
+              ? "사진을 올려 첫 노벨상을 찾아보세요."
+              : "빈칸의 힌트를 따라 다음 노벨상을 찾아보세요."}
+        </p>
         <div
           className="meter"
           role="progressbar"
@@ -136,7 +145,7 @@ export function Collection({
         </button>
       </div>
 
-      <div className="chips filters" role="group" aria-label="부문으로 거르기">
+      <div className="chips filters" role="group" aria-label="노벨상 부문 필터">
         {FILTERS.map((f) => (
           <button key={f.id} type="button" className="chip" aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}>
             {f.label}
@@ -174,7 +183,7 @@ export function Collection({
                     <Icon name={iconFor(id, got.objectId)} />
                     {meta}
                     <span className="tile__title">{prize.titleKo}</span>
-                    <span className="tile__date">{formatDate(got.firstAt)} 처음 찾음</span>
+                    <span className="tile__date">{formatDate(got.firstAt)} 발견</span>
                   </button>
                 </li>
               );
@@ -184,8 +193,7 @@ export function Collection({
       ) : (
         <section role="tabpanel" id="panel-stage2" aria-labelledby="tab-stage2" className="tabs__panel">
           <p className="sub section-desc">
-            지금의 기기 안 인식 모델로는 아직 사진에서 찾을 수 없는 노벨상들이에요. 더 많은 물건을 알아보는 인식 기능을 준비하고
-            있어요.
+            더 많은 노벨상 연구를 둘러보세요. 사진으로 찾는 기능은 준비 중이에요.
           </p>
           {stage2Ids.length === 0 && emptyNote}
           <div className={p.stage2Unlocked ? "stage2" : "stage2 stage2--locked"}>
@@ -201,7 +209,7 @@ export function Collection({
                         {prize.year} · {prize.categoryKo}
                       </span>
                       <span className="tile__title">{prize.titleKo}</span>
-                      <span className="tag">준비 중</span>
+                      <span className="tag">사진 인식 준비 중</span>
                     </button>
                   </li>
                 );
@@ -211,8 +219,10 @@ export function Collection({
               <div className="stage2__overlay">
                 <div className="stage2__message" role="note">
                   <Icon name="lock" />
-                  <strong>1차 도감을 모두 모으면 열려요</strong>
-                  <span className="tag">서비스 준비 중</span>
+                  <strong>1차 도감을 완성하면 열려요</strong>
+                  <span className="sub">
+                    남은 <span className="num">{p.prizeTotal - p.prizes}</span>개를 찾아보세요.
+                  </span>
                 </div>
               </div>
             )}
@@ -228,7 +238,7 @@ export function Collection({
           disabled={sharing || p.prizes === 0}
         >
           <Icon name="ui-share" small />
-          도감 공유하기
+          {sharing ? "공유 준비 중…" : "도감 공유하기"}
         </button>
         <p className="notice">기록은 이 브라우저에만 저장돼요. 사진은 저장하지 않아요.</p>
         <button type="button" className="btn btn--text btn--quiet" onClick={() => setConfirming(true)}>
@@ -280,14 +290,14 @@ function ConfirmSheet({
       <div className="sheet" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-desc">
         <h2 id="confirm-title">도감 기록을 지울까요?</h2>
         <p id="confirm-desc">
-          찾은 노벨상 <span className="num">{prizes}</span>개 기록이 모두 지워져요. 되돌릴 수 없어요.
+          찾은 노벨상 <span className="num">{prizes}</span>개의 기록이 삭제돼요. 되돌릴 수 없어요.
         </p>
         <div className="sheet__actions">
           <button ref={cancelRef} type="button" className="btn btn--secondary" onClick={onCancel}>
             취소
           </button>
           <button type="button" className="btn btn--primary" onClick={onConfirm}>
-            지우기
+            기록 지우기
           </button>
         </div>
       </div>

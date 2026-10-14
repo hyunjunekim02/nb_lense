@@ -274,20 +274,20 @@ export function App() {
     case "error":
       view =
         screen.kind === "decode" ? (
-          <Message title="이 사진 형식은 열 수 없어요. JPG나 PNG로 시도해 주세요">
+          <Message title="사진을 열 수 없어요" description="JPG나 PNG 사진으로 다시 시도해 주세요.">
             <button type="button" className="btn btn--primary" onClick={home}>
-              홈으로
+              다른 사진 선택하기
             </button>
           </Message>
         ) : (
-          <Message title="인식 모델을 불러오지 못했어요">
+          <Message title="사진 분석을 준비하지 못했어요" description="인터넷 연결을 확인하고 다시 시도해 주세요.">
             <button
               type="button"
               className="btn btn--primary"
               onClick={() => pending.current && runScan(pending.current.blob, pending.current.source, true)}
               disabled={!pending.current}
             >
-              다시 시도
+              다시 시도하기
             </button>
             <button type="button" className="btn btn--secondary" onClick={home}>
               홈으로
