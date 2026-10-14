@@ -1,163 +1,92 @@
 # 노벨 렌즈
 
-사진 한 장을 올리면 **브라우저 안에서(서버 전송 없이)** 사진 속 사물을 인식하고, 그 사물 안에 숨은 노벨상 수상 연구를 보여주는 모바일 웹 서비스입니다. POSTECH Nobel Week 2026 파견단 프로젝트의 일부입니다.
+사진 속 일상 사물을 브라우저에서 인식하고, 그 물건과 이어지는 노벨상 연구를 보여주는 모바일 웹 앱입니다. POSTECH 학생 4인이 Nobel Week 2026 파견단 활동의 하나로 만들었습니다.
 
-> 이 서비스는 POSTECH 학생들이 만든 비공식 교육용 프로젝트로, 노벨재단 및 Nobel Prize Outreach와 관련이 없습니다. 수상 정보 출처: NobelPrize.org (CC0)
+**데모:** [hyunjunekim02.github.io/nb_lense](https://hyunjunekim02.github.io/nb_lense/)
 
-- 사물 인식: [MediaPipe Object Detector](https://developers.google.com/edge/mediapipe/solutions/vision/object_detector) (EfficientDet-Lite0 int8, COCO), 기기 안에서 실행
-- 설명은 모두 미리 작성해 둔 정적 텍스트이며, 앱에서 LLM을 호출하지 않습니다
-- 사진은 기기 밖으로 전송되지 않습니다. 분석은 쿠키 없는 GoatCounter로 이벤트 수만 집계합니다
-- 직접 찍은 사진으로 찾은 노벨상은 **노벨상 도감**에 모입니다 (v1.1, 아래 "도감" 참고)
+> 노벨 렌즈는 학생들이 만든 비공식 교육용 프로젝트입니다. 노벨재단 및 Nobel Prize Outreach와 관련이 없습니다.
 
-## 로컬 개발 환경 (macOS)
+## 무엇을 할 수 있나요?
 
-### 1. 준비물 (처음 한 번)
+- 직접 찍거나 고른 사진에서 지원 사물을 찾습니다.
+- 사물에 연결된 노벨상과 일상 속 활용 사례를 읽을 수 있습니다.
+- 직접 찾은 항목은 이 브라우저의 **노벨상 도감**에 기록됩니다.
+- 예시 사진으로 설치 없이 바로 체험할 수 있습니다.
 
-- **Node.js 22** (20.19 이상이면 동작). 버전 확인: `node -v`
-  - 없다면 [nvm](https://github.com/nvm-sh/nvm)으로 설치하는 걸 권장합니다. 저장소에 `.nvmrc`가 있어서 폴더 안에서 `nvm install && nvm use`만 하면 맞는 버전이 잡힙니다.
-  - Homebrew를 쓴다면 `brew install node@22`도 됩니다.
-- **Git**. 맥에서는 `xcode-select --install`로 설치됩니다.
+현재 인식기는 COCO 데이터셋의 클래스 가운데 서비스가 지원하는 7종의 사물만 판별합니다. 인식 결과는 환경과 사진에 따라 틀릴 수 있으며, 노벨상 설명은 미리 작성한 정적 콘텐츠입니다. 앱에서 생성형 AI나 LLM을 호출하지 않습니다.
 
-### 2. 받아서 설치
+## 사진과 개인정보
+
+사진 추론은 [MediaPipe Object Detector](https://developers.google.com/edge/mediapipe/solutions/vision/object_detector)가 사용자의 브라우저 안에서 수행합니다. 업로드한 사진은 서버로 전송하거나 저장하지 않습니다.
+
+- 도감에는 항목 ID, 처음 찾은 날짜, 발견 횟수만 `localStorage`에 저장됩니다.
+- 모델과 WebAssembly 파일은 이 사이트에서 내려받아 브라우저 캐시에 보관할 수 있습니다.
+- 운영자가 GoatCounter를 설정한 배포본만 방문·기능 사용 이벤트를 쿠키 없이 전송합니다. 사진, 위치, 화면 크기, 이전 페이지 주소는 보내지 않습니다.
+- GoatCounter 설정이 비어 있는 기본 빌드는 분석 요청을 보내지 않습니다.
+
+## 기술 구성
+
+- React 19, TypeScript, Vite
+- MediaPipe Tasks Vision 1.1.0
+- EfficientDet-Lite0 int8 객체 감지 모델
+- GitHub Pages와 서비스 워커 기반 PWA
+- Nobel Prize API 기반 수상자·공식 수상 사유 데이터
+
+## 로컬에서 실행하기
+
+Node.js 22를 권장하며 최소 20.19 이상이 필요합니다.
 
 ```bash
 git clone https://github.com/hyunjunekim02/nb_lense.git
 cd nb_lense
-nvm use            # nvm을 쓰는 경우
-npm install        # 설치가 끝나면 MediaPipe wasm이 public/wasm에 자동으로 복사됩니다
-```
-
-### 3. 개발 서버 띄우기
-
-```bash
+npm install
 npm run dev
 ```
 
-브라우저가 자동으로 **http://localhost:5173/nb_lense/** 를 엽니다. 코드나 `src/data/*.json`을 저장하면 화면이 바로 바뀝니다. 끄려면 터미널에서 `Ctrl + C`.
+개발 서버는 `http://localhost:5173/nb_lense/`를 엽니다. `npm install` 뒤 MediaPipe WebAssembly 파일이 `public/wasm/`에 복사됩니다.
 
-> 주소 끝의 `/nb_lense/`를 빼먹으면 빈 화면이 나옵니다. GitHub Pages 경로에 맞춰 둔 것이라 로컬에서도 같은 경로를 씁니다.
+| 명령 | 설명 |
+| --- | --- |
+| `npm run dev` | 개발 서버 실행 |
+| `npm run check` | 데이터 검사, 타입 검사, 단위 테스트 |
+| `npm run build` | 배포용 빌드 생성 |
+| `npm run pages` | 배포 빌드를 로컬에서 미리보기 |
+| `npm run fetch-prizes` | Nobel Prize API에서 공식 데이터 갱신 |
 
-### 4. 검수할 때 쓰는 주소
+문구 검수는 `/nb_lense/#review`, 모델 결과 확인은 `/nb_lense/?debug`에서 할 수 있습니다. `?debug&threshold=0.25`처럼 임계값을 임시로 바꿀 수도 있습니다.
 
-| 주소 | 용도 |
-|---|---|
-| http://localhost:5173/nb_lense/ | 실제 서비스 화면 |
-| http://localhost:5173/nb_lense/#review | **문구 검수 화면.** 노벨상 카드, 수상 사유, 사물별 "이 물건 속에서" 문구를 한 페이지에서 봅니다. 검수 전 항목에 표시가 붙습니다 |
-| http://localhost:5173/nb_lense/?debug | **디버그 모드.** 사진을 올리면 결과 아래에 모델이 찾은 모든 클래스와 점수가 나옵니다. 오인식 기록, 임계값 조정에 씁니다 |
-| http://localhost:5173/nb_lense/?debug&threshold=0.25 | 임계값을 바꿔서 실험 (기본값 0.35는 `src/config.ts`) |
+## 프로젝트 구조
 
-`#review`와 `?debug`는 GitHub Pages 주소에서도 똑같이 동작합니다.
-
-문구 검수 순서:
-1. `npm run dev`를 켜고 `#review` 화면을 엽니다
-2. `src/data/prizes.json`(노벨상 제목·설명)과 `src/data/objects.json`(사물별 "이 물건 속에서")을 고칩니다. 저장하면 화면에 바로 반영됩니다
-3. 다 봤으면 해당 노벨상의 `"verified": false`를 `true`로 바꿉니다
-4. 수상자 이름과 `motivationEn`(공식 수상 사유)은 손으로 고치지 말고 `npm run fetch-prizes`로 공식 API 원문을 받아옵니다
-
-### 5. 배포본과 똑같이 확인하기
-
-```bash
-npm run pages      # 데이터 검사 → 타입 검사 → 빌드 → http://localhost:4173/nb_lense/ 로 열기
+```text
+public/models/   브라우저에서 실행할 객체 감지 모델
+public/samples/  실재 인물이 없는 AI 생성 예시 사진
+public/icons/    Lucide 기반 인터페이스 아이콘
+src/data/        사물-노벨상 연결과 노벨상 설명
+src/lib/         인식, 도감, 이미지 처리, 분석 로직
+src/screens/     사용자 화면과 검수 화면
+scripts/         데이터 검사, 공식 데이터 갱신, 빌드 보조 도구
 ```
 
-GitHub Pages에 올라가는 결과물(`dist/`)을 그대로 띄웁니다. 배포 전에 마지막으로 확인할 때 씁니다.
+사물과 노벨상의 연결은 [`src/data/objects.json`](src/data/objects.json), 노벨상 설명은 [`src/data/prizes.json`](src/data/prizes.json)에서 관리합니다. `laureates`와 `motivationEn`은 공식 API 값이므로 `npm run fetch-prizes`로 갱신합니다.
 
-### 그 밖의 명령
+## 배포
 
-```bash
-npm run check          # 데이터 검사 + 타입 검사 + 테스트 (커밋 전에)
-npm test               # 단위 테스트만
-npm run fetch-prizes   # 노벨상 공식 API → src/data/prizes.json 갱신
-```
+`main`에 push하면 [배포 워크플로](.github/workflows/deploy.yml)가 검사와 빌드를 거쳐 GitHub Pages에 배포합니다. 저장소의 **Settings → Pages → Build and deployment**에서 Source를 **GitHub Actions**로 설정해야 합니다.
 
-### 자주 막히는 곳
+분석을 켜려면 Actions 변수 `GOATCOUNTER_CODE`에 GoatCounter 사이트 코드를 넣습니다. `VITE_` 환경 변수는 브라우저 번들에 포함되므로 비밀 키나 토큰을 저장하면 안 됩니다.
 
-- **화면이 하얗게 나와요**: 주소가 `/nb_lense/`로 끝나는지 확인하세요.
-- **"인식 모델을 불러오지 못했어요"**: `public/wasm/` 폴더가 비어 있으면 `npm install`을 다시 하거나 `node scripts/copy-wasm.mjs`를 실행하세요.
-- **`npm install`이 Node 버전 오류로 실패해요**: `node -v`가 20.19 이상인지 확인하세요.
-- **포트가 이미 사용 중이래요**: 다른 터미널에 켜 둔 개발 서버를 끄거나, Vite가 알려 주는 다른 포트 주소로 들어가세요.
-- 로컬에서는 분석 이벤트를 보내지 않습니다. 사진도 어디로도 전송되지 않습니다.
+## 데이터와 저작권
 
-## 구조
+- 수상자 이름과 공식 수상 사유는 [Nobel Prize API](https://www.nobelprize.org/organization/developer-zone-2/)의 공개 데이터를 사용합니다.
+- 한국어 제목·설명과 사물 연결 문구는 프로젝트 팀이 작성했습니다.
+- 객체 감지 모델, 폰트, 아이콘 등 외부 구성요소의 출처와 라이선스는 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)에 정리했습니다.
+- 예시 사진 3장은 AI로 생성했으며 실재 인물의 사진이 아닙니다.
 
-```
-public/models/   인식 모델 (efficientdet_lite0_uint8.tflite, 같은 출처에서 서빙)
-public/wasm/     MediaPipe wasm (npm install 때 고정 버전 패키지에서 복사, git 제외)
-public/samples/  예시 사진 3장 (현재 자리표시 이미지, 팀 사진으로 교체)
-public/icons/    단색 라인 아이콘 (Lucide, ISC)
-public/manifest.webmanifest, app-icon-*.png   홈 화면 추가용 (아이콘은 scripts/make-icons.mjs로 생성)
-src/config.ts    서비스명·임계값·인식 단계 플래그·도감 설정
-src/data/        objects.json(사물 → 노벨상, 도감 힌트), prizes.json(노벨상 정보)
-src/lib/         recognizers/(단계별 인식 엔진), collection(도감), image(리사이즈·EXIF), mapping(결과 계산), analytics, shareCard
-src/screens/     Home, Analyzing, Result, Collection(도감), About, Message(오류), Review(#review 검수)
-src/sw.template.js  서비스 워커 템플릿 (빌드 때 vite.config.ts가 채워 dist/sw.js로 냄)
-scripts/         fetch-prizes.ts(공식 API → prizes.json), check-data.mjs(빌드 전 검사), make-icons.mjs
-```
+이 저장소 자체에는 아직 오픈 소스 라이선스가 부여되지 않았습니다. 공개 열람이 코드·콘텐츠의 복제, 수정, 배포 허락을 뜻하지 않으며, 외부 구성요소에는 각각의 라이선스가 적용됩니다.
 
-## 데이터 다루기
+## 만든 사람
 
-- **사물 추가/수정**: `src/data/objects.json`. `cocoClass`가 있는 사물만 인식되어 앱에 나옵니다. 없는 사물은 `#review`에만 보입니다.
-- **노벨상 문구**: `src/data/prizes.json`의 `titleKo`, `descKo`와 objects의 `whereKo`는 팀이 검수합니다. 검수가 끝나면 `verified`를 `true`로 바꾸세요. `false`가 남아 있으면 빌드할 때 경고가 나옵니다.
-- **수상자·수상 사유**: `laureates`, `motivationEn`은 공식 API 값을 그대로 씁니다(약관상 수정 금지). 갱신은 `npm run fetch-prizes` 또는 GitHub Actions의 **Fetch prize data** 워크플로를 실행하면 결과가 커밋됩니다.
-- 한 해에 주제가 둘인 상은 ID를 나눕니다(`2009-physics-fiber`, `2009-physics-ccd`). 결과 화면의 "노벨상 N개"는 이렇게 나눈 카드 수입니다.
-
-## 도감 (v1.1)
-
-- **무엇이 담기나**: 사진 올리기로 찾은 노벨상만 담깁니다. 예시 사진 결과는 보여주기만 하고 담지 않습니다.
-- **1차·2차**: `cocoClass`가 있는 사물(지금 기기 안 모델로 인식되는 것)에 연결된 노벨상이 1차, 나머지가 2차입니다. 데이터에서 자동 계산되며(`src/lib/collection.ts`), `npm run check`가 개수를 출력합니다.
-  - 1차 사물에는 잠긴 칸 힌트 `hintKo`가 꼭 있어야 합니다(사물 이름을 직접 말하지 않기). 없으면 빌드가 멈춥니다.
-  - 도감 화면은 1차·2차 탭으로 나뉩니다. 2차 탭은 언제든 목록을 볼 수 있지만, 1차 도감을 모두 채우기 전에는 회색 막과 "1차 도감을 모두 모으면 열려요 · 서비스 준비 중" 안내가 덮여 있습니다. 열린 뒤에는 칸을 눌러 설명을 읽을 수 있습니다(사진으로 찾는 기능은 준비 중).
-  - 2차 도감에는 공식 노벨상 목록에서 일상과 연결되는 물리·화학·생리의학상을 골라 넣었습니다(전체 100개 이내 유지). 사물과 연결되지 않은 노벨상은 부문 아이콘(원자·플라스크·심박)으로 표시됩니다.
-  - 홈 화면 오른쪽 위의 도감 버튼으로 들어갑니다.
-- **저장 정책**: 사진은 저장하지 않습니다. 노벨상·사물 ID, 처음 찾은 날짜, 횟수만 이 브라우저의 localStorage(`nb_lense.collection.v1`)에 남습니다. 서버로 보내지 않으므로 기기·브라우저를 바꾸면 이어지지 않습니다. 저장이 막힌 환경에서는 화면을 닫을 때까지만 기록됩니다. 기록이 깨졌으면 `…v1.bak`에 원본을 남기고 새로 시작합니다.
-- **앱 캐시**: 배포본에서는 서비스 워커가 앱 셸·아이콘을 미리 받아 두고, 모델·wasm·글꼴은 처음 쓸 때 캐시합니다. 한 번 스캔한 뒤에는 오프라인에서도 스캔과 도감 기록이 됩니다. 개발 서버(`npm run dev`)에서는 등록하지 않으니 `npm run pages`로 확인하세요.
-
-### 단계별 인식 구조
-
-작은 모델이 먼저 처리하고, 못 찾은 것만 더 큰 모델로 넘기는 구조입니다(`src/lib/recognizers/`). 켜고 끄는 값은 `src/config.ts`의 `RECOGNIZERS`입니다.
-
-| 단계 | 엔진 | 위치 | 상태 |
-|---|---|---|---|
-| 1 | MediaPipe EfficientDet-Lite0 (COCO) — `coco.ts` | 기기 안 | 사용 중 |
-| 2 | 제로샷 이미지 분류 (예: MobileCLIP) — `zeroshot.ts` | 기기 안 | 준비 중 (스텁) |
-| 3 | 비전 LLM — `llm.ts` | 서버 | 준비 중 (스텁, 사용 전 동의 필요) |
-
-`pipeline.ts`는 켜진 엔진을 단계 순서대로 돌리되, 상위 단계는 하위 단계가 0개를 찾았고 사용자가 요청했을 때만 시도합니다. 모든 엔진은 사물 ID(`objects.json`의 `id`)를 돌려주고, 문구는 언제나 미리 작성한 정적 데이터에서 나옵니다.
-
-## 배포 (GitHub Pages)
-
-공개 주소: **https://hyunjunekim02.github.io/nb_lense/** (Pages를 켠 뒤부터)
-
-1. 저장소 **Settings → Pages → Build and deployment → Source**를 **GitHub Actions**로 바꿉니다.
-   - 비공개 저장소는 GitHub Pro(학생은 [GitHub Student Developer Pack](https://education.github.com/pack)으로 무료)에서만 Pages를 쓸 수 있습니다. 메뉴가 막혀 있으면 저장소를 공개로 바꾸거나 Pro를 켜세요.
-2. `main`에 push하면 `.github/workflows/deploy.yml`이 테스트·빌드 후 배포합니다. Pages를 켜기 전의 실행은 `configure-pages` 단계에서 실패하는데, 켠 뒤 Actions 탭에서 **Deploy to GitHub Pages → Run workflow**로 다시 돌리면 됩니다.
-3. 분석을 켜려면 GoatCounter 사이트를 만든 뒤 Settings → Secrets and variables → Actions → Variables에 `GOATCOUNTER_CODE`(예: `nobellens`)를 추가하세요. 비어 있으면 아무것도 전송하지 않습니다.
-
-`vite.config.ts`의 `base`는 저장소 이름(`/nb_lense/`)에 맞춰져 있습니다. 저장소 이름을 바꾸면 이 값도 바꿔야 합니다.
-
-## 분석 이벤트
-
-GoatCounter 대시보드에서 아래 경로로 집계됩니다. 사진·인식 이미지·위치 정보는 보내지 않습니다.
-
-| 경로 | 의미 |
-|---|---|
-| `/` | 방문 |
-| `scan_start/upload`, `scan_start/sample` | 스캔 시작 |
-| `scan_success` (제목에 objects·prizes·ms) | 노벨상을 1개 이상 찾음 |
-| `scan_empty` | 찾지 못함 |
-| `prize_open/<prizeId>` | 상세 열기 |
-| `share/share`, `share/download` | 공유 카드 |
-| `model_load_fail` | 모델 로드 실패 |
-| `collect_new/<prizeId>` | 노벨상을 도감에 처음 담음 |
-| `collection_progress/<0~13>` | 업로드 스캔 뒤 1차 도감 개수 |
-| `milestone/first`, `half`, `complete` | 마일스톤 첫 도달 (`complete`는 2차 도감 열림과 같음) |
-| `collection_open` | 도감 화면 진입 |
-| `collection_share/share`, `collection_share/download` | 도감 공유 카드 |
-| `stage_placeholder_tap/llm`, `stage_placeholder_tap/zeroshot` | 준비 중 기능(AI로 더 찾기, 2차 칸)을 누름 |
-| `collection_reset` | 도감 기록 지우기 |
-
-## 법적 표기
-
-- 공개 서비스명은 **노벨 렌즈**로 확정했습니다(`src/config.ts`의 `SERVICE_NAME`, `index.html` 메타 태그). 이름에 "노벨"이 들어가므로 비공식 고지문을 모든 화면과 공유 카드에 유지하고, 노벨상 측 로고·상표 디자인은 쓰지 않습니다.
-- 공식 로고, 메달 이미지·형상, 수상자 사진을 쓰지 않습니다.
-- 수상 사유(motivation) 원문은 수정하지 않습니다.
+- 김현준 — 개발
+- 문준혁
+- 조인재
+- 오은호
