@@ -29,9 +29,7 @@ describe("1차·2차 계산", () => {
       "1913-physics",
       "1918-chemistry",
       "1921-physics",
-      "1924-medicine",
       "1929-medicine-eijkman",
-      "1930-medicine",
       "1937-chemistry-haworth",
       "1953-chemistry",
       "1956-physics",
@@ -43,16 +41,13 @@ describe("1차·2차 계산", () => {
       "1997-physics",
       "2000-physics-hetero",
       "2000-physics-ic",
-      "2003-medicine",
       "2007-chemistry",
       "2007-physics",
       "2009-physics-ccd",
       "2009-physics-fiber",
-      "2014-medicine",
       "2014-physics",
       "2017-medicine",
       "2019-chemistry",
-      "2019-medicine",
       "2021-medicine",
       "2023-chemistry",
       "2024-physics",
@@ -128,7 +123,7 @@ describe("applyScan", () => {
     const first = applyScan(emptyState(), scan("upload", "clock"));
     expect(first.milestones).toEqual(["first"]);
 
-    // 시계 2 + 스마트폰 10 + 사람 8 = 20개로 31개의 절반(16)을 넘는다
+    // 시계 2 + 스마트폰 10 + 사람 3 = 15개로 26개의 절반(13)을 넘는다
     const half = applyScan(first.state, scan("upload", "phone", "person"));
     expect(half.milestones).toEqual(["half"]);
     expect(applyScan(half.state, scan("upload", "phone")).milestones).toEqual([]);
@@ -142,7 +137,7 @@ describe("applyScan", () => {
 
     const complete = applyScan(almost.state, scan("upload", "refrigerator"));
     expect(complete.milestones).toEqual(["complete"]);
-    expect(progress(complete.state)).toMatchObject({ prizes: 31, prizeTotal: 31, objects: 13, objectTotal: 14, stage2Unlocked: true });
+    expect(progress(complete.state)).toMatchObject({ prizes: 26, prizeTotal: 26, objects: 13, objectTotal: 14, stage2Unlocked: true });
   });
 
   it("데이터에서 사라진 ID는 진행률에서 빠진다", () => {

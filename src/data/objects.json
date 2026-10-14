@@ -173,32 +173,12 @@
         "whereKo": "몸속 모든 세포에 든 설계도, DNA 이중나선 구조"
       },
       {
-        "prizeId": "2003-medicine",
-        "whereKo": "병원에서 몸속을 찍는 MRI"
-      },
-      {
-        "prizeId": "1930-medicine",
-        "whereKo": "수혈 전에 꼭 확인하는 ABO 혈액형"
-      },
-      {
         "prizeId": "1967-medicine",
         "whereKo": "눈이 빛과 색을 느끼는 원리"
       },
       {
         "prizeId": "2021-medicine",
         "whereKo": "피부가 온도와 촉감을 느끼는 원리"
-      },
-      {
-        "prizeId": "2014-medicine",
-        "whereKo": "길을 찾게 해 주는 뇌 속 위치 세포"
-      },
-      {
-        "prizeId": "2019-medicine",
-        "whereKo": "세포가 산소의 양을 감지하는 원리"
-      },
-      {
-        "prizeId": "1924-medicine",
-        "whereKo": "심장의 전기 신호를 기록하는 심전도"
       }
     ]
   },
