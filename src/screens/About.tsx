@@ -1,4 +1,4 @@
-import { GITHUB_URL, RECOGNIZERS, SERVICE_NAME } from "../config";
+import { GITHUB_URL, SERVICE_NAME } from "../config";
 import { Disclaimer, PHOTO_NOTICE } from "../components/Disclaimer";
 import { Icon } from "../components/Icon";
 
@@ -28,7 +28,8 @@ export function About({ onBack }: { onBack: () => void }) {
 
       <h2>사진과 개인정보</h2>
       <p>
-        {PHOTO_NOTICE} 사물 인식은 이 기기의 브라우저에서 이루어지며, 얼굴은 인식하지 않습니다.
+        {PHOTO_NOTICE} 사물 인식은 이 기기의 브라우저에서 이루어지며, 얼굴은 인식하지 않습니다. 2차 도감이 열리면 추가
+        인식 모델을 Hugging Face에서 한 번 내려받습니다.
       </p>
       <p>
         운영자가 분석을 켠 경우에만 방문 수와 스캔 수 같은 집계용 이벤트를 쿠키 없이 전송합니다. 사진, 위치, 화면
@@ -44,8 +45,8 @@ export function About({ onBack }: { onBack: () => void }) {
         의 공개 데이터(CC0)를 원문 그대로 사용합니다. 한국어 설명은 공식 수상 사유와 공개 자료를 바탕으로 정리했습니다.
       </p>
       <p>
-        사물 인식: MediaPipe Object Detector (EfficientDet-Lite0, COCO)
-        {RECOGNIZERS.zeroshot && ", Transformers.js + MobileCLIP-S0 (실험 중)"}. 아이콘:{" "}
+        사물 인식: MediaPipe Object Detector (EfficientDet-Lite0, COCO), 2차 도감 사물은 Transformers.js +
+        MobileCLIP-S0 제로샷 분류. 아이콘:{" "}
         <a href="https://lucide.dev/" target="_blank" rel="noopener noreferrer">
           Lucide
         </a>{" "}

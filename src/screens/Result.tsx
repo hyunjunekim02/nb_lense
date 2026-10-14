@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DEBUG, NEURAL_NET_PRIZE_ID, RECOGNIZERS } from "../config";
+import { DEBUG, NEURAL_NET_PRIZE_ID } from "../config";
 import { OBJECTS, ZEROSHOT_OBJECTS } from "../data";
 import { filterByObject } from "../lib/mapping";
 import { TIERS, tierOf } from "../lib/collection";
@@ -11,9 +11,8 @@ import { Icon } from "../components/Icon";
 import { DebugPanel } from "../components/DebugPanel";
 
 /** 빈 결과 안내에 쓰는 인식 가능한 사물 이름 */
-const AUTO_NAMES = [...OBJECTS.filter((o) => o.cocoClass), ...(RECOGNIZERS.zeroshot ? ZEROSHOT_OBJECTS : [])]
-  .map((o) => o.nameKo)
-  .join(", ");
+const COCO_NAMES = OBJECTS.filter((o) => o.cocoClass).map((o) => o.nameKo);
+const ZEROSHOT_NAMES = ZEROSHOT_OBJECTS.map((o) => o.nameKo);
 
 const MILESTONE_TEXT: Record<Milestone, string> = {
   first: "첫 노벨상을 찾았어요!",
@@ -35,6 +34,7 @@ export function Result({
   onOpenCollection,
   onShareCollection,
   onPlaceholderTap,
+  zeroshotActive,
 }: {
   result: ScanResult;
   onOpenPrize: (prizeId: string) => void;
@@ -45,6 +45,8 @@ export function Result({
   onShareCollection: () => void;
   /** 준비 중인 3단계(AI로 더 찾기)를 눌렀을 때. 수요 측정용 */
   onPlaceholderTap: () => void;
+  /** 2단계(제로샷)를 돌리는 중인가 (2차 도감이 열림). 찾을 수 있는 물건 안내에 쓴다 */
+  zeroshotActive: boolean;
 }) {
   const [focus, setFocus] = useState<string | null>(null);
   const toggle = (id: string) => setFocus((cur) => (cur === id ? null : id));
@@ -106,7 +108,7 @@ export function Result({
           <p className="lead">물건이 밝고 선명하게 보이는 사진으로 다시 시도해 주세요.</p>
           <details className="supported-objects">
             <summary>어떤 물건을 찾을 수 있나요?</summary>
-            <p className="sub">{AUTO_NAMES}</p>
+            <p className="sub">{(zeroshotActive ? [...COCO_NAMES, ...ZEROSHOT_NAMES] : COCO_NAMES).join(", ")}</p>
           </details>
           <div className="empty__actions">
             <button type="button" className="btn btn--primary" onClick={onAgain}>

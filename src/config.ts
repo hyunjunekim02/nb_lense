@@ -40,16 +40,20 @@ const params = typeof location !== "undefined" ? new URLSearchParams(location.se
  */
 export const RECOGNIZERS = {
   coco: true,
-  /** 2단계: 정확도 실험 중이라 주소에 ?zeroshot 을 붙였을 때만 켠다 */
-  zeroshot: params.has("zeroshot"),
+  /** 2단계: 1차 도감을 완성해 2차 도감이 열린 사람에게만 돌린다 (ZEROSHOT_FORCE 참고) */
+  zeroshot: true,
   llm: false, // 3단계: 준비 중
 } as const;
 
 /**
  * 2단계 제로샷 분류 (MobileCLIP, Transformers.js). 1단계가 아무것도 못 찾았을 때 사진 전체를
  * 사물 라벨 문장들(objects.json의 zeroshotLabelsEn)과 비교해 가장 가까운 사물 하나를 고른다.
+ * 2차 도감이 열린 뒤(또는 ?zeroshot)에만 돌린다.
  * 모델은 처음 쓸 때 Hugging Face에서 받고 브라우저 캐시에 남긴다.
  */
+/** ?zeroshot: 2차 도감이 열리기 전에도 2단계를 돌려 본다 (실험용. 이때 찾은 2차 노벨상은 도감에 담지 않는다) */
+export const ZEROSHOT_FORCE = params.has("zeroshot");
+
 export const ZEROSHOT = {
   modelId: "Xenova/mobileclip_s0",
   /** 라벨 앞에 붙이는 문장 틀 */
