@@ -149,11 +149,13 @@ export function App() {
         const stage2Open = collection.progress(recordRef.current).stage2Unlocked;
         const applied = collection.applyScan(recordRef.current, { source, objects, prizes });
         updateRecord(applied.state);
-        const count = collection.progress(applied.state).prizes;
+        const after = collection.progress(applied.state);
+        const count = after.found;
         collected = {
           newPrizeIds: applied.newPrizeIds,
           milestone: collection.topMilestone(applied.milestones),
           count,
+          total: after.total,
           stage2Open,
         };
         for (const prizeId of applied.newPrizeIds) track({ name: "collect_new", prizeId });
@@ -230,9 +232,10 @@ export function App() {
   }, [result, share]);
 
   const onShareCollection = useCallback(async () => {
-    const found = collection.TIERS.stage1.filter((id) => recordRef.current.prizes[id]).map((id) => PRIZE_BY_ID.get(id)!);
+    const p = collection.progress(recordRef.current);
+    const found = p.foundIds.map((id) => PRIZE_BY_ID.get(id)!);
     const method = await share(
-      (url) => renderCollectionCard(found, collection.TIERS.stage1.length, url),
+      (url) => renderCollectionCard(found, p.total, url),
       "nobel-lens-collection.png",
     );
     if (method !== "cancel") track({ name: "collection_share", method });
@@ -254,8 +257,8 @@ export function App() {
           onSample={onSample}
           onAbout={() => go({ name: "about" })}
           onCollection={openCollection}
-          collected={collection.progress(record).prizes}
-          collectionTotal={collection.TIERS.stage1.length}
+          collected={collection.progress(record).found}
+          collectionTotal={collection.progress(record).total}
         />
       );
       break;

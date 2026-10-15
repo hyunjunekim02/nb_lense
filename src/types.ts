@@ -63,8 +63,9 @@ export type ScanResult = {
     newPrizeIds: string[];
     /** 이번 스캔에서 처음 도달한 마일스톤 중 가장 높은 것 */
     milestone?: Milestone;
-    /** 스캔 후 1차 노벨상 수집 개수 */
+    /** 스캔 후 도감 수집 개수 / 전체 (2차 도감이 열렸으면 사진으로 모으는 2차 포함) */
     count: number;
+    total: number;
     /** 스캔 전에 2차 도감이 열려 있었는가 (아니면 2차 노벨상은 담지 않았다) */
     stage2Open: boolean;
   };

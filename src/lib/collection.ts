@@ -80,20 +80,36 @@ export type Progress = {
   /** 2차 중 사진으로 모은 노벨상 수 / 사진으로 모을 수 있는 수 */
   stage2Prizes: number;
   stage2PrizeTotal: number;
+  /**
+   * 화면에 보여줄 전체 개수. 2차 도감이 열리면 사진으로 모을 수 있는 2차까지 합친다
+   * (마일스톤은 계속 1차 기준)
+   */
+  found: number;
+  total: number;
+  /** found에 해당하는 노벨상 ID (연도 오름차순, 도감 공유 카드용) */
+  foundIds: string[];
 };
 
 /** 데이터에서 사라진 ID는 기록에 남아 있어도 세지 않는다 */
 export function progress(state: CollectionState, tiers: Tiers = TIERS): Progress {
   const prizes = tiers.stage1.filter((id) => state.prizes[id]).length;
   const objects = tiers.stage1Objects.filter((id) => state.objects[id]).length;
+  const stage2Unlocked = tiers.stage1.length > 0 && prizes >= tiers.stage1.length;
+  const counted = stage2Unlocked ? [...tiers.stage1, ...tiers.stage2Photo] : tiers.stage1;
+  const foundIds = counted.filter((id) => state.prizes[id]);
+  const order = new Map(PRIZES.map((p) => [p.id, p.year]));
+  foundIds.sort((a, b) => (order.get(a) ?? 0) - (order.get(b) ?? 0) || a.localeCompare(b));
   return {
     prizes,
     prizeTotal: tiers.stage1.length,
     objects,
     objectTotal: tiers.stage1Objects.length,
-    stage2Unlocked: tiers.stage1.length > 0 && prizes >= tiers.stage1.length,
+    stage2Unlocked,
     stage2Prizes: tiers.stage2Photo.filter((id) => state.prizes[id]).length,
     stage2PrizeTotal: tiers.stage2Photo.length,
+    found: foundIds.length,
+    total: counted.length,
+    foundIds,
   };
 }
 
