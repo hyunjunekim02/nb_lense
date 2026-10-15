@@ -194,6 +194,11 @@ describe("applyScan", () => {
     const after = applyScan(all1, scan("upload", "mosquito"));
     expect(after.newPrizeIds).toEqual(["1902-medicine"]);
     expect(progress(after.state)).toMatchObject({ stage2Prizes: 1, stage2PrizeTotal: 25 });
+    // 2차가 열리면 화면의 전체 개수에 사진으로 모으는 2차까지 합친다
+    expect(progress(all1)).toMatchObject({ found: 26, total: 51 });
+    expect(progress(after.state)).toMatchObject({ found: 27, total: 51 });
+    expect(progress(after.state).foundIds).toContain("1902-medicine");
+    expect(progress(before.state)).toMatchObject({ found: 0, total: 26 });
   });
 
   it("테스트용 unlockStage1은 1차를 모두 채우고 기존 기록은 유지한다", () => {

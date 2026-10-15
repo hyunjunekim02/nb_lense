@@ -2,7 +2,7 @@ import { useState } from "react";
 import { DEBUG, NEURAL_NET_PRIZE_ID } from "../config";
 import { OBJECTS, ZEROSHOT_OBJECTS } from "../data";
 import { filterByObject } from "../lib/mapping";
-import { TIERS, tierOf } from "../lib/collection";
+import { tierOf } from "../lib/collection";
 import type { Milestone, ScanResult } from "../types";
 import { ObjectChip } from "../components/ObjectChip";
 import { PrizeCard } from "../components/PrizeCard";
@@ -145,7 +145,7 @@ export function Result({
               <strong>{collected.milestone ? MILESTONE_TEXT[collected.milestone] : `도감에 ${newIds.size}개 추가`}</strong>
               <span className="num">
                 {collected.milestone && newIds.size > 0 ? `도감에 ${newIds.size}개 추가 · ` : ""}
-                {TIERS.stage1.length}개 중 {collected.count}개
+                {collected.total}개 중 {collected.count}개
               </span>
             </div>
             {collected.milestone === "complete" ? (

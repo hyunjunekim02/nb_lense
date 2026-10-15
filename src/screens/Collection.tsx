@@ -116,12 +116,16 @@ export function Collection({
       <section className="collection__summary">
         <p className="sub collection__eyebrow">사진으로 모은 노벨상</p>
         <h2 className="headline">
-          <span className="num">{p.prizes}</span>개 발견
-          <span className="collection__total num"> / {p.prizeTotal}개</span>
+          <span className="num">{p.found}</span>개 발견
+          <span className="collection__total num"> / {p.total}개</span>
         </h2>
         <p className="lead">
           {p.stage2Unlocked
-            ? "1차 도감 완성! 2차 도감도 둘러보세요."
+            ? p.found >= p.total
+              ? "사진으로 찾을 수 있는 노벨상을 모두 모았어요!"
+              : p.stage2PrizeTotal > 0
+                ? "1차 도감 완성! 2차 도감의 빈칸도 사진으로 채워 보세요."
+                : "1차 도감 완성! 2차 도감도 둘러보세요."
             : p.prizes === 0
               ? "사진을 올려 첫 노벨상을 찾아보세요."
               : "빈칸의 힌트를 따라 다음 노벨상을 찾아보세요."}
@@ -129,12 +133,12 @@ export function Collection({
         <div
           className="meter"
           role="progressbar"
-          aria-label="1차 도감 진행률"
+          aria-label="도감 진행률"
           aria-valuemin={0}
-          aria-valuemax={p.prizeTotal}
-          aria-valuenow={p.prizes}
+          aria-valuemax={p.total}
+          aria-valuenow={p.found}
         >
-          <div className="meter__bar" style={{ width: `${(p.prizes / Math.max(1, p.prizeTotal)) * 100}%` }} />
+          <div className="meter__bar" style={{ width: `${(p.found / Math.max(1, p.total)) * 100}%` }} />
         </div>
       </section>
 
@@ -232,7 +236,7 @@ export function Collection({
 
       {confirming && (
         <ConfirmSheet
-          prizes={p.prizes}
+          prizes={p.found}
           onCancel={() => setConfirming(false)}
           onConfirm={() => {
             setConfirming(false);
