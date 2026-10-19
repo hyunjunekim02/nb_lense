@@ -42,7 +42,23 @@ export const RECOGNIZERS = {
   coco: true,
   /** 2단계: 1차 도감을 완성해 2차 도감이 열린 사람에게만 돌린다 (ZEROSHOT_FORCE 참고) */
   zeroshot: true,
-  llm: false, // 3단계: 준비 중
+  llm: false, // 3단계: 기반만 준비 (LLM 아래 참고). 켜기 전에 사진 전송 동의 화면이 필요하다
+} as const;
+
+/**
+ * 3단계 비전 LLM (v1.1 명세 5.3). 사진을 운영자가 띄운 프록시(proxy/, Cloudflare Worker)로 보내고,
+ * 프록시가 운영자 키로 OpenAI·Claude·Gemini·POSTECH AI 중 설정된 곳에 물어 사물 ID 하나를 받는다.
+ * 키는 프록시에만 있고 이 번들에는 들어가지 않는다. 주소가 비어 있으면 3단계는 꺼진다.
+ * 예: VITE_LLM_ENDPOINT=https://nb-lense-llm-proxy.<계정>.workers.dev
+ */
+export const LLM = {
+  endpoint: (import.meta.env.VITE_LLM_ENDPOINT ?? "").replace(/\/+$/, ""),
+  /** LLM이 답한 확신도가 이 값 이상이어야 인정한다 */
+  threshold: 0.6,
+  /** 보내기 전에 긴 변을 이 크기(px)로 줄인다 (전송량·비용 절약) */
+  maxImageSide: 768,
+  jpegQuality: 0.8,
+  timeoutMs: 20_000,
 } as const;
 
 /**

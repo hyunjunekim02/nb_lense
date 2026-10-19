@@ -1,0 +1,6 @@
+# cp .dev.vars.example .dev.vars 후 값을 채우면 npm run dev(wrangler dev)가 읽는다. .dev.vars는 커밋하지 않는다
+POSTECH_API_KEY=
+LLM_API_KEY=
+PROXY_TOKEN=
+# 키를 Authorization: Bearer 가 아닌 다른 헤더로 보내야 하면 (예: X-API-Key)
+# POSTECH_AUTH_HEADER=X-API-Key

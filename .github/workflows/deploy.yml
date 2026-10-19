@@ -29,6 +29,8 @@ jobs:
         env:
           # Settings → Secrets and variables → Actions → Variables 에서 설정 (비우면 분석 비활성)
           VITE_GOATCOUNTER_CODE: ${{ vars.GOATCOUNTER_CODE }}
+          # 3단계 LLM 프록시 주소 (proxy/README.md). 키가 아니라 공개 주소만 넣는다
+          VITE_LLM_ENDPOINT: ${{ vars.LLM_ENDPOINT }}
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
