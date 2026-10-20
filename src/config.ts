@@ -62,7 +62,7 @@ export const LLM = {
 } as const;
 
 /**
- * 2단계 제로샷 분류 (MobileCLIP, Transformers.js). 1단계가 아무것도 못 찾았을 때 사진 전체를
+ * 2단계 제로샷 분류 (MobileCLIP, Transformers.js). 1단계 결과와 상관없이 사진 전체를
  * 사물 라벨 문장들(objects.json의 zeroshotLabelsEn)과 비교해 가장 가까운 사물 하나를 고른다.
  * 2차 도감이 열린 뒤(또는 ?zeroshot)에만 돌린다.
  * 모델은 처음 쓸 때 Hugging Face에서 받고 브라우저 캐시에 남긴다.

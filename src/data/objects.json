@@ -23,20 +23,12 @@
         "whereKo": "카메라 이미지 센서의 뿌리가 된 CCD (지금은 주로 CMOS 센서)"
       },
       {
-        "prizeId": "2009-physics-fiber",
-        "whereKo": "스마트폰을 인터넷에 이어 주는 광섬유 통신망"
-      },
-      {
         "prizeId": "2014-physics",
-        "whereKo": "카메라 플래시와 LCD 화면 백라이트의 흰빛 LED"
+        "whereKo": "카메라 플래시와 손전등을 켜는 흰빛 LED"
       },
       {
         "prizeId": "2019-chemistry",
         "whereKo": "매일 충전하는 리튬이온 배터리"
-      },
-      {
-        "prizeId": "1921-physics",
-        "whereKo": "빛을 전기 신호로 바꾸는 카메라 센서의 바탕 원리(광전효과)"
       },
       {
         "prizeId": "2024-physics",
@@ -76,12 +68,12 @@
         "whereKo": "음성 인식과 번역 같은 AI 기능의 바탕(인공신경망)"
       },
       {
-        "prizeId": "2007-physics",
-        "whereKo": "하드디스크(HDD)의 읽기 헤드 (SSD만 쓰는 기종은 해당 없음)"
-      },
-      {
         "prizeId": "1909-physics",
         "whereKo": "와이파이처럼 전파로 데이터를 주고받는 무선 통신의 출발점"
+      },
+      {
+        "prizeId": "2000-chemistry",
+        "whereKo": "메인보드에 달린 고분자 콘덴서 속, 전기가 통하는 플라스틱"
       }
     ]
   },
@@ -153,11 +145,11 @@
     "prizes": [
       {
         "prizeId": "1989-physics-clock",
-        "whereKo": "시계가 맞춰 가는 세계 표준시를 정하는 원자시계의 원리"
+        "whereKo": "시계가 따르는 1초의 길이를 정하는 세슘 원자시계의 바탕 원리"
       },
       {
         "prizeId": "1997-physics",
-        "whereKo": "원자를 레이저로 식혀 더 정밀해진 원자시계"
+        "whereKo": "원자를 레이저로 식혀 더 정밀해진, 세계 표준시를 만드는 원자시계"
       }
     ]
   },
@@ -192,6 +184,10 @@
       {
         "prizeId": "1961-chemistry",
         "whereKo": "잎이 햇빛으로 이산화탄소를 양분으로 바꾸는 광합성의 경로"
+      },
+      {
+        "prizeId": "1918-chemistry",
+        "whereKo": "화분에 주는 질소 비료를 만드는 암모니아 합성"
       }
     ]
   },
@@ -251,7 +247,7 @@
     "prizes": [
       {
         "prizeId": "1929-medicine-eijkman",
-        "whereKo": "흰쌀밥만 먹으면 생기는 각기병에서 찾은 비타민의 실마리"
+        "whereKo": "밥그릇 속 흰쌀밥만 먹으면 생기는 각기병에서 찾은 비타민의 실마리"
       }
     ]
   },
@@ -276,8 +272,8 @@
     "hintKo": "부엌에서 가장 차가운 곳을 찾아보세요",
     "prizes": [
       {
-        "prizeId": "1913-physics",
-        "whereKo": "기체를 압축·팽창시켜 온도를 낮추는 원리를 극한까지 밀어붙인 극저온 연구"
+        "prizeId": "1995-chemistry",
+        "whereKo": "예전 냉장고 냉매로 쓰던 프레온 가스(CFC)가 오존층을 망가뜨리는 원리. 그래서 지금은 다른 냉매를 써요"
       }
     ]
   },
@@ -325,7 +321,11 @@
     "prizes": [
       {
         "prizeId": "2009-physics-fiber",
-        "whereKo": "집까지 인터넷을 실어 오는 광섬유 통신"
+        "whereKo": "공유기까지 인터넷을 빛으로 실어 오는 광섬유 통신"
+      },
+      {
+        "prizeId": "1909-physics",
+        "whereKo": "와이파이처럼 전파로 데이터를 주고받는 무선 통신의 출발점"
       }
     ]
   },
@@ -366,66 +366,23 @@
     ]
   },
   {
-    "id": "vaccine",
-    "nameKo": "백신",
-    "icon": "vaccine.svg",
-    "hintKo": "예방 접종을 떠올려 보세요",
-    "zeroshotLabelsEn": [
-      "a vaccine vial",
-      "a nurse giving a vaccine injection"
-    ],
-    "prizes": [
-      {
-        "prizeId": "2023-medicine",
-        "whereKo": "코로나19 mRNA 백신 기술"
-      }
-    ]
-  },
-  {
-    "id": "antibiotic",
-    "nameKo": "항생제",
-    "icon": "antibiotic.svg",
-    "hintKo": "약 상자 속 캡슐을 찾아보세요",
-    "zeroshotLabelsEn": [
-      "antibiotic capsules",
-      "a pill capsule"
-    ],
-    "prizes": [
-      {
-        "prizeId": "1945-medicine",
-        "whereKo": "세계 최초로 널리 쓰인 항생제, 페니실린"
-      }
-    ]
-  },
-  {
-    "id": "mri",
-    "nameKo": "MRI",
-    "icon": "mri.svg",
-    "hintKo": "병원 영상의학과를 떠올려 보세요",
-    "zeroshotLabelsEn": [
-      "an MRI scanner in a hospital",
-      "an MRI scan image of a brain"
-    ],
-    "prizes": [
-      {
-        "prizeId": "2003-medicine",
-        "whereKo": "자기장으로 몸속을 찍는 자기공명영상"
-      }
-    ]
-  },
-  {
     "id": "mosquito",
-    "nameKo": "모기",
+    "nameKo": "모기·모기향",
     "icon": "mosquito.svg",
-    "hintKo": "여름밤 귓가에서 앵앵거리는 것을 찾아보세요",
+    "hintKo": "여름밤 앵앵거리는 것, 또는 그걸 쫓는 물건을 찾아보세요",
     "zeroshotLabelsEn": [
       "a mosquito",
-      "a mosquito on skin"
+      "a mosquito coil",
+      "an electric mosquito racket"
     ],
     "prizes": [
       {
         "prizeId": "1902-medicine",
-        "whereKo": "말라리아를 옮기는 모기. 그 경로를 밝힌 연구"
+        "whereKo": "모기가 말라리아를 옮긴다는 것을 밝힌 연구"
+      },
+      {
+        "prizeId": "2015-medicine-malaria",
+        "whereKo": "모기가 옮기는 말라리아를 치료하는 약, 아르테미시닌"
       }
     ]
   },
@@ -442,38 +399,6 @@
       {
         "prizeId": "1953-physics",
         "whereKo": "투명한 세포도 또렷이 보이게 하는 위상차 현미경의 원리"
-      }
-    ]
-  },
-  {
-    "id": "xray",
-    "nameKo": "엑스레이 사진",
-    "icon": "xray.svg",
-    "hintKo": "몸속 뼈가 보이는 사진을 찾아보세요",
-    "zeroshotLabelsEn": [
-      "an X-ray image of bones",
-      "a chest X-ray"
-    ],
-    "prizes": [
-      {
-        "prizeId": "1901-physics",
-        "whereKo": "몸을 뚫고 뼈를 비추는 빛, 엑스선"
-      }
-    ]
-  },
-  {
-    "id": "ct_scanner",
-    "nameKo": "CT 촬영기",
-    "icon": "ct_scanner.svg",
-    "hintKo": "병원의 커다란 고리 모양 기계를 찾아보세요",
-    "zeroshotLabelsEn": [
-      "a CT scanner in a hospital",
-      "a CT scan image"
-    ],
-    "prizes": [
-      {
-        "prizeId": "1979-medicine",
-        "whereKo": "여러 방향의 엑스선으로 몸속 단면을 그려 내는 컴퓨터 단층촬영"
       }
     ]
   },
@@ -499,54 +424,26 @@
   },
   {
     "id": "pills",
-    "nameKo": "알약",
+    "nameKo": "알약·캡슐",
     "icon": "pills.svg",
-    "hintKo": "두통이 있을 때 먹는 하얀 것을 찾아보세요",
+    "hintKo": "약 상자나 약 봉투 속을 찾아보세요",
     "zeroshotLabelsEn": [
       "white pills",
       "a blister pack of tablets",
-      "aspirin tablets"
+      "medicine capsules"
     ],
     "prizes": [
+      {
+        "prizeId": "1945-medicine",
+        "whereKo": "감기 뒤 처방받는 항생제의 시작, 페니실린"
+      },
       {
         "prizeId": "1982-medicine",
         "whereKo": "아스피린이 통증과 열을 줄이는 원리, 프로스타글란딘"
       },
       {
         "prizeId": "1988-medicine",
-        "whereKo": "병의 원인을 겨냥해 약을 설계하는 신약 개발 방식"
-      }
-    ]
-  },
-  {
-    "id": "blood_bag",
-    "nameKo": "혈액 팩",
-    "icon": "blood_bag.svg",
-    "hintKo": "헌혈의 집을 떠올려 보세요",
-    "zeroshotLabelsEn": [
-      "a blood bag",
-      "a blood donation"
-    ],
-    "prizes": [
-      {
-        "prizeId": "1930-medicine",
-        "whereKo": "수혈 전에 꼭 확인하는 ABO 혈액형"
-      }
-    ]
-  },
-  {
-    "id": "ecg_monitor",
-    "nameKo": "심전도 모니터",
-    "icon": "ecg_monitor.svg",
-    "hintKo": "병원 침대 옆에서 삑삑 소리 내는 화면을 찾아보세요",
-    "zeroshotLabelsEn": [
-      "an ECG heart monitor",
-      "an electrocardiogram trace"
-    ],
-    "prizes": [
-      {
-        "prizeId": "1924-medicine",
-        "whereKo": "심장의 전기 신호를 그래프로 기록하는 심전도"
+        "whereKo": "위장약·혈압약처럼 병의 원인을 겨냥해 약을 설계하는 방식"
       }
     ]
   },
@@ -571,21 +468,6 @@
     ]
   },
   {
-    "id": "spray_can",
-    "nameKo": "스프레이 캔",
-    "icon": "spray_can.svg",
-    "hintKo": "누르면 칙 하고 나오는 것을 찾아보세요",
-    "zeroshotLabelsEn": [
-      "an aerosol spray can"
-    ],
-    "prizes": [
-      {
-        "prizeId": "1995-chemistry",
-        "whereKo": "예전 스프레이 속 프레온 가스가 오존층을 망가뜨리는 원리"
-      }
-    ]
-  },
-  {
     "id": "margarine",
     "nameKo": "마가린",
     "icon": "margarine.svg",
@@ -603,33 +485,18 @@
   },
   {
     "id": "hologram",
-    "nameKo": "홀로그램",
-    "icon": "hologram.svg",
-    "hintKo": "각도에 따라 반짝이며 바뀌는 무늬를 찾아보세요",
+    "nameKo": "지폐·카드",
+    "icon": "banknote.svg",
+    "hintKo": "지갑 속을 찾아보세요",
     "zeroshotLabelsEn": [
-      "a hologram sticker",
-      "the hologram on a credit card"
+      "a banknote",
+      "paper money",
+      "a hologram sticker"
     ],
     "prizes": [
       {
         "prizeId": "1971-physics",
-        "whereKo": "카드와 지폐의 위조 방지 홀로그램"
-      }
-    ]
-  },
-  {
-    "id": "telescope",
-    "nameKo": "망원경",
-    "icon": "telescope.svg",
-    "hintKo": "밤하늘을 가까이 보는 도구를 찾아보세요",
-    "zeroshotLabelsEn": [
-      "a telescope",
-      "an astronomical telescope"
-    ],
-    "prizes": [
-      {
-        "prizeId": "2019-physics-exoplanet",
-        "whereKo": "망원경으로 별빛을 살펴 찾아낸 외계 행성"
+        "whereKo": "지폐와 카드에서 각도에 따라 바뀌는 위조 방지 홀로그램"
       }
     ]
   },
@@ -665,50 +532,34 @@
     ]
   },
   {
-    "id": "jellyfish",
-    "nameKo": "해파리",
-    "icon": "jellyfish.svg",
-    "hintKo": "수족관이나 바다에서 찾아보세요",
+    "id": "smartwatch",
+    "nameKo": "스마트워치",
+    "icon": "smartwatch.svg",
+    "hintKo": "손목에서 풀어 화면이 보이게 찍어 보세요",
     "zeroshotLabelsEn": [
-      "a jellyfish",
-      "a glowing jellyfish in an aquarium"
+      "a smartwatch",
+      "a smartwatch showing heart rate"
     ],
     "prizes": [
       {
-        "prizeId": "2008-chemistry",
-        "whereKo": "해파리에서 찾은 초록 형광 단백질(GFP)"
+        "prizeId": "1924-medicine",
+        "whereKo": "손목에서 재는 심전도(ECG). 심장의 전기 신호를 기록하는 방법이에요"
       }
     ]
   },
   {
-    "id": "fossil",
-    "nameKo": "화석·유물",
-    "icon": "fossil.svg",
-    "hintKo": "박물관 전시실을 떠올려 보세요",
+    "id": "hard_drive",
+    "nameKo": "외장 하드디스크",
+    "icon": "hard_drive.svg",
+    "hintKo": "사진과 파일을 백업해 두는 상자를 찾아보세요",
     "zeroshotLabelsEn": [
-      "a fossil",
-      "an ancient artifact in a museum"
+      "an external hard drive",
+      "a hard disk drive"
     ],
     "prizes": [
       {
-        "prizeId": "1960-chemistry",
-        "whereKo": "유물의 나이를 재는 탄소-14 연대 측정"
-      }
-    ]
-  },
-  {
-    "id": "pcr_test",
-    "nameKo": "PCR 검사 키트",
-    "icon": "pcr_test.svg",
-    "hintKo": "코로나19 검사를 떠올려 보세요",
-    "zeroshotLabelsEn": [
-      "a COVID-19 PCR test swab",
-      "a test tube in a laboratory"
-    ],
-    "prizes": [
-      {
-        "prizeId": "1993-chemistry-pcr",
-        "whereKo": "아주 적은 유전자도 불려서 찾아내는 PCR"
+        "prizeId": "2007-physics",
+        "whereKo": "하드디스크에서 데이터를 읽는 GMR 헤드"
       }
     ]
   }
