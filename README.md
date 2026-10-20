@@ -69,6 +69,14 @@ COCO에 없는 물건(연필, 알약, 지폐 등)은 2단계 제로샷 분류로
 - 2차 노벨상은 1차 도감을 완성한 뒤에 찍은 사진만 도감에 담깁니다.
 - `?unlock`을 붙이면 1차가 모두 채워진 테스트용 도감으로 열립니다. 실제 기록과 다른 키에 저장되므로 원래 도감은 그대로입니다. 2차 수집까지 실험하려면 `/nb_lense/?unlock&zeroshot&debug`를 쓰세요.
 
+### 3단계 비전 LLM (준비 중)
+
+1·2단계가 아무것도 못 찾은 사진을 비전 LLM이 사물 목록 가운데서 하나 고르게 하는 단계입니다. 운영자 키를 브라우저에 둘 수 없어서, 키는 [`proxy/`](proxy/)의 Cloudflare Worker에만 넣고 앱은 그 주소로 사진을 보냅니다. OpenAI, Claude, Gemini, POSTECH AI를 설정 하나로 바꿔 쓸 수 있고, 같은 Worker가 POSTECH AI를 OpenAI 호환 API로도 열어 줍니다. 배포와 확인 방법은 [`proxy/README.md`](proxy/README.md)에 있습니다.
+
+- 앱 쪽 코드는 `src/lib/recognizers/llm.ts`, 설정은 `src/config.ts`의 `LLM`입니다.
+- `RECOGNIZERS.llm`이 `false`이고 `VITE_LLM_ENDPOINT`가 비어 있는 동안은 아무 요청도 보내지 않습니다.
+- 켜기 전에 사진이 서버로 간다는 동의 화면을 붙이고, 위 [사진과 개인정보](#사진과-개인정보) 문구를 고쳐야 합니다.
+
 ## 프로젝트 구조
 
 ```text
@@ -79,6 +87,7 @@ src/data/        사물-노벨상 연결과 노벨상 설명
 src/lib/         인식(recognizers/: 1단계 COCO, 2단계 제로샷), 도감, 이미지 처리, 분석 로직
 src/screens/     사용자 화면과 검수 화면
 scripts/         데이터 검사, 공식 데이터 갱신, 빌드 보조 도구
+proxy/           3단계 비전 LLM과 POSTECH AI를 잇는 Cloudflare Worker (운영자 키 보관)
 ```
 
 사물과 노벨상의 연결은 [`src/data/objects.json`](src/data/objects.json), 노벨상 설명은 [`src/data/prizes.json`](src/data/prizes.json)에서 관리합니다. `laureates`와 `motivationEn`은 공식 API 값이므로 `npm run fetch-prizes`로 갱신합니다.
@@ -87,7 +96,7 @@ scripts/         데이터 검사, 공식 데이터 갱신, 빌드 보조 도구
 
 `main`에 push하면 [배포 워크플로](.github/workflows/deploy.yml)가 검사와 빌드를 거쳐 GitHub Pages에 배포합니다. 저장소의 **Settings → Pages → Build and deployment**에서 Source를 **GitHub Actions**로 설정해야 합니다.
 
-분석을 켜려면 Actions 변수 `GOATCOUNTER_CODE`에 GoatCounter 사이트 코드를 넣습니다. `VITE_` 환경 변수는 브라우저 번들에 포함되므로 비밀 키나 토큰을 저장하면 안 됩니다.
+분석을 켜려면 Actions 변수 `GOATCOUNTER_CODE`에 GoatCounter 사이트 코드를 넣습니다. 3단계 LLM 프록시 주소는 Actions 변수 `LLM_ENDPOINT`에 넣습니다. `VITE_` 환경 변수는 브라우저 번들에 포함되므로 비밀 키나 토큰을 저장하면 안 됩니다.
 
 ## 데이터와 저작권
 

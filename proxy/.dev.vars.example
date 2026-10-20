@@ -1,0 +1,6 @@
+# cp .dev.vars.example .dev.vars 후 값을 채우면 npm run dev(wrangler dev)가 읽는다. .dev.vars는 커밋하지 않는다
+POSTECH_API_KEY=
+LLM_API_KEY=
+PROXY_TOKEN=
+# 기본 인증 헤더는 X-Api-Key. 별도 게이트웨이에서 다른 헤더를 요구할 때만 재정의한다.
+# POSTECH_AUTH_HEADER=Authorization

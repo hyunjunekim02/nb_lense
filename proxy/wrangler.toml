@@ -1,0 +1,16 @@
+# 노벨 렌즈 LLM 프록시 (Cloudflare Worker). 배포 방법은 proxy/README.md
+name = "nb-lense-llm-proxy"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+[vars]
+# openai | anthropic | gemini | postech
+LLM_PROVIDER = "postech"
+# 비우면 공급자 기본값 (POSTECH: gpt-4.1-mini-gs-2025-04-14)
+LLM_MODEL = ""
+ALLOWED_ORIGINS = "https://hyunjunekim02.github.io,http://localhost:5173,http://localhost:4173"
+
+# 키는 여기 쓰지 말고 시크릿으로 넣는다:
+#   npx wrangler secret put POSTECH_API_KEY
+#   npx wrangler secret put LLM_API_KEY      (openai·anthropic·gemini를 쓸 때)
+#   npx wrangler secret put PROXY_TOKEN      (/v1/chat/completions를 열 때)

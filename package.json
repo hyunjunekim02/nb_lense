@@ -12,8 +12,8 @@
     "preview": "vite preview",
     "pages": "npm run build && vite preview --open",
     "test": "vitest run",
-    "typecheck": "tsc -b",
-    "check": "node scripts/check-data.mjs && tsc -b && vitest run",
+    "typecheck": "tsc -b && tsc -p proxy",
+    "check": "node scripts/check-data.mjs && tsc -b && tsc -p proxy && vitest run",
     "fetch-prizes": "tsx scripts/fetch-prizes.ts",
     "postinstall": "node scripts/copy-wasm.mjs"
   },
