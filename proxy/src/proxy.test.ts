@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { handle, type Env } from "./index";
-import { flattenMessages, toPostech } from "./postech";
+import { DEFAULT_POSTECH_MODEL, flattenMessages, toPostech } from "./postech";
 import { parseAnswer, parseRecognizeRequest } from "./recognize";
 import { bodyToText } from "./text";
 
@@ -22,13 +22,13 @@ const post = (path: string, body: unknown, headers: Record<string, string> = {})
   new Request(`https://proxy.example${path}`, { method: "POST", headers: { "Content-Type": "application/json", ...headers }, body: JSON.stringify(body) });
 
 describe("POSTECH 변환", () => {
-  it("postech-* 모델은 에이전트 API의 message/files 형식으로 보낸다", () => {
+  it("postech-* 모델의 텍스트 대화는 에이전트 API로 보낸다", () => {
     const up = toPostech(
       {
         model: "postech-gpt",
         messages: [
           { role: "system", content: "Be brief." },
-          { role: "user", content: [{ type: "text", text: "What is this?" }, { type: "image_url", image_url: { url: IMAGE } }] },
+          { role: "user", content: "What is this?" },
         ],
       },
       "https://genai.postech.ac.kr/agent/api/",
@@ -37,8 +37,12 @@ describe("POSTECH 변환", () => {
     expect(up.body).toEqual({
       message: "[system]\nBe brief.\n\n[user]\nWhat is this?",
       stream: false,
-      files: [{ id: "image-1", name: "image-1.jpg", url: IMAGE }],
     });
+  });
+
+  it.each(["postech-gpt", "postech-gemini", "postech-claude", "postech"])("%s의 이미지 입력은 비전 API 모델로 안내한다", (model) => {
+    expect(() => toPostech({ model, messages: [{ role: "user", content: [{ type: "image_url", image_url: { url: IMAGE } }] }] }, "https://genai.postech.ac.kr/agent/api"))
+      .toThrow(/do not support image input/);
   });
 
   it("사용자 메시지 하나뿐이면 역할 표시 없이 그대로 보낸다", () => {
@@ -48,7 +52,7 @@ describe("POSTECH 변환", () => {
   it("그 밖의 모델은 Responses API(a11)에 모델 이름을 그대로 넘긴다", () => {
     const up = toPostech(
       {
-        model: "gpt-5.2",
+        model: DEFAULT_POSTECH_MODEL,
         max_tokens: 50,
         messages: [
           { role: "system", content: "Be brief." },
@@ -59,10 +63,11 @@ describe("POSTECH 변환", () => {
     );
     expect(up.url).toBe("https://genai.postech.ac.kr/agent/api/a11/openai/responses");
     expect(up.body).toEqual({
-      model: "gpt-5.2",
+      model: DEFAULT_POSTECH_MODEL,
       instructions: "Be brief.",
       max_output_tokens: 50,
       stream: false,
+      store: false,
       input: [{ role: "user", content: [{ type: "input_image", image_url: IMAGE }, { type: "input_text", text: "?" }] }],
     });
   });
@@ -74,6 +79,8 @@ describe("응답 텍스트 꺼내기", () => {
     ["Responses API", { output: [{ type: "reasoning" }, { type: "message", content: [{ type: "output_text", text: "A" }] }] }],
     ["output_text", { output_text: "A" }],
     ["중첩된 data.content", { data: { content: "A" } }],
+    ["POSTECH 성공 안내보다 실제 Responses 답변 우선", { code: "200", message: "operation success", data: { output: [{ type: "message", content: [{ type: "output_text", text: "A" }] }] } }],
+    ["POSTECH로 감싼 Chat Completions", { code: "200", message: "operation success", data: { choices: [{ message: { content: "A" } }] } }],
     ["message 필드", { message: "A" }],
   ])("%s", (_name, body) => {
     expect(bodyToText(JSON.stringify(body), "application/json")).toBe("A");
@@ -86,6 +93,10 @@ describe("응답 텍스트 꺼내기", () => {
 
   it("JSON이 아니면 본문 그대로", () => {
     expect(bodyToText("plain answer", "text/plain")).toBe("plain answer");
+  });
+
+  it("POSTECH의 data가 비어 있으면 성공 안내를 모델 답변으로 사용하지 않는다", () => {
+    expect(bodyToText(JSON.stringify({ code: "200", message: "operation success", data: null }), "application/json")).toBe("");
   });
 });
 
@@ -102,22 +113,24 @@ describe("/v1/chat/completions", () => {
     expect(res.status).toBe(403);
   });
 
-  it("POSTECH 답을 OpenAI 형식으로 돌려주고, 키를 Bearer로 싣는다", async () => {
+  it("POSTECH 답을 OpenAI 형식으로 돌려주고, 키를 X-Api-Key로 싣는다", async () => {
     const f = fakeFetch({ content: "hello" });
     const res = await handle(post("/v1/chat/completions", body, { Authorization: "Bearer proxy-token" }), env, f);
     expect(res.status).toBe(200);
     const data = (await res.json()) as { choices: { message: { content: string } }[] };
     expect(data.choices[0].message.content).toBe("hello");
     const init = f.mock.calls[0][1] as RequestInit;
-    expect((init.headers as Record<string, string>).Authorization).toBe("Bearer test-key");
+    const headers = init.headers as Record<string, string>;
+    expect(headers["X-Api-Key"]).toBe("test-key");
+    expect(headers.Authorization).toBeUndefined();
   });
 
-  it("POSTECH_AUTH_HEADER로 다른 헤더에 키를 그대로 싣는다", async () => {
+  it("Authorization을 명시한 게이트웨이는 Bearer 인증을 유지한다", async () => {
     const f = fakeFetch({ content: "hello" });
-    await handle(post("/v1/chat/completions", body, { Authorization: "Bearer proxy-token" }), { ...env, POSTECH_AUTH_HEADER: "X-API-Key" }, f);
+    await handle(post("/v1/chat/completions", body, { Authorization: "Bearer proxy-token" }), { ...env, POSTECH_AUTH_HEADER: "Authorization" }, f);
     const headers = (f.mock.calls[0][1] as RequestInit).headers as Record<string, string>;
-    expect(headers["X-API-Key"]).toBe("test-key");
-    expect(headers.Authorization).toBeUndefined();
+    expect(headers.Authorization).toBe("Bearer test-key");
+    expect(headers["X-Api-Key"]).toBeUndefined();
   });
 
   it("stream: true면 SSE로 돌려준다", async () => {
@@ -149,12 +162,25 @@ describe("/v1/recognize", () => {
   });
 
   it("후보 중 하나를 고른 답을 돌려주고 CORS 헤더를 붙인다", async () => {
-    const f = fakeFetch({ output_text: '```json\n{"objectId":"microscope","confidence":0.82}\n```' });
+    const f = fakeFetch({ code: "200", message: "operation success", data: { output: [{ type: "message", content: [{ type: "output_text", text: '```json\n{"objectId":"microscope","confidence":0.82}\n```' }] }] } });
     const res = await handle(post("/v1/recognize", { image: IMAGE, candidates }, { Origin: ORIGIN }), env, f);
     expect(res.status).toBe(200);
     expect(res.headers.get("access-control-allow-origin")).toBe(ORIGIN);
-    expect(await res.json()).toEqual({ objectId: "microscope", confidence: 0.82, provider: "postech", model: "gpt-5.2" });
+    expect(await res.json()).toEqual({ objectId: "microscope", confidence: 0.82, provider: "postech", model: DEFAULT_POSTECH_MODEL });
     expect(String(f.mock.calls[0][0])).toContain("a11/openai/responses");
+    const init = f.mock.calls[0][1] as RequestInit;
+    expect((init.headers as Record<string, string>)["X-Api-Key"]).toBe("test-key");
+    expect(JSON.parse(init.body as string)).toMatchObject({
+      model: DEFAULT_POSTECH_MODEL,
+      store: false,
+      input: [{ role: "user", content: [{ type: "input_image", image_url: IMAGE }, { type: "input_text" }] }],
+    });
+  });
+
+  it("/v1/models에 기본 비전 모델의 실제 POSTECH 배포명을 노출한다", async () => {
+    const res = await handle(new Request("https://proxy.example/v1/models", { headers: { Authorization: "Bearer proxy-token" } }), env);
+    expect(res.status).toBe(200);
+    expect((await res.json() as { data: { id: string }[] }).data).toContainEqual({ id: DEFAULT_POSTECH_MODEL, object: "model", owned_by: "postech" });
   });
 
   it.each([

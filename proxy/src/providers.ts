@@ -1,7 +1,7 @@
 // 비전 LLM 공급자 어댑터. 사진 한 장 + 지시문을 보내고 답 텍스트를 받는다.
 // 키는 운영자(admin)가 Worker 시크릿 LLM_API_KEY로 넣는다. 브라우저에는 절대 내려가지 않는다.
 import { HttpError } from "./errors";
-import { callPostech, type PostechEnv } from "./postech";
+import { callPostech, DEFAULT_POSTECH_MODEL, type PostechEnv } from "./postech";
 import { bodyToText } from "./text";
 
 export type Provider = "openai" | "anthropic" | "gemini" | "postech";
@@ -21,7 +21,7 @@ export const DEFAULT_MODELS: Record<Provider, string> = {
   openai: "gpt-5.2",
   anthropic: "claude-haiku-5-5",
   gemini: "gemini-2.5-flash",
-  postech: "gpt-5.2",
+  postech: DEFAULT_POSTECH_MODEL,
 };
 
 export type VisionInput = {

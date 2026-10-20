@@ -6,7 +6,7 @@ compatibility_date = "2026-10-01"
 [vars]
 # openai | anthropic | gemini | postech
 LLM_PROVIDER = "postech"
-# 비우면 공급자 기본값 (src/providers.ts의 DEFAULT_MODELS)
+# 비우면 공급자 기본값 (POSTECH: gpt-4.1-mini-gs-2025-04-14)
 LLM_MODEL = ""
 ALLOWED_ORIGINS = "https://hyunjunekim02.github.io,http://localhost:5173,http://localhost:4173"
 

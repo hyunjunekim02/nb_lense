@@ -6,7 +6,7 @@
 // GET  /health               설정 상태 (키 값은 내보내지 않음)
 import { HttpError } from "./errors";
 import { completion, completionSse, type ChatRequest } from "./openai";
-import { callPostech, POSTECH_AGENT_MODELS } from "./postech";
+import { callPostech, DEFAULT_POSTECH_MODEL, POSTECH_AGENT_MODELS } from "./postech";
 import { callVision, resolveProvider, type ProviderEnv } from "./providers";
 import { buildUserText, parseAnswer, parseRecognizeRequest, SYSTEM_PROMPT, type RecognizeResponse } from "./recognize";
 
@@ -81,7 +81,7 @@ async function chatCompletions(req: Request, env: Env, fetchFn: typeof fetch): P
 }
 
 function models() {
-  const ids = [...Object.keys(POSTECH_AGENT_MODELS), "gpt-5.2"];
+  const ids = [...Object.keys(POSTECH_AGENT_MODELS), DEFAULT_POSTECH_MODEL];
   return { object: "list", data: ids.map((id) => ({ id, object: "model", owned_by: "postech" })) };
 }
 

@@ -2,5 +2,5 @@
 POSTECH_API_KEY=
 LLM_API_KEY=
 PROXY_TOKEN=
-# 키를 Authorization: Bearer 가 아닌 다른 헤더로 보내야 하면 (예: X-API-Key)
-# POSTECH_AUTH_HEADER=X-API-Key
+# 기본 인증 헤더는 X-Api-Key. 별도 게이트웨이에서 다른 헤더를 요구할 때만 재정의한다.
+# POSTECH_AUTH_HEADER=Authorization

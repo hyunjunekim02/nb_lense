@@ -15,7 +15,7 @@
 
 | `LLM_PROVIDER` | 키 시크릿 | 기본 모델 | 호출하는 API |
 | --- | --- | --- | --- |
-| `postech` (기본) | `POSTECH_API_KEY` | `gpt-5.2` | POSTECH AI (아래 규칙) |
+| `postech` (기본) | `POSTECH_API_KEY` | `gpt-4.1-mini-gs-2025-04-14` | POSTECH AI Responses API (이미지 입력 지원) |
 | `openai` | `LLM_API_KEY` | `gpt-5.2` | Chat Completions. `OPENAI_BASE_URL`로 다른 OpenAI 호환 서버도 됩니다 |
 | `anthropic` | `LLM_API_KEY` | `claude-haiku-5-5` | Messages API |
 | `gemini` | `LLM_API_KEY` | `gemini-2.5-flash` | `generateContent` |
@@ -26,16 +26,20 @@
 
 | 모델 이름 | POSTECH AI 엔드포인트 | 보내는 본문 |
 | --- | --- | --- |
-| `postech-gpt` | `a1/gpt` | `{ message, stream: false, files }` |
+| `postech-gpt` | `a1/gpt` | `{ message, stream: false }` (텍스트 전용) |
 | `postech-gemini` | `a2/gemini` | 〃 |
 | `postech-claude` | `a3/claude` | 〃 |
 | `postech` | `a10/postech` | 〃 |
-| 그 밖의 이름 (`gpt-5.2` 등) | `a11/openai/responses` | OpenAI Responses API 본문 (모델 이름 그대로) |
+| 그 밖의 이름 | `a11/openai/responses` | OpenAI Responses API 본문 (POSTECH 배포명 그대로, `store: false`) |
 
-- 에이전트 엔드포인트(a1~a10)는 대화를 `[system]`, `[user]`처럼 역할을 붙인 문자열 하나로 펴서 `message`에 넣고, 사진은 `files[].url`에 data URL로 넣습니다.
+- 에이전트 엔드포인트는 텍스트 대화를 `[system]`, `[user]`처럼 역할을 붙인 문자열 하나로 펴서 `message`에 넣습니다. `files`는 비전 입력용이 아니므로, 이 모델들에 이미지를 보내면 프록시가 400으로 거절합니다.
+- 이미지 인식에는 기본 모델인 `gpt-4.1-mini-gs-2025-04-14`를 사용합니다. `gpt-5.2`처럼 짧은 모델 이름은 `DeploymentNotFound`로 실패합니다. 다른 모델을 쓰려면 [공식 지원 배포명](https://github.com/posicube-services/llm-agent-api#2-사용-가능한-모델)을 확인하세요.
 - 업스트림은 항상 한 번에 받아 옵니다. 요청이 `stream: true`면 받은 답을 OpenAI 스트리밍(SSE) 형식으로 다시 내보냅니다.
-- 키는 기본으로 `Authorization: Bearer <키>`에 싣습니다. POSTECH AI가 다른 헤더를 쓰면 `POSTECH_AUTH_HEADER`(예: `X-API-Key`)를 설정합니다.
-- 응답 형식은 문서로 확정되지 않아 `output_text`, `choices[0].message.content`, `content`, `message`, `answer` 같은 흔한 필드를 차례로 찾습니다(`src/text.ts`).
+- 키는 기본으로 `X-Api-Key`에 원문 그대로 싣습니다. 별도 게이트웨이가 다른 인증 헤더를 요구하는 경우에만 `POSTECH_AUTH_HEADER`를 지정합니다. `Authorization`으로 지정하면 `Bearer` 접두사를 붙입니다.
+- POSTECH의 `{ code, message: "operation success", data }` 응답에서 `data` 안의 실제 모델 답변을 읽습니다. Responses API, Chat Completions, SSE 텍스트를 지원합니다(`src/text.ts`).
+- Responses API에는 `store: false`를 보내 응답 저장을 요청 단계에서 비활성화합니다. 사진은 외부 서버에서 처리되므로 앱에서 이 단계를 켜기 전 전송 동의가 필요합니다.
+
+API의 요청 형식과 인증 규칙은 [공식 SDK 가이드](https://github.com/posicube-services/llm-agent-api)와 [에이전트 API 가이드](https://github.com/posicube-services/llm-agent-api/blob/main/a1_a3_README.md)를 참고하세요.
 
 ## 로컬에서 실행하기
 
@@ -49,12 +53,12 @@ npm run dev                      # http://localhost:8787
 다른 터미널에서 확인합니다.
 
 ```bash
-# POSTECH AI를 OpenAI 형식으로 (Responses API 경로)
+# POSTECH AI를 OpenAI 형식으로 (이미지 입력도 지원하는 기본 모델)
 curl -s http://localhost:8787/v1/chat/completions \
   -H "Authorization: Bearer $PROXY_TOKEN" -H "Content-Type: application/json" \
-  -d '{"model":"gpt-5.2","messages":[{"role":"user","content":"한 단어로 인사해 줘"}]}'
+  -d '{"model":"gpt-4.1-mini-gs-2025-04-14","messages":[{"role":"user","content":"한 단어로 인사해 줘"}]}'
 
-# 에이전트 엔드포인트 경로
+# 텍스트 전용 에이전트 엔드포인트 경로
 curl -s http://localhost:8787/v1/chat/completions \
   -H "Authorization: Bearer $PROXY_TOKEN" -H "Content-Type: application/json" \
   -d '{"model":"postech-gpt","messages":[{"role":"user","content":"한 단어로 인사해 줘"}]}'
@@ -66,7 +70,7 @@ OpenAI SDK에서도 그대로 쓸 수 있습니다: `new OpenAI({ baseURL: "http
 
 ```bash
 curl -s https://genai.postech.ac.kr/agent/api/a1/gpt \
-  -H "Authorization: Bearer $POSTECH_API_KEY" -H "Content-Type: application/json" \
+  -H "X-Api-Key: $POSTECH_API_KEY" -H "Content-Type: application/json" \
   -d '{"message":"한 단어로 인사해 줘","stream":false}'
 ```
 
@@ -93,3 +97,16 @@ npm run deploy                            # https://nb-lense-llm-proxy.<계정>.
 ## 테스트
 
 저장소 루트의 `npm test`가 `proxy/src/*.test.ts`도 함께 돌리고, `npm run check`가 `tsc -p proxy`로 타입을 검사합니다.
+
+### 실제 이미지 호출 검증 (2026-10-20)
+
+기본 설정(`X-Api-Key`, `gpt-4.1-mini-gs-2025-04-14`)으로 프록시의 `/v1/recognize` 핸들러에서 실제 POSTECH API까지 호출했습니다. `public/samples/` 이미지를 긴 변 768px JPEG로 변환해 사용했고, 사진 3장에는 앱의 전체 사물 후보 40개를 전달했습니다.
+
+| 입력 | 결과 | 확신도 |
+| --- | --- | --- |
+| `sample-1.jpg` — 책상 | `laptop` | 1.0 |
+| `sample-2.jpg` — 도로 | `car` | 1.0 |
+| `sample-3.jpg` — 손목시계 | `clock` | 1.0 |
+| 책상 사진 + 현미경·모기 후보만 전달 | `null` | 0 |
+
+네 요청 모두 HTTP 200, 약 3.3~4.7초였고 업스트림 응답의 `store: false`도 확인했습니다. 확신도는 모델이 반환한 값이며, 이 결과는 시연 이미지에 대한 연동 확인입니다. 앱의 실제 화면에서는 3단계가 아직 비활성화되어 있습니다.

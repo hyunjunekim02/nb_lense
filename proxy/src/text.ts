@@ -14,6 +14,10 @@ export function extractText(value: unknown, depth = 0): string | null {
   if (typeof value !== "object") return null;
   const obj = value as Record<string, unknown>;
 
+  // POSTECH 응답은 { code, message: "operation success", data: <LLM 응답> }로 감싸진다.
+  // 상태 안내 message를 모델의 답으로 읽으면 정상 인식도 빈 결과가 된다.
+  if ("code" in obj && "data" in obj) return extractText(obj.data, depth + 1);
+
   // OpenAI Chat Completions
   if (Array.isArray(obj.choices)) {
     const c = obj.choices[0] as { message?: { content?: unknown }; text?: unknown } | undefined;
