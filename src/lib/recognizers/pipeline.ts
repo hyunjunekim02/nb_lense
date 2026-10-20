@@ -23,6 +23,8 @@ export type RunOptions = {
  * 켜진 엔진을 단계 순서대로 돌린다 (v1.1 명세 5.1).
  * - 1단계는 항상 돌린다. 무언가 찾았으면 거기서 멈춘다.
  * - 상위 단계는 하위 단계가 0개를 찾았고, 엔진이 켜져 있고, 그 단계를 요청했을 때만 시도한다.
+ * - 단, 2단계(제로샷)는 요청했으면 1단계 결과와 상관없이 돌린다. 2차 도감 사물은 손목·책상처럼
+ *   1단계 사물과 함께 찍히기 쉬워서, 1단계가 무언가 찾았다고 건너뛰면 2차 칸을 열 수 없다.
  * - 1단계 실패는 그대로 던지고(오류 화면), 상위 단계 실패는 기록만 하고 넘어간다.
  */
 export function createPipeline(recognizers: Recognizer[]) {
@@ -39,7 +41,7 @@ export function createPipeline(recognizers: Recognizer[]) {
       const out: PipelineOutput = { recognitions: [], ms: 0, raw: {}, ran: [], failed: [] };
       for (const r of ordered) {
         if (!r.enabled) continue;
-        if (r.stage > 1 && (out.recognitions.length > 0 || !requested.includes(r.id))) continue;
+        if (r.stage > 1 && ((r.stage !== 2 && out.recognitions.length > 0) || !requested.includes(r.id))) continue;
         let res;
         try {
           if (!r.isReady()) options.onLoad?.(r.id);
