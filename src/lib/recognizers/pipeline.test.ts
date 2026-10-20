@@ -32,12 +32,18 @@ describe("pipeline", () => {
     expect(zeroshotRecognizer.enabled).toBe(true);
   });
 
-  it("1단계가 찾았으면 켜진 상위 단계도 돌리지 않는다", async () => {
-    const coco = fake("coco", 1, true, [hit("phone", "coco")]);
-    const zs = fake("zeroshot", 2, true, [hit("led_bulb", "zeroshot")]);
-    const out = await createPipeline([coco, zs]).run(image, ["zeroshot"]);
-    expect(out.recognitions.map((r) => r.objectId)).toEqual(["phone"]);
+  it("2단계는 요청하면 1단계가 찾았어도 돌린다", async () => {
+    const coco = fake("coco", 1, true, [hit("person", "coco")]);
+    const zs = fake("zeroshot", 2, true, [hit("smartwatch", "zeroshot")]);
+    const pipe = createPipeline([coco, zs]);
+
+    // 2차 도감이 열리기 전(요청 없음)에는 1단계만
+    expect((await pipe.run(image)).ran).toEqual(["coco"]);
     expect(zs.recognize).not.toHaveBeenCalled();
+
+    const out = await pipe.run(image, ["zeroshot"]);
+    expect(out.ran).toEqual(["coco", "zeroshot"]);
+    expect(out.recognitions.map((r) => r.objectId)).toEqual(["person", "smartwatch"]);
   });
 
   it("1단계가 0개이고 요청한 경우에만 상위 단계를 시도한다", async () => {

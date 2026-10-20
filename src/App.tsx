@@ -123,7 +123,7 @@ export function App() {
 
       // detect()는 동기라 UI를 막는다. 분석 중 화면이 그려진 뒤 호출한다 (명세 5.1)
       await nextPaint(2);
-      // 2단계(제로샷)는 2차 도감이 열렸으면(또는 ?zeroshot) 1단계가 아무것도 못 찾았을 때 이어서 돌린다
+      // 2단계(제로샷)는 2차 도감이 열렸으면(또는 ?zeroshot) 1단계 결과와 상관없이 이어서 돌린다
       const { recognitions, ms, raw, ran, failed } = await pipeline.run(
         prepared.canvas,
         zeroshotActive(recordRef.current) ? ["zeroshot"] : [],
